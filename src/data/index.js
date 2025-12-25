@@ -2,9 +2,10 @@
 
 export const heroData = {
   name: "James Kidd",
-  title: "Software Developer & Data Scientist",
+  title: "Developer & Data Science",
   tagline:
-    "I build data-driven systems, internal tooling, and scalable software with a focus on clarity and performance.",
+    "Welcome to my local space. If recrutier, download my resume or send me a message below. For contractual job, refer to site email."
+    ,
   resumeLink: "/assets/resume.pdf",
   socials: {
     github: "https://github.com/james-kidd/",
@@ -16,11 +17,10 @@ export const heroData = {
 export const aboutData = {
   banner: "/assets/about-banner.jpg", // You can remove this if you prefer a clean text look
 
-  // The "Selling Point" Intro
   intro: [
-    "I build data automation and analytics systems that reduce friction between raw information and real decision-making.",
-    "My work sits at the intersection of software engineering, data pipelines, and financial analytics — turning messy inputs into structured, reliable outputs.",
-    "I care less about flashy tech and more about systems that run quietly, scale cleanly, and earn trust over time."
+    "I build data automation and analytics systems that reduce friction between raw information and management decision-making.",
+    "My work sits at the intersection of software engineering, data science, and financial analytics.",
+    "Let me get rid of your wasted time. Let me guid you. Let me solve your problem. "
   ],
 
   education: {
@@ -90,8 +90,8 @@ export const experienceData = {
       title: "Investment Advisory Intern (Incoming)",
       company: "CI Global Asset Management",
       description:
-        "Incoming internship focused on investment advisory and portfolio analysis within a global asset management firm. Will be leveraging financial data tools to support strategic decision-making.",
-      skills: ["Financial Analysis", "Data Analysis", "Bloomberg", "Excel"],
+        "Incoming internship.",
+      skills: ["Financial Analysis", "Bloomberg", "Excel"],
       link: "https://www.cifinancial.com",
     },
     {
@@ -115,11 +115,11 @@ export const experienceData = {
   ],
   academic: [
     {
-      date: "2023",
-      title: "CodeJam Participant",
+      date: "Jun 2023 — Sep 2026",
+      title: "CodeJam Hackathon",
       school: "McGill University",
-      description: "Collaborated in a 48-hour hackathon to build a sports matchmaking platform using NLP and Python.",
-      skills: ["Python", "NLP", "Teamwork"],
+      description: "Logistics position.",
+      skills: [],
       link: "",
     }
   ],
@@ -128,7 +128,7 @@ export const experienceData = {
       date: "2023 — Present",
       title: "Full Stack Developer",
       company: "Freelance",
-      description: "Building custom web solutions for local businesses, focusing on SEO-optimized landing pages and inventory management systems.",
+      description: "Solutions for small size companies.",
       skills: ["React", "Shopify", "Node.js", "Tailwind CSS"],
       link: "",
     }
@@ -141,44 +141,31 @@ export const projectData = [
     description:
       "Built a data pipeline combining ETF and equity data from Yahoo Finance/iShares with Bloomberg fundamentals. Developed machine learning models to predict whether securities appear in an ETF’s top-K holdings to analyze portfolio manager behavior.",
     skills: ["Python", "Pandas", "Scikit-learn", "ML", "Financial Data"],
-    link: "https://github.com/james-kidd/etf-inference",
+    link: "https://github.com/james-kidd/",
   },
   {
     title: "SquashNoFriends",
     description:
       "A squash-partner matching platform built at McGill CodeJam. Used NLP techniques to parse player availability and a Python scheduling algorithm to generate weekly matches. Deployed with a Next.js frontend and MySQL backend.",
     skills: ["Python", "NLP", "Next.js", "MySQL", "Apache"],
-    link: "https://github.com/james-kidd/squash-no-friends",
+    link: "https://github.com/james-kidd/",
   },
-  {
-    title: "High-Frequency Order Book Sim",
-    description:
-      "Designed a low-latency limit order book simulation in C++. Implemented matching engine logic to handle bid/ask spread updates and trade execution, optimizing for memory safety and pointer management.",
-    skills: ["C++", "Systems Programming", "Algorithms", "Market Microstructure"],
-    link: "https://github.com/james-kidd/cpp-orderbook",
-  },
-  {
-    title: "Distributed Log Analyzer",
-    description:
-      "A distributed system tool written in Java and Python to parse and aggregate server logs across multiple nodes. Uses a master-worker architecture to parallelize log processing for anomaly detection.",
-    skills: ["Java", "Python", "Distributed Systems", "Networking"],
-    link: "https://github.com/james-kidd/log-analyzer",
-  }
+
 ];
 
 export const personalData = {
   description:
-    "Outside of code and data, I need to be moving. Whether it's backpacking through a national park, shooting film on my old Canon, or just finding the best espresso in Montreal, I value environments that reward curiosity.",
+    "Outside of code and data, Travelled a whole lotg.",
   
   // The "Fun Sub-Things"
   favorites: [
-    { label: "Current Read", value: "Thinking, Fast and Slow" },
+    { label: "Current Read", value: "outliers" },
     { label: "Camera", value: "Canon AE-1 Program" },
-    { label: "Go-to Coffee", value: "Cortado" },
-    { label: "Activity", value: "Backpacking & Hiking" },
+    { label: "Golf Handicap", value: "high" },
+    { label: "Activity", value: "Backpacking, Hiking" },
   ],
 
-  // Placeholder Images - Just replace the src with your actual local paths later
+  // Placeholder Images
   // e.g. src: "/assets/personal/hiking.jpg"
   gallery: [
     { src: "https://placehold.co/600x400/2a2a2a/FFF?text=Hiking+Trip", alt: "Hiking in the Laurentians" },
