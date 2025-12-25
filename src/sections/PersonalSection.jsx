@@ -15,7 +15,7 @@ export default function PersonalSection({ data }) {
           </p>
         </div>
 
-        {/*  "Favorites" Mini-Card */}
+        {/* "Favorites" Mini-Card */}
         <div className="bg-gray-50 p-6 rounded-xl border border-gray-100">
           <h3 className="font-bold text-gray-900 mb-4 flex items-center">
             <Coffee className="w-4 h-4 mr-2" /> 
@@ -36,7 +36,7 @@ export default function PersonalSection({ data }) {
         </div>
       </div>
 
-      {/* 2. Photo Grid (Mosaic Style) */}
+      {/* Photo Grid (Mosaic Style) */}
       <div>
         <h3 className="font-bold text-xl mb-6 flex items-center">
           <Camera className="w-5 h-5 mr-2" />

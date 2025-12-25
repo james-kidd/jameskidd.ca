@@ -40,9 +40,9 @@
   --font-sans: var(--font-sans);
 }
 
-/* ===============================
-   3. COMPONENTS
-   =============================== */
+/* 
+   COMPONENTS
+    */
 @layer components {
 
   /* --- TAG PILL --- */

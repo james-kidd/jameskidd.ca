@@ -1,6 +1,6 @@
 # Personal 
-# src/data/*.js
-# src/assets/*.js 
+src/data/*.js
+src/assets/*.js 
 
 # Logs
 logs
