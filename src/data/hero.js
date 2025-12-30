@@ -7,7 +7,7 @@ export const heroData = {
 
   emails: {
     school: "james.kidd@mail.mcgill.ca",
-    dev: "dev@jameskidd.ca",
+    dev: "dev@jameskidd.info",
   },
 
   contactGuidance: {

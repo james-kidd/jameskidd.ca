@@ -78,7 +78,7 @@ export default function SkillsSection({ data }) {
         <div
           className={`
             overflow-hidden transition-[max-height,opacity] duration-300 ease-out
-            ${isExpanded ? "max-h-[2000px] opacity-100 mt-6" : "max-h-0 opacity-0"}
+            ${isExpanded ? "max-h-500 opacity-100 mt-6" : "max-h-0 opacity-0"}
           `}
         >
           <div className="grid gap-5 sm:grid-cols-2 pb-2">
