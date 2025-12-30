@@ -119,6 +119,30 @@ export const sectionData = {
       skills: ["Python", "NLP", "Next.js", "MySQL"],
       link: "https://github.com/james-kidd/",
     },
+    {
+      title: "Paint-By-Number Generator",
+      description:
+        "Designed a deterministic computer-vision pipeline that converts photographs into print-ready paint-by-number outlines. Implemented image preprocessing, superpixel segmentation, region merging, and color quantization with a typed, configurable pipeline and interactive Jupyter demo.",
+      skills: [
+        "Python",
+        "Computer Vision",
+        "OpenCV",
+        "scikit-image",
+        "NumPy",
+        "Image Processing",
+        "Jupyter"
+      ],
+      link: "https://github.com/james-kidd/"
+    },
+    {
+      title: "Scientific Text Classification (LSTM vs BERT)",
+      description:
+        "Built an end-to-end NLP pipeline for classifying scientific abstracts. Implemented a custom LSTM from scratch and fine-tuned BERT, comparing performance and error patterns to assess the impact of pretrained representations.",
+      skills: ["Python", "PyTorch", "NLP", "Transformers", "Machine Learning"],
+      link: "https://github.com/james-kidd/",
+    }
+
+
   ],
 
   skills: {
@@ -222,8 +246,6 @@ export const sectionData = {
           "MariaDB",
           "MySQL",
           "Apache Spark",
-          "Kubernetes",
-          "Zookeeper",
         ],
       },
 

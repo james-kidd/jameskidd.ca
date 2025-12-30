@@ -25,11 +25,9 @@ const ICONS = {
 
 function SkillCard({ block }) {
   return (
-    <div className="card card-hover group flex flex-col">
+    <div className="card card-hover  flex flex-col">
       <div className="flex items-center mb-5">
-        <div className="icon-box">
-          {ICONS[block.icon] ?? ICONS.terminal}
-        </div>
+        <div className="icon-box">{ICONS[block.icon] ?? ICONS.terminal}</div>
 
         <h3 className="ml-3 font-bold text-lg text-(--text-strong)">
           {block.title}
@@ -38,7 +36,16 @@ function SkillCard({ block }) {
 
       <div className="flex flex-wrap gap-2">
         {block.items.map((item) => (
-          <span key={item} className="tag-pill">
+          <span
+            key={item}
+            className="
+                    tag-pill
+                    text-xs font-medium
+                    bg-gray-100 text-gray-700
+                    hover:bg-(--primary)/10 hover:text-(--primary)
+                    transition-colors
+                  "
+          >
             {item}
           </span>
         ))}

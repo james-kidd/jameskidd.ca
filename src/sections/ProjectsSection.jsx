@@ -51,7 +51,16 @@ export default function ProjectsSection({ data }) {
               <div className="border-t border-gray-100 pt-4 mt-auto">
                 <div className="flex flex-wrap gap-2">
                   {project.skills.map((skill) => (
-                    <span key={skill} className="tag-pill">
+                    <span
+                      key={skill}
+                      className="
+                    tag-pill
+                    text-xs font-medium
+                    bg-gray-100 text-gray-700
+                    hover:bg-(--primary)/10 hover:text-(--primary)
+                    transition-colors
+                  "
+                    >
                       {skill}
                     </span>
                   ))}
