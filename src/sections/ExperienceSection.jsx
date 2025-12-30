@@ -100,24 +100,26 @@ export default function ExperienceSection({ data }) {
   ];
 
   return (
-    <div className="space-y-16">
-      {GROUPS.map(({ key, label }) => (
-        <div key={key}>
-          <h3 className="section-title mb-12">
-            <FolderGit2 className="w-8 h-8 mr-3 text-(--primary)" />
-            {label}
-          </h3>
+    <div className="section-shell">
+      <div className="section-panel space-y-12">
+        {GROUPS.map(({ key, label }) => (
+          <div key={key} className="space-y-6">
+            <h3 className="section-title">
+              <FolderGit2 className="w-8 h-8 mr-3 text-(--primary)" />
+              {label}
+            </h3>
 
-          <div className="ml-2">
-            {data[key].map((role) => (
-              <ExperienceCard
-                key={`${role.title}-${role.date}`}
-                role={role}
-              />
-            ))}
+            <div className="ml-2">
+              {data[key].map((role) => (
+                <ExperienceCard
+                  key={`${role.title}-${role.date}`}
+                  role={role}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

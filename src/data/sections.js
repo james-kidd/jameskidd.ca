@@ -52,8 +52,8 @@ export const sectionData = {
         title: "Investment Advisory Intern (Incoming)",
         company: "CI Global Asset Management",
         description:
-          "Incoming role supporting investment advisory and portfolio analysis teams.",
-        skills: ["Financial Analysis", "Bloomberg", "Excel"],
+          "Incoming role supporting investment advisory teams.",
+        skills: [],
         link: "https://www.cifinancial.com",
       },
       {
@@ -71,7 +71,7 @@ export const sectionData = {
         company: "KPMG Hungary",
         description:
           "Analyzed operational workflows to identify automation opportunities. Designed UiPath workflows and delivered RPA recommendations with quantified efficiency gains.",
-        skills: ["Process Automation", "UiPath", "Business Analysis"],
+        skills: ["Process Automation", "UiPath", "Business Analysis", "Visio"],
         link: "https://kpmg.com",
       },
     ],
@@ -92,7 +92,7 @@ export const sectionData = {
         company: "Independent",
         description:
           "End-to-end web and automation solutions for small businesses.",
-        skills: ["React", "Node.js", "Shopify", "Tailwind CSS"],
+        skills: [],
         link: "",
       },
     ],
@@ -129,13 +129,12 @@ export const sectionData = {
         icon: "star",
         items: [
           "Python",
+          "PyTorch",
+          "Pandas",
+          "Java",
           "SQL",
           "Linux",
           "Docker",
-          "Pandas",
-          "NumPy",
-          "Flask",
-          "Apache Spark",
         ],
       },
 
@@ -247,32 +246,31 @@ export const sectionData = {
   },
 
 
-
-
   personal: {
     description:
-      "Outside of software and data, I spend most of my time traveling and exploring the outdoors.",
+    "There’s life beyond coding. As much as I enjoy building software, I value time spent outdoors, traveling, and in real human connection. The deeper I’ve gone into engineering, the more I’ve come to appreciate simple experiences away from screens.",
     favorites: [
-      { label: "Current Read", value: "Outliers" },
-      { label: "Camera", value: "Canon AE-1 Program" },
-      { label: "Golf Handicap", value: "High" },
-      { label: "Activities", value: "Backpacking, Hiking" },
+      { label: "Current Read", value: "Options, Futures, and Other Derivatives - John Huel" },
+      { label: "Countries Visited", value: "39" },
     ],
+    instagram :
+      "https://www.instagram.com/jameskidd__/",
+
     gallery: [
       {
-        src: "https://placehold.co/600x400/2a2a2a/FFF?text=Hiking+Trip",
+        src: "/photos/about-me-0.jpg",
         alt: "Hiking trip",
       },
       {
-        src: "https://placehold.co/600x800/2a2a2a/FFF?text=Film+Photo",
+        src: "/photos/about-me-1.jpg",
         alt: "Film photography",
       },
       {
-        src: "https://placehold.co/600x400/2a2a2a/FFF?text=Workspace",
+        src: "/photos/about-me-2.jpg",
         alt: "Workspace setup",
       },
       {
-        src: "https://placehold.co/600x400/2a2a2a/FFF?text=Travel",
+        src: "/photos/about-me-3.jpg",
         alt: "Travel photography",
       },
     ],

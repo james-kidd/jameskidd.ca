@@ -29,7 +29,7 @@ function App() {
         <section
           id={id}
           key={id}
-          className="py-20 border-t border-gray-100 first:border-0"
+          className="section-block first:border-0"
         >
           <Component data={sectionData[id]} />
         </section>

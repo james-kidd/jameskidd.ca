@@ -1,8 +1,8 @@
 import React from "react";
-import { FileText, Mail, Linkedin, ChevronDown } from "lucide-react";
+import { FileText, Linkedin, ChevronDown } from "lucide-react";
 
 export default function HeroSection({ data }) {
-  const publicEmail = data.emails.dev;
+  const { emails } = data;
 
   return (
     <div
@@ -15,7 +15,7 @@ export default function HeroSection({ data }) {
     >
       {/* CONTENT CENTER */}
       <div className="flex-1 flex flex-col justify-center items-start md:block md:flex-none">
-        <span className="text-(--primary) font-bold tracking-widest uppercase text-xs mb-4 block">
+        <span className="eyebrow text-(--primary) mb-4 block">
           Software Developer & Data Scientist
         </span>
 
@@ -24,7 +24,7 @@ export default function HeroSection({ data }) {
           <span className="text-(--primary)">.</span>
         </h1>
 
-        <p className="text-lg md:text-2xl text-gray-500 leading-relaxed font-light mb-8 md:max-w-xl">
+        <p className="section-lead md:text-2xl text-body mb-2 md:max-w-xl">
           {data.tagline}
         </p>
       </div>
@@ -32,76 +32,94 @@ export default function HeroSection({ data }) {
       {/* ACTION GRID */}
       <div className="mt-auto md:mt-8 w-full md:w-auto pb-12 md:pb-0">
         {/* DESKTOP */}
-        <div className="hidden md:flex flex-wrap gap-4 items-center">
-          {data.resumeLink && (
-            <a
-              href={data.resumeLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-            >
-              Resume <FileText className="w-4 h-4 ml-2" />
-            </a>
-          )}
+        <div className="hidden md:flex flex-col gap-4 max-w-md">
+          {/* Buttons */}
+          <div className="flex gap-4">
+            {data.resumeLink && (
+              <a
+                href={data.resumeLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary"
+              >
+                Resume <FileText className="w-4 h-4 ml-2" />
+              </a>
+            )}
 
-          {data.socials?.linkedin && (
-            <a
-              href={data.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline"
-            >
-              <Linkedin className="w-4 h-4 mr-2" />
-              LinkedIn
-            </a>
-          )}
+            {data.socials?.linkedin && (
+              <a
+                href={data.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+              >
+                <Linkedin className="w-4 h-4 mr-2" />
+                LinkedIn
+              </a>
+            )}
+          </div>
 
-          <a
-            href={`mailto:${publicEmail}`}
-            className="btn btn-outline"
-          >
-            Email Me <Mail className="w-4 h-4 ml-2" />
-          </a>
+          {/* Guidance line */}
+          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
+            <span className="font-medium">Recruiters:</span>{" "}
+            see resume for contact
+            <span className="mx-2 opacity-40"> / </span>
+            <span className="font-medium">Contract work:</span>{" "}
+            <a
+              href={`mailto:${emails.dev}?subject=Contract Inquiry`}
+              className="text-(--primary) hover:underline"
+            >
+              {emails.dev}
+            </a>
+          </div>
+
         </div>
 
         {/* MOBILE */}
-        <div className="md:hidden flex flex-col gap-3">
+        <div className="md:hidden flex flex-col gap-4 max-w-md">
+          {/* Buttons */}
           <div className="grid grid-cols-2 gap-3">
             {data.resumeLink && (
               <a
                 href={data.resumeLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center py-4 bg-gray-900 text-white rounded-xl font-medium shadow-lg active:scale-95 transition-transform"
+                className="flex items-center justify-center py-4 bg-(--primary) text-white rounded-xl font-medium shadow-lg active:scale-95 transition-transform"
               >
                 <FileText className="w-5 h-5 mr-2" />
                 Resume
               </a>
             )}
 
-            <a
-              href={`mailto:${publicEmail}`}
-              className="flex items-center justify-center py-4 bg-white border border-gray-200 text-gray-900 rounded-xl font-medium shadow-sm active:bg-gray-50 transition-colors"
-            >
-              <Mail className="w-5 h-5 mr-2 text-(--primary)" />
-              Email
-            </a>
-          </div>
-
-          {data.socials?.linkedin && (
-            <div className="grid grid-cols-1">
+            {data.socials?.linkedin && (
               <a
                 href={data.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center py-3 text-gray-500 bg-gray-50 rounded-xl hover:text-(--primary) transition-colors text-sm font-medium"
+                className="flex items-center justify-center py-4 bg-white border border-(--border) text-gray-900 rounded-xl font-medium shadow-sm active:bg-gray-50 transition-colors"
               >
-                <Linkedin className="w-4 h-4 mr-2" />
-                Connect on LinkedIn
+                <Linkedin className="w-5 h-5 mr-2 text-(--primary)" />
+                LinkedIn
               </a>
-            </div>
-          )}
+            )}
+          </div>
 
+
+          {/* Guidance line */}
+          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
+            <span className="font-medium">Recruiters:</span>{" "}
+            see resume for contact
+            <span className="mx-2 opacity-40"> / </span>
+            <span className="font-medium">Contract work:</span>{" "}
+            <a
+              href={`mailto:${emails.dev}?subject=Contract Inquiry`}
+              className="text-(--primary) hover:underline"
+            >
+              {emails.dev}
+            </a>
+          </div>
+
+          {/* Swipe hint */}
           <div className="flex flex-col items-center mt-6 opacity-40">
             <span className="text-[10px] uppercase tracking-widest text-(--primary-dark) mb-1">
               Swipe to explore

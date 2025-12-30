@@ -16,26 +16,12 @@ function Navigation({ sections, activeSection, onNavigate }) {
           key={id}
           href={`#${id}`}
           onClick={(e) => onNavigate(e, id)}
-          className={`
-            group flex items-center justify-between
-            py-3 px-2 rounded-lg transition-all duration-300
-            ${
-              isActive
-                ? "bg-gray-50/80 text-(--primary)"
-                : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-            }
-          `}
+          className={`nav-item ${isActive ? "active" : ""}`}
         >
           <span className="text-sm font-medium tracking-wide">
             {navLabel ?? label}
           </span>
-          <span
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-              isActive
-                ? "bg-(--primary) scale-100"
-                : "bg-gray-300 scale-0 group-hover:scale-100"
-            }`}
-          />
+          <span className="nav-indicator" />
         </a>
       );
     });
@@ -98,8 +84,8 @@ function SocialIcon({ type, url }) {
 
 function IdentityBlock() {
   return (
-    <div className="pt-8 border-t border-gray-100">
-      <h1 className="text-2xl font-extrabold text-gray-900 mb-1">
+    <div className="pt-12 border-t border-gray-100">
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-1">
         {heroData.name}
       </h1>
 
@@ -133,7 +119,7 @@ export default function Layout({ children, sections, currentTheme, setTheme }) {
   return (
     <div className="min-h-screen md:flex">
       {/* MOBILE HEADER */}
-      <header className="md:hidden glass-header p-4 flex justify-between">
+      <header className="md:hidden glass-header p-4 flex items-center justify-between">
         <button
           onClick={() => setIsMobileMenuOpen((v) => !v)}
           className="p-2 rounded-lg hover:bg-gray-100"
@@ -144,7 +130,10 @@ export default function Layout({ children, sections, currentTheme, setTheme }) {
 
       {/* MOBILE MENU */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-16 z-40 bg-white border-b shadow-xl">
+        <div
+          className="md:hidden fixed inset-x-0 top-16 z-40 bg-white border-b shadow-xl"
+          style={{ borderColor: "var(--border)" }}
+        >
           <nav className="flex flex-col p-4 space-y-4">
             <Navigation
               sections={sections}
@@ -159,16 +148,22 @@ export default function Layout({ children, sections, currentTheme, setTheme }) {
         </div>
       )}
       {/* DESKTOP SIDEBAR */}
-      <aside className="hidden md:flex md:w-80 md:fixed md:inset-y-0 border-r bg-white">
+      <aside
+        className="hidden md:flex md:w-80 md:fixed md:inset-y-0 border-r bg-white"
+        style={{ borderColor: "var(--border)" }}
+      >
         <div className="flex flex-col h-full px-10 py-10">
 
           {/* THEME CONTROLS (GLOBAL MODE) */}
-          <div className="mb-10">
+          <div className="mb-6 scale-90 origin-left opacity-80">            
             <ThemeControls
               currentTheme={currentTheme}
               setTheme={setTheme}
             />
           </div>
+
+          <div className="flex-1" />
+
 
           {/* NAVIGATION */}
           <nav className="space-y-1">

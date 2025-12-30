@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Calendar, GraduationCap, ChevronDown, ChevronUp } from "lucide-react";
 
-/* ===================== CARD ===================== */
+/* CARD  */
 
 const EducationCard = ({ edu }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -81,32 +81,34 @@ export default function AboutSection({ data }) {
   const { intro, education } = data;
 
   return (
-    <div className="space-y-12">
-      {/* INTRO */}
-      <div className="space-y-6 max-w-3xl">
-        {intro.map((paragraph) => (
-          <p key={paragraph} className="text-xl text-body font-light">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-
-      <hr className="border-gray-100" />
-
-      {/* EDUCATION */}
-      <div>
-        <h3 className="section-title mb-12">
-          <GraduationCap className="w-6 h-6 mr-2" />
-          Education Timeline
-        </h3>
-
-        <div className="ml-2">
-          {education.details.map((edu) => (
-            <EducationCard
-              key={`${edu.school}-${edu.year}`}
-              edu={edu}
-            />
+    <div className="section-shell">
+      <div className="section-panel space-y-10">
+        {/* INTRO */}
+        <div className="space-y-6 max-w-3xl">
+          {intro.map((paragraph) => (
+            <p key={paragraph} className="section-lead">
+              {paragraph}
+            </p>
           ))}
+        </div>
+
+        <hr className="border-t" style={{ borderColor: "var(--border)" }} />
+
+        {/* EDUCATION */}
+        <div>
+          <h3 className="section-title mb-12">
+            <GraduationCap className="w-6 h-6 mr-2" />
+            Education Timeline
+          </h3>
+
+          <div className="ml-2">
+            {education.details.map((edu) => (
+              <EducationCard
+                key={`${edu.school}-${edu.year}`}
+                edu={edu}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
