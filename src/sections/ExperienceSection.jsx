@@ -8,23 +8,22 @@ import {
   ChevronUp,
 } from "lucide-react";
 
+/* ===================== CARD ===================== */
+
 const ExperienceCard = ({ role }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    /* 1. Added 'group' so children can use group-hover */
     <div className="timeline-item group">
-      {/* 2. Simplified Dot Logic */}
       <div className={`timeline-dot ${isExpanded ? "active" : ""}`} />
 
-      {/* ================= HEADER ================= */}
+      {/* HEADER */}
       <div
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={() => setIsExpanded((v) => !v)}
         className="cursor-pointer"
       >
         <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-          {/* Title hover color is now handled by CSS (.timeline-item:hover h3) */}
-          <h3 className="text-lg font-semibold text-gray-900 transition-colors">
+          <h3 className="text-lg font-semibold text-gray-900">
             {role.title}
           </h3>
 
@@ -45,7 +44,6 @@ const ExperienceCard = ({ role }) => {
           </p>
         )}
 
-        {/* Toggle Hint - Uses 'group-hover' from the parent class */}
         <div className="mt-1 flex items-center text-xs font-bold text-(--primary) uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity">
           {isExpanded ? (
             <ChevronUp className="w-4 h-4" />
@@ -55,9 +53,9 @@ const ExperienceCard = ({ role }) => {
         </div>
       </div>
 
-      {/* ================= BODY ================= */}
+      {/* BODY */}
       <div
-        className={`grid transition-all duration-500 ease-in-out cursor-default ${
+        className={`grid transition-all duration-500 ease-in-out ${
           isExpanded
             ? "grid-rows-[1fr] opacity-100 mt-4"
             : "grid-rows-[0fr] opacity-0"
@@ -66,7 +64,7 @@ const ExperienceCard = ({ role }) => {
         <div className="overflow-hidden">
           <p className="text-body text-sm mb-6">{role.description}</p>
 
-          {role.skills?.length > 0 && (
+          {role.skills.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
               {role.skills.map((skill) => (
                 <span key={skill} className="tag-pill">
@@ -92,50 +90,34 @@ const ExperienceCard = ({ role }) => {
   );
 };
 
+/* ===================== SECTION ===================== */
+
 export default function ExperienceSection({ data }) {
+  const GROUPS = [
+    { key: "internships", label: "Internships" },
+    { key: "academic", label: "Leadership" },
+    { key: "freelance", label: "Freelance" },
+  ];
+
   return (
     <div className="space-y-16">
-      {data.internships && (
-        <div>
+      {GROUPS.map(({ key, label }) => (
+        <div key={key}>
           <h3 className="section-title mb-12">
             <FolderGit2 className="w-8 h-8 mr-3 text-(--primary)" />
-            Internships
+            {label}
           </h3>
-          <div className="ml-2">
-            {data.internships.map((role, idx) => (
-              <ExperienceCard key={idx} role={role} />
-            ))}
-          </div>
-        </div>
-      )}
 
-      {data.academic && (
-        <div>
-          <h3 className="section-title mb-12">
-            <FolderGit2 className="w-8 h-8 mr-3 text-(--primary)" />
-            Leadership
-          </h3>
           <div className="ml-2">
-            {data.academic.map((role, idx) => (
-              <ExperienceCard key={idx} role={role} />
+            {data[key].map((role) => (
+              <ExperienceCard
+                key={`${role.title}-${role.date}`}
+                role={role}
+              />
             ))}
           </div>
         </div>
-      )}
-
-      {data.freelance && (
-        <div>
-          <h3 className="section-title mb-12">
-            <FolderGit2 className="w-8 h-8 mr-3 text-(--primary)" />
-            Freelance
-          </h3>
-          <div className="ml-2">
-            {data.freelance.map((role, idx) => (
-              <ExperienceCard key={idx} role={role} />
-            ))}
-          </div>
-        </div>
-      )}
+      ))}
     </div>
   );
 }

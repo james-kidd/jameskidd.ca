@@ -1,31 +1,33 @@
 // src/hooks/useScrollSpy.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-export function useScrollSpy(sectionIds) {
-  const [activeSection, setActiveSection] = useState('');
+export function useScrollSpy(sectionIds = []) {
+  const [activeSection, setActiveSection] = useState(
+    sectionIds[0] ?? ""
+  );
 
   useEffect(() => {
-    const observers = [];
+    if (!sectionIds.length) return;
 
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible.length > 0) {
+          setActiveSection(visible[0].target.id);
         }
-      });
-    };
-
-    // "rootMargin: -50% 0px -50% 0px" defines a 1px strip across the middle of the screen.
-    const observerOptions = {
-      rootMargin: '-50% 0px -50% 0px',
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+      },
+      {
+        rootMargin: "-50% 0px -50% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
 
     sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
