@@ -60,7 +60,7 @@ export default function HeroSection({ data }) {
           </div>
 
           {/* Guidance line */}
-          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
+          {/* <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
             <span className="font-medium">Recruiters:</span>{" "}
             see resume for contact
             <span className="mx-2 opacity-40"> / </span>
@@ -71,7 +71,7 @@ export default function HeroSection({ data }) {
             >
               {emails.dev}
             </a>
-          </div>
+          </div> */}
 
         </div>
 
@@ -106,7 +106,7 @@ export default function HeroSection({ data }) {
 
 
           {/* Guidance line */}
-          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
+          {/* <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
             <span className="font-medium">Recruiters:</span>{" "}
             see resume for contact
             <span className="mx-2 opacity-40"> / </span>
@@ -117,7 +117,7 @@ export default function HeroSection({ data }) {
             >
               {emails.dev}
             </a>
-          </div>
+          </div> */}
 
           {/* Swipe hint */}
           <div className="flex flex-col items-center mt-6 opacity-40">
