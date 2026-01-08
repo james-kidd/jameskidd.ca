@@ -144,6 +144,10 @@ export const sectionData = {
         link: "https://kpmg.com",
       },
     ],
+
+    academic: [],
+
+    freelance: [],
   },
 
   /* =========================
@@ -157,21 +161,31 @@ export const sectionData = {
       skills: ["Python", "NLP", "Next.js", "MySQL"],
       link: "https://devpost.com/software/squash-no-friends",
     },
+    // {
+    //   title: "Paint-By-Number Pipeline",
+    //   description:
+    //     "Designed a deterministic computer-vision pipeline that converts images into print-ready paint-by-number outlines using segmentation and color quantization.",
+    //   skills: [
+    //     "Python",
+    //     "Computer Vision",
+    //     "OpenCV",
+    //     "scikit-image",
+    //     "NumPy",
+    //     "Image Processing",
+    //     "Jupyter",
+    //   ],
+    //   link: "https://github.com/james-kidd/",
+    // },
+
     {
-      title: "Paint-By-Number Pipeline",
+      title: "Paint-by-Number Generator",
       description:
-        "Designed a deterministic computer-vision pipeline that converts images into print-ready paint-by-number outlines using segmentation and color quantization.",
-      skills: [
-        "Python",
-        "Computer Vision",
-        "OpenCV",
-        "scikit-image",
-        "NumPy",
-        "Image Processing",
-        "Jupyter",
-      ],
-      link: "https://github.com/james-kidd/",
-    },
+        "Image-processing pipeline implemented in Python and exposed via a Flask API. Deployed on Render and integrated with a React frontend. Designed a deterministic computer-vision pipeline that converts images into print-ready paint-by-number outlines using segmentation and color quantization.",
+      skills: ["Python", "Flask", "Image Processing", "OpenCV"],
+      link: "https://github.com/james-kidd/pbn_flask_demo",
+      demo: "https://pbn-flask-demo.onrender.com",   // NEW
+    }
+
   ],
 
   /* =========================
@@ -305,5 +319,11 @@ export const sectionData = {
       { label: "Countries Visited", value: "39" },
     ],
     instagram: "https://www.instagram.com/jameskidd__/",
+    gallery: [
+      { id: "about-0", src: "photos/about-me-0.jpg" },
+      { id: "about-1", src: "photos/about-me-1.jpg" },
+      { id: "about-2", src: "photos/about-me-2.jpg" },
+    ]
+
   },
 };

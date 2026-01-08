@@ -17,8 +17,8 @@ export default function ProjectsSection({ data = [] }) {
             <p className="text-gray-600 text-sm leading-relaxed">
               This section is being actively curated.
               <br />
-              Additional projects, technical write-ups, and repositories will
-              be added shortly.
+              Additional projects, technical write-ups, and repositories will be
+              added shortly.
             </p>
           </div>
         )}
@@ -60,6 +60,37 @@ export default function ProjectsSection({ data = [] }) {
                 <p className="text-gray-600 mb-6 grow leading-relaxed text-[15px]">
                   {project.description}
                 </p>
+
+                {/* ACTIONS */}
+                <div className="flex items-center gap-4 mb-6">
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+        inline-flex items-center gap-1.5
+        text-sm font-medium
+        text-(--primary)
+        hover:underline
+      "
+                    >
+                      Live Demo
+                      <ArrowUpRight className="w-4 h-4" />
+                    </a>
+                  )}
+
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-gray-500 hover:text-gray-800"
+                    >
+                      GitHub
+                    </a>
+                  )}
+                </div>
 
                 {/* SKILLS */}
                 {project.skills?.length > 0 && (
