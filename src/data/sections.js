@@ -1,12 +1,16 @@
 // src/data/sections.js
 
 export const sectionData = {
+  /* =========================
+     ABOUT
+  ========================= */
   about: {
     intro: [
       "I build data automation and analytics systems that reduce friction between raw information and decision-making.",
       "My work sits at the intersection of software engineering, data science, and financial analytics.",
       "I focus on eliminating wasted effort, providing clarity, and delivering practical solutions.",
     ],
+
     education: {
       details: [
         {
@@ -16,17 +20,59 @@ export const sectionData = {
           description:
             "Concentration in data systems, statistical learning, automation, and algorithmic problem-solving.",
           coursework: [
-            { code: "COMP 551", name: "Applied Machine Learning" },
-            { code: "COMP 424", name: "Artificial Intelligence" },
-            { code: "COMP 3XX", name: "Big Data Systems" },
-            { code: "COMP 360", name: "Algorithm Design" },
-            { code: "COMP 330", name: "Theory of Computation" },
-            { code: "COMP 310", name: "Operating Systems" },
-            { code: "MATH 324", name: "Statistics" },
-            { code: "MATH 323", name: "Probability" },
-            { code: "MATH 317", name: "Numerical Analysis" },
+            {
+              code: "COMP 551",
+              name: "Applied Machine Learning",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/comp-551",
+            },
+            {
+              code: "COMP 424",
+              name: "Artificial Intelligence",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/comp-424",
+            },
+            {
+              code: "COMPSCI 4064",
+              name: "Big Data: Systems, Programming, and Management",
+              url: "https://www.gla.ac.uk/coursecatalogue/course/?code=COMPSCI4064",
+            },
+            {
+              code: "COMP 360",
+              name: "Algorithm Design",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/comp-360",
+            },
+            {
+              code: "COMP 330",
+              name: "Theory of Computation",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/comp-330",
+            },
+            {
+              code: "COMP 310",
+              name: "Operating Systems",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/comp-310",
+            },
+            {
+              code: "MATH 324",
+              name: "Statistics",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/math-324",
+            },
+            {
+              code: "MATH 323",
+              name: "Probability",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/math-323",
+            },
+            {
+              code: "MATH 340",
+              name: "Discrete Mathematics",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/math-340",
+            },
+            {
+              code: "MATH 317",
+              name: "Numerical Analysis",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/math-317",
+            },
           ],
         },
+
         {
           school: "Queen’s University",
           degree: "B.Sc. Computer Engineering (Transferred)",
@@ -34,17 +80,40 @@ export const sectionData = {
           description:
             "Strong foundation in engineering mathematics, computer architecture, and low-level systems programming.",
           coursework: [
-            { code: "ELEC 279", name: "Object-Oriented Programming" },
-            { code: "ELEC 274", name: "Computer Architecture" },
-            { code: "ELEC 271", name: "Digital Systems" },
-            { code: "ELEC 270", name: "Discrete Mathematics" },
-            { code: "MTHE 235", name: "Differential Equations" },
+            {
+              code: "ELEC 279",
+              name: "Object-Oriented Programming",
+              url: "https://smithengineering.queensu.ca/ece/undergraduate/courses/elec-279.html",
+            },
+            {
+              code: "ELEC 274",
+              name: "Computer Architecture",
+              url: "https://smithengineering.queensu.ca/ece/undergraduate/courses/elec-274.html",
+            },
+            {
+              code: "ELEC 271",
+              name: "Digital Systems",
+              url: "https://smithengineering.queensu.ca/ece/undergraduate/courses/elec-271.html",
+            },
+            {
+              code: "ELEC 270",
+              name: "Discrete Mathematics",
+              url: "https://smithengineering.queensu.ca/ece/undergraduate/courses/elec-270.html",
+            },
+            {
+              code: "MTHE 225",
+              name: "Differential Equations",
+              url: "https://www.queensu.ca/artsci_online/courses/ordinary-differential-equations-1",
+            },
           ],
         },
       ],
     },
   },
 
+  /* =========================
+     EXPERIENCE
+  ========================= */
   experience: {
     internships: [
       {
@@ -71,58 +140,27 @@ export const sectionData = {
         company: "KPMG Hungary",
         description:
           "Analyzed operational workflows to identify automation opportunities. Designed UiPath workflows and delivered RPA recommendations with quantified efficiency gains.",
-        skills: ["Process Automation", "UiPath", "Business Analysis", "Visio"],
+        skills: ["Process Automation", "UiPath", "Business Analysis"],
         link: "https://kpmg.com",
-      },
-    ],
-    academic: [
-      {
-        date: "Jun 2023 — Sep 2026",
-        title: "CodeJam Hackathon",
-        school: "McGill University",
-        description: "Logistics coordinator for large-scale student hackathons.",
-        skills: [],
-        link: "",
-      },
-    ],
-    freelance: [
-      {
-        date: "2023 — Present",
-        title: "Full Stack Developer",
-        company: "Independent",
-        description:
-          "End-to-end web and automation solutions for small businesses.",
-        skills: [],
-        link: "",
       },
     ],
   },
 
+  /* =========================
+     PROJECTS
+  ========================= */
   projects: [
-    {
-      title: "ETF Holdings Inference",
-      description:
-        "Built a data pipeline combining ETF and equity data from Yahoo Finance, iShares, and Bloomberg. Trained machine learning models to predict top-K ETF holdings and analyze portfolio manager behavior.",
-      skills: [
-        "Python",
-        "Pandas",
-        "Scikit-learn",
-        "Machine Learning",
-        "Financial Data",
-      ],
-      link: "https://github.com/james-kidd/",
-    },
     {
       title: "SquashNoFriends",
       description:
-        "Squash partner-matching platform built at McGill CodeJam. Used NLP to parse availability and a Python scheduler to generate weekly matches. Deployed with a Next.js frontend and MySQL backend.",
+        "Squash partner-matching platform built at McGill CodeJam. Used NLP to parse availability and a Python scheduler to generate weekly matches.",
       skills: ["Python", "NLP", "Next.js", "MySQL"],
-      link: "https://github.com/james-kidd/",
+      link: "https://devpost.com/software/squash-no-friends",
     },
     {
-      title: "Paint-By-Number Generator",
+      title: "Paint-By-Number Pipeline",
       description:
-        "Designed a deterministic computer-vision pipeline that converts photographs into print-ready paint-by-number outlines. Implemented image preprocessing, superpixel segmentation, region merging, and color quantization with a typed, configurable pipeline and interactive Jupyter demo.",
+        "Designed a deterministic computer-vision pipeline that converts images into print-ready paint-by-number outlines using segmentation and color quantization.",
       skills: [
         "Python",
         "Computer Vision",
@@ -130,21 +168,15 @@ export const sectionData = {
         "scikit-image",
         "NumPy",
         "Image Processing",
-        "Jupyter"
+        "Jupyter",
       ],
-      link: "https://github.com/james-kidd/"
-    },
-    {
-      title: "Scientific Text Classification (LSTM vs BERT)",
-      description:
-        "Built an end-to-end NLP pipeline for classifying scientific abstracts. Implemented a custom LSTM from scratch and fine-tuned BERT, comparing performance and error patterns to assess the impact of pretrained representations.",
-      skills: ["Python", "PyTorch", "NLP", "Transformers", "Machine Learning"],
       link: "https://github.com/james-kidd/",
-    }
-
-
+    },
   ],
 
+  /* =========================
+     SKILLS
+  ========================= */
   skills: {
     blocks: [
       {
@@ -152,16 +184,15 @@ export const sectionData = {
         title: "Primary Toolset",
         icon: "star",
         items: [
-          "Python",
-          "PyTorch",
-          "Pandas",
-          "Java",
+
+          "ML and ETL Processes",
+          "Python Solutions",
+          "Java, JavaScript, C++",
+          "PyTorch, scikit-learn",
           "SQL",
-          "Linux",
-          "Docker",
+          "Linux Ecosystem",
         ],
       },
-
       {
         id: "languages",
         title: "Programming Languages",
@@ -180,7 +211,6 @@ export const sectionData = {
           "VHDL",
         ],
       },
-
       {
         id: "data",
         title: "Data Science & Analytics",
@@ -196,7 +226,6 @@ export const sectionData = {
           "Feature Engineering",
         ],
       },
-
       {
         id: "ml",
         title: "Machine Learning",
@@ -205,12 +234,13 @@ export const sectionData = {
           "PyTorch",
           "TensorFlow",
           "scikit-learn",
-          "Model Training",
-          "Model Evaluation",
-          "ML Pipelines",
+          "End-to-End ML Pipelines",
+          "ML Systems Integration",
+          "Applied CNNs",
+          "Applied NLP",
+          "Reinforcement Learning (Foundations)",
         ],
       },
-
       {
         id: "web",
         title: "Web & API Development",
@@ -224,19 +254,18 @@ export const sectionData = {
           "REST APIs",
         ],
       },
-
       {
         id: "systems",
         title: "Systems & Infrastructure",
         icon: "terminal",
         items: [
           "Linux",
+          "Git",
           "Docker",
           "Virtual Machines",
           "AWS (EC2, S3)",
         ],
       },
-
       {
         id: "databases",
         title: "Databases & Distributed Systems",
@@ -248,13 +277,11 @@ export const sectionData = {
           "Apache Spark",
         ],
       },
-
       {
         id: "tooling",
         title: "Tooling, Automation & Analytics",
         icon: "terminal",
         items: [
-          "Git",
           "Jira",
           "UiPath (RPA)",
           "Google Analytics",
@@ -267,34 +294,16 @@ export const sectionData = {
     ],
   },
 
-
+  /* =========================
+     PERSONAL
+  ========================= */
   personal: {
     description:
-    "There’s life beyond coding. As much as I enjoy building software, I value time spent outdoors, traveling, and in real human connection. The deeper I’ve gone into engineering, the more I’ve come to appreciate simple experiences away from screens.",
+      "There’s life beyond coding. As much as I enjoy building software, I value time spent outdoors, traveling, and real human connection.",
     favorites: [
-      { label: "Current Read", value: "Options, Futures, and Other Derivatives - John Huel" },
+      { label: "Current Read", value: "Options, Futures, and Other Derivatives — John Hull" },
       { label: "Countries Visited", value: "39" },
     ],
-    instagram :
-      "https://www.instagram.com/jameskidd__/",
-
-    gallery: [
-      {
-        src: "/photos/about-me-0.jpg",
-        alt: "Hiking trip",
-      },
-      {
-        src: "/photos/about-me-1.jpg",
-        alt: "Film photography",
-      },
-      {
-        src: "/photos/about-me-2.jpg",
-        alt: "Workspace setup",
-      },
-      {
-        src: "/photos/about-me-3.jpg",
-        alt: "Travel photography",
-      },
-    ],
+    instagram: "https://www.instagram.com/jameskidd__/",
   },
 };

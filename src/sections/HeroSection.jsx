@@ -13,7 +13,7 @@ export default function HeroSection({ data }) {
         mb-0 md:mb-12
       "
     >
-      {/* CONTENT CENTER */}
+      {/* CONTENT */}
       <div className="flex-1 flex flex-col justify-center items-start md:block md:flex-none">
         <span className="eyebrow text-(--primary) mb-4 block">
           Software Developer & Data Scientist
@@ -29,11 +29,10 @@ export default function HeroSection({ data }) {
         </p>
       </div>
 
-      {/* ACTION GRID */}
+      {/* ACTIONS */}
       <div className="mt-auto md:mt-8 w-full md:w-auto pb-12 md:pb-0">
         {/* DESKTOP */}
         <div className="hidden md:flex flex-col gap-4 max-w-md">
-          {/* Buttons */}
           <div className="flex gap-4">
             {data.resumeLink && (
               <a
@@ -59,25 +58,25 @@ export default function HeroSection({ data }) {
             )}
           </div>
 
-          {/* Guidance line */}
-          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
-            <span className="font-medium">Recruiters:</span>{" "}
-            see resume for contact
-            <span className="mx-2 opacity-40"> / </span>
-            <span className="font-medium">Contract work:</span>{" "}
-            <a
-              href={`mailto:${emails.dev}?subject=Contract Inquiry`}
-              className="text-(--primary) hover:underline"
-            >
-              {emails.dev}
-            </a>
+          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted) leading-snug">
+            <div>
+              <span className="font-medium">Recruiters:</span>{" "}
+              contact details are included in my resume
+            </div>
+            <div>
+              <span className="font-medium">Contract inquiries:</span>{" "}
+              <a
+                href={`mailto:${emails.dev}?subject=Contract Inquiry`}
+                className="text-(--primary) hover:underline"
+              >
+                {emails.dev}
+              </a>
+            </div>
           </div>
-
         </div>
 
         {/* MOBILE */}
         <div className="md:hidden flex flex-col gap-4 max-w-md">
-          {/* Buttons */}
           <div className="grid grid-cols-2 gap-3">
             {data.resumeLink && (
               <a
@@ -104,22 +103,22 @@ export default function HeroSection({ data }) {
             )}
           </div>
 
-
-          {/* Guidance line */}
-          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted)">
-            <span className="font-medium">Recruiters:</span>{" "}
-            see resume for contact
-            <span className="mx-2 opacity-40"> / </span>
-            <span className="font-medium">Contract work:</span>{" "}
-            <a
-              href={`mailto:${emails.dev}?subject=Contract Inquiry`}
-              className="text-(--primary) hover:underline"
-            >
-              {emails.dev}
-            </a>
+          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted) leading-snug">
+            <div>
+              <span className="font-medium">Recruiters:</span>{" "}
+              contact details are included in my resume
+            </div>
+            <div>
+              <span className="font-medium">Contract inquiries:</span>{" "}
+              <a
+                href={`mailto:${emails.dev}?subject=Contract Inquiry`}
+                className="text-(--primary) hover:underline"
+              >
+                {emails.dev}
+              </a>
+            </div>
           </div>
 
-          {/* Swipe hint */}
           <div className="flex flex-col items-center mt-6 opacity-40">
             <span className="text-[10px] uppercase tracking-widest text-(--primary-dark) mb-1">
               Swipe to explore

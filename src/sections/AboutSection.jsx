@@ -70,9 +70,12 @@ const EducationCard = ({ edu }) => {
 
             <div className="flex flex-wrap gap-2">
               {edu.coursework.map((course) => (
-                <span
+                <a
                   key={course.code}
                   title={course.name}
+                  href={course.URL}
+                  target="_blank"
+                  rel="noreferrer"
                   className="
                     tag-pill
                     text-xs font-medium
@@ -82,7 +85,7 @@ const EducationCard = ({ edu }) => {
                   "
                 >
                   {course.code}
-                </span>
+                </a>
               ))}
             </div>
           </div>
