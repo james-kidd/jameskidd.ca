@@ -51,6 +51,11 @@ export const sectionData = {
               url: "https://www.mcgill.ca/study/2024-2025/courses/comp-310",
             },
             {
+              code: "COMP 302",
+              name: "Programming Languages and Paradigms",
+              url: "https://www.mcgill.ca/study/2024-2025/courses/comp-302",
+            },
+            {
               code: "MATH 324",
               name: "Statistics",
               url: "https://www.mcgill.ca/study/2024-2025/courses/math-324",
@@ -121,7 +126,7 @@ export const sectionData = {
         title: "Investment Advisory Intern (Incoming)",
         company: "CI Global Asset Management",
         description:
-          "Incoming role supporting investment advisory teams.",
+          "Incoming role supporting investment advisory teams working accross multiple asset classes.",
         skills: [],
         link: "https://www.cifinancial.com",
       },
@@ -139,15 +144,56 @@ export const sectionData = {
         title: "Technology Enablement Advisor Intern",
         company: "KPMG Hungary",
         description:
-          "Analyzed operational workflows to identify automation opportunities. Designed UiPath workflows and delivered RPA recommendations with quantified efficiency gains.",
+          "Analyzed operational workflows to identify automation opportunities. Designed UiPath workflows and delivered RPA recommendations.",
         skills: ["Process Automation", "UiPath", "Business Analysis"],
         link: "https://kpmg.com",
       },
     ],
 
-    academic: [],
+    academic: [
+      {
+        date: "2024 — Present",
+        title: "Executive Committee Member",
+        company: "McGill CodeJam (Engineering Hackathon)",
+        description:
+          "Leadership role supporting academic and technical programming for McGill’s largest engineering hackathon. Organized logistics for 350+ participants across facilities, sponsors, and staff; built the event-wide scheduling system covering registration, ceremonies, catering, and judging; and prepared and delivered four MERN-stack workshops spanning backend, frontend, and cloud deployment while mentoring first-time hackers.",
+        skills: [
+          "Event Operations",
+          "Technical Mentorship",
+          "MERN Stack",
+          "Systems Coordination",
+        ],
+      },
+      {
+        date: "2021 — 2022",
+        title: "Director of Sponsorships",
+        company: "QCTF (Queen’s Cybersecurity Hackathon)",
+        description:
+          "Led sponsor outreach and external relations for Queen’s University’s annual cybersecurity hackathon, managing sponsor communications, event publicity, and securing funding to support competition operations and growth.",
+        skills: [
+          "Sponsorship Strategy",
+          "Stakeholder Management",
+          "Event Operations",
+        ],
+      },
+    ],
 
-    freelance: [],
+    freelance: [
+      {
+        date: "2024 — Present",
+        title: "Technology & Operations Consultant",
+        company: "Independent / Contract",
+        description:
+          "Advised small businesses on operational and technology transitions, focusing on automation-ready system design, data integrity, and scalable workflows. Consulted with Marquis Logistics on migrating pricing and operational processes to a new CRM by redesigning data flows to support future end-to-end automation, and advised ElevateFi on accounting automation, including integration planning and data synchronization using the QuickBooks API.",
+        skills: [
+          "Process Automation",
+          "CRM & ERP Integration",
+          "APIs",
+          "Systems Design",
+        ],
+      },
+    ],
+
   },
 
   /* =========================
@@ -180,8 +226,7 @@ export const sectionData = {
     {
       title: "Paint-by-Number Generator",
       description:
-        "Image-processing pipeline implemented in Python and exposed via a Flask API. Deployed on Render and integrated with a React frontend. Designed a deterministic computer-vision pipeline that converts images into print-ready paint-by-number outlines using segmentation and color quantization.",
-      skills: ["Python", "Flask", "Image Processing", "OpenCV"],
+        "Deterministic image-to-paint-by-number pipeline in Python (segmentation + color quantization), exposed via a Flask API and integrated with a React frontend.",      skills: ["Python", "Flask", "Image Processing", "OpenCV"],
       link: "https://github.com/james-kidd/pbn_flask_demo",
       demo: "https://pbn-flask-demo.onrender.com",   // NEW
     }
