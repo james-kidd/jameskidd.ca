@@ -181,10 +181,10 @@ export const sectionData = {
     freelance: [
       {
         date: "2024 — Present",
-        title: "Technology & Operations Consultant",
+        title: "Technology Advisor",
         company: "Independent / Contract",
         description:
-          "Advised small businesses on operational and technology transitions, focusing on automation-ready system design, data integrity, and scalable workflows. Consulted with Marquis Logistics on migrating pricing and operational processes to a new CRM by redesigning data flows to support future end-to-end automation, and advised ElevateFi on accounting automation, including integration planning and data synchronization using the QuickBooks API.",
+          "Consulted on operational and technology transitions for Marquis Logistics; advised Elevate Financial on QuickBooks API–based integrations.",
         skills: [
           "Process Automation",
           "CRM & ERP Integration",
@@ -291,7 +291,7 @@ skills: {
         "Pandas",
         "NumPy",
         "Exploratory data analysis",
-        "Scientific computing workflows",
+        "Scientific computing workflows (Jupyter, Colab)",
         "Image processing (OpenCV, scikit-image)",
         "Clustering & segmentation methods",
       ],
