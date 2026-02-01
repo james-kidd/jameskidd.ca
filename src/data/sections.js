@@ -156,7 +156,7 @@ export const sectionData = {
         title: "Executive Committee Member",
         company: "McGill CodeJam (Engineering Hackathon)",
         description:
-          "Leadership role supporting academic and technical programming for McGill’s largest engineering hackathon. Organized logistics for 350+ participants across facilities, sponsors, and staff; built the event-wide scheduling system covering registration, ceremonies, catering, and judging; and prepared and delivered four MERN-stack workshops spanning backend, frontend, and cloud deployment while mentoring first-time hackers.",
+          "Leadership role supporting academic and technical programming for McGill’s largest engineering hackathon. Organized logistics for 350+ participants across facilities, sponsors, and staff. Also prepared and delivered four MERN-stack workshops spanning backend, frontend, and cloud deployment while mentoring first-time hackers.",
         skills: [
           "Event Operations",
           "Technical Mentorship",
@@ -236,122 +236,126 @@ export const sectionData = {
   /* =========================
      SKILLS
   ========================= */
-  skills: {
-    blocks: [
-      {
-        id: "primary",
-        title: "Primary Toolset",
-        icon: "star",
-        items: [
+skills: {
+  blocks: [
+    {
+      id: "primary",
+      title: "Core Strengths",
+      icon: "star",
+      items: [
+        "End-to-end ML pipelines",
+        "Algorithm design & complexity analysis",
+        "Data-intensive backend systems",
+        "Production Python services",
+        "Relational data modeling",
+        "Linux-based development",
+      ],
+    },
 
-          "ML and ETL Processes",
-          "Python Solutions",
-          "Java, JavaScript, C++",
-          "PyTorch, scikit-learn",
-          "SQL",
-          "Linux Ecosystem",
-        ],
-      },
-      {
-        id: "languages",
-        title: "Programming Languages",
-        icon: "terminal",
-        items: [
-          "Python",
-          "SQL",
-          "JavaScript",
-          "C",
-          "Java",
-          "PHP",
-          "C++",
-          "Scala",
-          "OCaml",
-          "VBA",
-          "VHDL",
-        ],
-      },
-      {
-        id: "data",
-        title: "Data Science & Analytics",
-        icon: "database",
-        items: [
-          "Pandas",
-          "NumPy",
-          "Matplotlib",
-          "Jupyter Notebooks",
-          "OpenCV",
-          "Data Cleaning",
-          "Exploratory Data Analysis",
-          "Feature Engineering",
-        ],
-      },
-      {
-        id: "ml",
-        title: "Machine Learning",
-        icon: "trending",
-        items: [
-          "PyTorch",
-          "TensorFlow",
-          "scikit-learn",
-          "End-to-End ML Pipelines",
-          "ML Systems Integration",
-          "Applied CNNs",
-          "Applied NLP",
-          "Reinforcement Learning (Foundations)",
-        ],
-      },
-      {
-        id: "web",
-        title: "Web & API Development",
-        icon: "cloud",
-        items: [
-          "React",
-          "Node.js",
-          "Flask",
-          "Django",
-          "FastAPI",
-          "REST APIs",
-        ],
-      },
-      {
-        id: "systems",
-        title: "Systems & Infrastructure",
-        icon: "terminal",
-        items: [
-          "Linux",
-          "Git",
-          "Docker",
-          "Virtual Machines",
-          "AWS (EC2, S3)",
-        ],
-      },
-      {
-        id: "databases",
-        title: "Databases & Distributed Systems",
-        icon: "database",
-        items: [
-          "SQL",
-          "MariaDB",
-          "MySQL",
-          "Apache Spark",
-        ],
-      },
-      {
-        id: "tooling",
-        title: "Tooling, Automation & Analytics",
-        icon: "terminal",
-        items: [
-          "Jira",
-          "UiPath (RPA)",
-          "Google Analytics",
-          "Meta Pixel",
-          "Slack Bots",
-          "Discord Bots",
-          "QuickBooks API",
-        ],
-      },
-    ],
-  },
+    {
+      id: "languages",
+      title: "Programming Languages",
+      icon: "terminal",
+      items: [
+        "Python",
+        "Java",
+        "JavaScript / TypeScript",
+        "SQL",
+        "C",
+        "C++",
+        "Scala",
+        "OCaml",
+      ],
+    },
+
+    {
+      id: "ml",
+      title: "Machine Learning & AI",
+      icon: "trending",
+      items: [
+        "PyTorch (custom models & training loops)",
+        "Transformer fine-tuning (BERT-style models)",
+        "Classical ML (LogReg, RF, XGBoost)",
+        "Computer vision pipelines",
+        "NLP pipelines & text classification",
+        "Feature engineering & statistical analysis",
+        "Model evaluation & ablation",
+      ],
+    },
+
+    {
+      id: "data",
+      title: "Data Science & Numerical Computing",
+      icon: "database",
+      items: [
+        "Pandas",
+        "NumPy",
+        "Exploratory data analysis",
+        "Scientific computing workflows",
+        "Image processing (OpenCV, scikit-image)",
+        "Clustering & segmentation methods",
+      ],
+    },
+
+    {
+      id: "web",
+      title: "Web & API Development",
+      icon: "cloud",
+      items: [
+        "REST APIs",
+        "Flask",
+        "FastAPI",
+        "Django",
+        "React",
+        "Node.js",
+      ],
+    },
+
+    {
+      id: "systems",
+      title: "Systems & Infrastructure",
+      icon: "terminal",
+      items: [
+        "Linux",
+        "Docker",
+        "Virtual machines",
+        "Cloud deployment (AWS)",
+        "Kubernetes (foundations)",
+        "Containerized services",
+      ],
+    },
+
+    {
+      id: "databases",
+      title: "Databases & Distributed Systems",
+      icon: "database",
+      items: [
+        "SQL databases",
+        "MariaDB",
+        "MySQL",
+        "Apache Spark",
+        "Hadoop ecosystem (HDFS, MapReduce)",
+        "ZooKeeper (coordination concepts)",
+      ],
+    },
+
+    {
+      id: "tooling",
+      title: "Tooling, Automation & Analytics",
+      icon: "terminal",
+      items: [
+        "Git",
+        "Jira",
+        "UiPath (RPA)",
+        "API integrations",
+        "Slack & Discord bots",
+        "Google Analytics",
+        "Meta Pixel",
+      ],
+    },
+  ],
+},
+
 
   /* =========================
      PERSONAL
