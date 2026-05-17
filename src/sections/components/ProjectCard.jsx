@@ -1,4 +1,5 @@
-import { Github, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Github, ArrowUpRight, ArrowRight } from "lucide-react";
 import IconBox from "../../components/IconBox";
 import TagPill from "../../components/TagPill";
 
@@ -54,6 +55,16 @@ export default function ProjectCard({ project }) {
           >
             GitHub
           </a>
+        )}
+
+        {project.slug && project.detail && (
+          <Link
+            to={`/projects/${project.slug}`}
+            className="inline-flex items-center gap-1 text-sm font-medium text-(--text-muted) hover:text-(--primary) transition-colors ml-auto"
+          >
+            Details
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         )}
       </div>
 
