@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Layout from "./layout/Layout";
 import HeroSection from "./sections/HeroSection";
 import { SECTIONS } from "./sections/registry";
@@ -26,11 +26,7 @@ function App() {
       <HeroSection data={heroData} />
 
       {SECTIONS.map(({ id, Component }) => (
-        <section
-          id={id}
-          key={id}
-          className="section-block first:border-0"
-        >
+        <section id={id} key={id} className="section-block first:border-0">
           <Component data={sectionData[id]} />
         </section>
       ))}

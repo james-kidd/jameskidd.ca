@@ -238,7 +238,6 @@
   }
 
   /* --- ICONS --- */
-  .icon-soft,
   .icon-box {
     @apply p-2 rounded-lg
            bg-(--primary)/10
