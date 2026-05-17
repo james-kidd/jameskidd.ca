@@ -17,9 +17,22 @@ export default function HeroSection({ data }) {
           <span className="text-(--primary)">.</span>
         </h1>
 
-        <p className="section-lead md:text-2xl text-body mb-2 md:max-w-xl">
+        <p className="section-lead md:text-2xl text-body mb-6 md:max-w-xl">
           {data.tagline}
         </p>
+
+        {data.stack?.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {data.stack.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1 text-xs font-semibold rounded-full border border-(--primary)/20 bg-(--primary)/8 text-(--primary)"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ACTIONS */}

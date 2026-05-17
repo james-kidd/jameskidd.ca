@@ -255,31 +255,16 @@ skills: {
   blocks: [
     {
       id: "primary",
-      title: "Core Strengths",
+      title: "Main Stack",
       icon: "star",
       items: [
-        "End-to-end ML pipelines",
-        "Algorithm design & complexity analysis",
-        "Data-intensive backend systems",
-        "Production Python services",
-        "Relational data modeling",
-        "Linux-based development",
-      ],
-    },
-
-    {
-      id: "languages",
-      title: "Programming Languages",
-      icon: "terminal",
-      items: [
         "Python",
-        "Java",
-        "JavaScript / TypeScript",
+        "PyTorch",
+        "Pandas / NumPy",
         "SQL",
-        "C",
-        "C++",
-        "Scala",
-        "OCaml",
+        "Flask / FastAPI",
+        "React",
+        "Linux / Docker",
       ],
     },
 
@@ -313,6 +298,22 @@ skills: {
     },
 
     {
+      id: "languages",
+      title: "Programming Languages",
+      icon: "terminal",
+      items: [
+        "Python",
+        "Java",
+        "JavaScript / TypeScript",
+        "SQL",
+        "C",
+        "C++",
+        "Scala",
+        "OCaml",
+      ],
+    },
+
+    {
       id: "web",
       title: "Web & API Development",
       icon: "cloud",
@@ -329,7 +330,7 @@ skills: {
     {
       id: "systems",
       title: "Systems & Infrastructure",
-      icon: "terminal",
+      icon: "systems",
       items: [
         "Linux",
         "Docker",
@@ -357,7 +358,7 @@ skills: {
     {
       id: "tooling",
       title: "Tooling, Automation & Analytics",
-      icon: "terminal",
+      icon: "tooling",
       items: [
         "Git",
         "Jira",
