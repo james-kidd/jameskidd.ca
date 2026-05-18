@@ -20,6 +20,12 @@
     "react-simple-maps": "^3.0.0",
     "tailwindcss": "^4.1.18"
   },
+  "overrides": {
+    "react-simple-maps": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
+  },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@mdx-js/rollup": "^3.1.1",
