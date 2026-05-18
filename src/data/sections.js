@@ -122,12 +122,21 @@ export const sectionData = {
   experience: {
     internships: [
       {
-        date: "Jan 2026 — May 2026",
-        title: "Investment Advisory Intern (Incoming)",
-        company: "CI Global Asset Management",
+        date: "May 2026 — Present",
+        title: "Distribution Enablement Co-op",
+        company: "CI Financial",
         description:
-          "Incoming role supporting investment advisory teams working accross multiple asset classes.",
-        skills: [],
+          "Architected Seismic LiveDocs templates via a .NET application plugin, SQL, and Cinchy to auto-populate fund performance and $450B+ AUM data, saving the Equities team 40+ hours monthly. Engineered a tracking architecture using NLP and Excel key-sort logic to map disparate Seismic content IDs to client interaction URLs, extracting precise KPIs on optimal sending periods and engagement. Designed a content schema to govern the ETF and Mutual Fund advisory merger and Invesco Canada transition, restructuring universal SharePoint libraries to prepare enterprise data for Microsoft Copilot deployment.",
+        skills: ["SQL", ".NET", "Cinchy", "NLP", "Advanced Excel", "Seismic", "SharePoint"],
+        link: "https://www.cifinancial.com",
+      },
+      {
+        date: "Jan 2026 — Apr 2026",
+        title: "Investment Advisory Analyst Co-op",
+        company: "CI Financial",
+        description:
+          "Synthesized capital flow trends to underwrite PM-published macro-research. Co-authored pieces on AI infrastructure credit yields, AI agents disrupting legacy SaaS, and private markets software resets. Authored evergreen positioning collateral for Global Alpha Innovators, Emerging Markets, and Small Cap funds, directly bridging portfolio manager strategy with global sales distribution. Automated regulatory translation workflows using Morningstar bulk data and custom glossaries, reducing a 146-page manual task to 34 automated pages, ensuring 34 Know-Your-Product documents met Quebec language laws ahead of deadline.",
+        skills: ["SQL", "Morningstar Direct", "Regulatory Automation", "Advanced Excel"],
         link: "https://www.cifinancial.com",
       },
       {
@@ -201,6 +210,49 @@ export const sectionData = {
   ========================= */
   projects: [
     {
+      slug: "manager-dna",
+      title: "Manager DNA: The Dynamic Style Box",
+      description:
+        "A quantitative research pipeline that reverse-engineers the behavioral tendencies of active ETF managers using regime-aware factor analysis, PCA, and network theory.",
+      skills: ["Python", "Financial Econometrics", "GMM", "PCA", "Network Theory"],
+      link: "#",
+      detail: {
+        overview:
+          "In active management, the most critical question is whether a fund manager is generating genuine alpha or simply taking on disguised factor risk. Manager DNA is a quantitative research pipeline built to reverse-engineer the behavioral tendencies of active ETF managers.",
+        whyItMatters:
+          "Traditional fund analysis relies heavily on static models, like the standard Morningstar 3x3 style box. Markets aren't static. A static grid fails to capture how a manager adapts when the market is under stress. This tool explicitly detects style drift, revealing whether a manager holds firm to their mandate during a downturn or tactically rotates their exposures.",
+        technicalApproach: [
+          "Extracts active return factor loadings using a rolling 63-day OLS regression against the Fama-French 5-Factor model",
+          "Applies Gaussian Mixture Modeling (GMM) over macroeconomic indicators (SPY returns, VIX, credit spreads, 10Y yields) for probabilistic market regime classification",
+          "Uses Principal Component Analysis (PCA) to extract orthogonal Super-Styles from the beta matrix, then layers cosine similarity networks over GMM-defined regimes to construct a bipartite conviction network",
+          "Calculates Louvain communities and spectral distances across multi-layer graphs to quantify style drift at both intra-fund and universe levels",
+        ],
+        recruiterRelevance:
+          "Demonstrates the ability to apply rigorous econometrics and unsupervised learning to noisy financial data, separating true conviction from cyclical luck.",
+      },
+    },
+    {
+      slug: "personal-portfolio",
+      title: "jameskidd.info",
+      description:
+        "A modular, data-driven React application built to cleanly present quantitative research, software systems, and professional experience.",
+      skills: ["React", "JavaScript", "Data Architecture", "UI/UX"],
+      link: "https://jameskidd.info",
+      detail: {
+        overview:
+          "The platform you are currently viewing. Rather than using a rigid website builder, I built a custom React application where all content is dynamically driven by structured JavaScript data files, making it highly maintainable and extensible.",
+        whyItMatters:
+          "First impressions matter. In the intersection of finance and tech, the ability to communicate complex information clearly and cleanly is just as important as the underlying math.",
+        technicalApproach: [
+          "Architected with React and modular data structures, separating content from presentation logic",
+          "Implemented fully responsive design focusing on readability and intuitive navigation",
+          "Deployed via continuous integration for seamless updates as the portfolio evolves",
+        ],
+        recruiterRelevance:
+          "Shows front-end competency, attention to detail, and a strong understanding of product positioning and user experience.",
+      },
+    },
+    {
       slug: "squash-no-friends",
       title: "SquashNoFriends",
       description:
@@ -224,27 +276,27 @@ export const sectionData = {
     },
     {
       slug: "paint-by-number",
-      title: "Paint-by-Number Generator",
+      title: "Commodity Forecasting via Deterministic Vision",
       description:
-        "Deterministic image-to-paint-by-number pipeline in Python (segmentation + color quantization), exposed via a Gradio app on Hugging Face Spaces.",
-      skills: ["Python", "Gradio", "Image Processing", "OpenCV"],
+        "An automated, deterministic computer vision pipeline designed to track vegetation progressions across satellite imagery to predict agricultural yields, with a Paint-by-Number sandbox for the core segmentation engine.",
+      skills: ["Python", "OpenCV", "SLIC Superpixels", "scikit-learn"],
       link: "https://github.com/james-kidd/pbn_flask_demo",
       demo: "https://huggingface.co/spaces/jkiddmtl/paint-by-number",
       embed: "https://jkiddmtl-paint-by-number.hf.space",
       detail: {
         overview:
-          "A deterministic computer vision pipeline that converts any photograph into a print-ready paint-by-number template. The system segments the image using SLIC superpixels in CIELAB space, quantizes colors via k-means, and generates clean numbered outlines — deployed as a Gradio app on Hugging Face Spaces.",
+          "In commodity markets, accurate supply forecasting often comes down to tracking the physical maturation of crops from space. This project is the groundwork for an automated, deterministic computer vision pipeline designed to track vegetation progressions across satellite imagery to predict agricultural yields. The core engine is currently exposed as an interactive Paint-by-Number web application.",
         whyItMatters:
-          "This project solves a real creative workflow while serving as groundwork for a more applied goal: automated crop health and maturity detection from satellite imagery, where the same SLIC segmentation and LAB-space palette extraction can track vegetation color progressions for commodity market analysis.",
+          "While the industry default is often to throw deep learning at image problems, I explicitly avoided black-box neural networks in favor of classical, deterministic methods. When dealing with massive time-series multispectral agricultural data, interpretability, strict reproducibility, and scale matter most.",
         technicalApproach: [
-          "Five-stage pipeline: preprocessing (CIELAB + bilateral filter), SLIC superpixel segmentation, k-means palette extraction, connected-component finalization, and distance-transform number placement",
-          "All color math in CIELAB space for perceptual uniformity — equal distances correspond to equal perceived color differences",
-          "SLIC clusters pixels in joint 5D LAB+XY space with O(N) complexity, producing compact paintable regions",
-          "Region Adjacency Graph merging collapses similar adjacent superpixels for clean artifact-free boundaries",
+          "Operates entirely in the CIELAB color space, ensuring mathematical distances between pixels match human-perceived color differences",
+          "Uses Simple Linear Iterative Clustering (SLIC) in a joint 5D LAB+XY space, allowing precise control over the trade-off between color adherence and shape regularity",
+          "Extracts region mean colors into k-means clustering to define a representative palette, applying a Region Adjacency Graph (RAG) to collapse similar adjacent superpixels",
+          "Guarantees O(N) complexity, demonstrating that the best solution for commercial data processing isn't always the trendiest AI model",
           "Deployed on Hugging Face Spaces with a Gradio interface for interactive parameter tuning",
         ],
         recruiterRelevance:
-          "This project demonstrates end-to-end product thinking: taking a data processing pipeline from algorithm design through deployment. It shows comfort with Python, computer vision, and the judgment to choose deterministic methods over neural approaches when reproducibility and speed matter.",
+          "Demonstrates end-to-end product thinking: taking a data processing pipeline from algorithm design through deployment. Shows comfort with Python, computer vision, and the judgment to choose mathematically sound, highly scalable deterministic pipelines over neural approaches.",
       },
     },
   ],
@@ -252,126 +304,80 @@ export const sectionData = {
   /* =========================
      SKILLS
   ========================= */
-skills: {
-  blocks: [
-    {
-      id: "primary",
-      title: "Main Stack",
-      icon: "star",
-      items: [
-        "Python",
-        "PyTorch",
-        "Pandas / NumPy",
-        "SQL",
-        "Flask / FastAPI",
-        "React",
-        "Linux / Docker",
-      ],
-    },
+  skills: {
+    blocks: [
+      {
+        id: "languages",
+        title: "Languages & Core Technologies",
+        icon: "terminal",
+        items: [
+          "Python",
+          "SQL",
+          "C/C++",
+          "Java",
+          "Scala",
+          "OCaml",
+          "JavaScript / TypeScript",
+          "FastAPI",
+          "Django",
+          "Flask",
+          "React",
+          "Node.js",
+          "RESTful Architecture",
+        ],
+      },
 
-    {
-      id: "ml",
-      title: "Machine Learning & AI",
-      icon: "trending",
-      items: [
-        "PyTorch (custom models & training loops)",
-        "Transformer fine-tuning (BERT-style models)",
-        "Classical ML (LogReg, RF, XGBoost)",
-        "Computer vision pipelines",
-        "NLP pipelines & text classification",
-        "Feature engineering & statistical analysis",
-        "Model evaluation & ablation",
-      ],
-    },
+      {
+        id: "ml",
+        title: "Machine Learning & AI",
+        icon: "trending",
+        items: [
+          "PyTorch",
+          "Transformers (BERT-style fine-tuning)",
+          "Sequence Models (LSTMs)",
+          "Tokenization & Text Classification",
+          "Applied Mathematics (Linear Algebra, Optimization)",
+          "Feature Engineering & Model Ablation",
+          "XGBoost, Random Forest, Logistic Regression",
+          "Image Segmentation (OpenCV, scikit-image)",
+        ],
+      },
 
-    {
-      id: "data",
-      title: "Data Science & Numerical Computing",
-      icon: "database",
-      items: [
-        "Pandas",
-        "NumPy",
-        "Exploratory data analysis",
-        "Scientific computing workflows (Jupyter, Colab)",
-        "Image processing (OpenCV, scikit-image)",
-        "Clustering & segmentation methods",
-      ],
-    },
+      {
+        id: "data",
+        title: "Data Engineering & Distributed Systems",
+        icon: "database",
+        items: [
+          "Pandas",
+          "NumPy",
+          "Jupyter / Google Colab",
+          "Apache Spark",
+          "Hadoop (HDFS, MapReduce)",
+          "ZooKeeper",
+          "PostgreSQL",
+          "MySQL",
+          "MariaDB",
+        ],
+      },
 
-    {
-      id: "languages",
-      title: "Programming Languages",
-      icon: "terminal",
-      items: [
-        "Python",
-        "Java",
-        "JavaScript / TypeScript",
-        "SQL",
-        "C",
-        "C++",
-        "Scala",
-        "OCaml",
-      ],
-    },
-
-    {
-      id: "web",
-      title: "Web & API Development",
-      icon: "cloud",
-      items: [
-        "REST APIs",
-        "Flask",
-        "FastAPI",
-        "Django",
-        "React",
-        "Node.js",
-      ],
-    },
-
-    {
-      id: "systems",
-      title: "Systems & Infrastructure",
-      icon: "systems",
-      items: [
-        "Linux",
-        "Docker",
-        "Virtual machines",
-        "Cloud deployment (AWS)",
-        "Kubernetes (foundations)",
-        "Containerized services",
-      ],
-    },
-
-    {
-      id: "databases",
-      title: "Databases & Distributed Systems",
-      icon: "database",
-      items: [
-        "SQL databases",
-        "MariaDB",
-        "MySQL",
-        "Apache Spark",
-        "Hadoop ecosystem (HDFS, MapReduce)",
-        "ZooKeeper (coordination concepts)",
-      ],
-    },
-
-    {
-      id: "tooling",
-      title: "Tooling, Automation & Analytics",
-      icon: "tooling",
-      items: [
-        "Git",
-        "Jira",
-        "UiPath (RPA)",
-        "API integrations",
-        "Slack & Discord bots",
-        "Google Analytics",
-        "Meta Pixel",
-      ],
-    },
-  ],
-},
+      {
+        id: "infra",
+        title: "Infrastructure & Automation",
+        icon: "cloud",
+        items: [
+          "Linux (Ubuntu)",
+          "Docker",
+          "Kubernetes (K8s)",
+          "AWS (EC2/S3)",
+          "Git",
+          "UiPath (RPA)",
+          "Slack / Discord Bot APIs",
+          "Meta Pixel & Google Analytics",
+          "Jira",
+        ],
+      },
+    ],
+  },
 
 
   /* =========================
@@ -394,20 +400,30 @@ skills: {
     ],
     favorites: {
       books: [
+        "Atomic Habits — James Clear",
+        "Capitalism in America — Alan Greenspan",
+        "Outliers — Malcolm Gladwell",
+        "Flash Boys — Michael Lewis",
         "Options, Futures, and Other Derivatives — John Hull",
         "Designing Data-Intensive Applications — Martin Kleppmann",
-        "The Pragmatic Programmer — Hunt & Thomas",
+        "Discrete Mathematics and Its Applications — Kenneth H. Rosen",
+        "Introduction to the Theory of Computation — Michael Sipser",
+        "Absolute Java — Walter Savitch",
+        "The Dirt — Nikki Sixx",
+        "Oryx and Crake — Margaret Atwood",
       ],
       websites: [
-        "Hacker News",
-        "ArXiv (cs.LG)",
-        "Matt Levine’s Money Stuff",
+        "IBM Education Series",
+        "ServiceNow Lab Series",
+        "Claude",
+        "OpenAI",
+        "Bloomberg News",
       ],
       technologies: [
         "PyTorch",
-        "Docker",
+        "Google Colab",
+        "Plotly",
         "Neovim",
-        "Gradio",
         "Tailwind CSS",
       ],
     },

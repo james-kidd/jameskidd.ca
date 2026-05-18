@@ -3,7 +3,7 @@ export const heroData = {
   name: "James Kidd",
   title: "Software Developer & Data Scientist",
   tagline: "I design reliable data systems and internal tools",
-  stack: ["Python", "PyTorch", "Pandas / NumPy", "SQL", "Flask"],
+  stack: ["Python", "PyTorch", "Pandas / NumPy", "SQL"],
   resumeLink: "/resume.pdf",
 
   emails: {
