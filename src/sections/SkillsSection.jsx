@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Settings, Rocket, BarChart3 } from "lucide-react";
+import { ArrowRight, Settings, Rocket, BarChart3, Sparkles } from "lucide-react";
 import SectionPanel from "../components/SectionPanel";
 import SectionTitle from "../components/SectionTitle";
 import TagPill from "../components/TagPill";
-import { skillsDetailData } from "../data";
+import { pillars } from "../content/pillars";
 
 const PILLAR_ICONS = {
-  systematic: Settings,
-  innovative: Rocket,
-  quantitative: BarChart3,
+  settings: Settings,
+  rocket: Rocket,
+  barChart: BarChart3,
 };
 
 export default function SkillsSection() {
@@ -24,16 +24,14 @@ export default function SkillsSection() {
 
       {/* THREE PILLARS */}
       <div className="grid gap-5 md:grid-cols-3 mb-10">
-        {skillsDetailData.pillars.map((pillar) => {
-          const Icon = PILLAR_ICONS[pillar.id];
+        {pillars.map((pillar) => {
+          const Icon = PILLAR_ICONS[pillar.icon] ?? Sparkles;
           return (
             <div key={pillar.id} className="surface-muted p-5">
               <div className="flex items-center gap-3 mb-3">
-                {Icon && (
-                  <div className="icon-box">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                )}
+                <div className="icon-box">
+                  <Icon className="w-5 h-5" />
+                </div>
                 <h3 className="font-bold text-(--text-strong)">{pillar.title}</h3>
               </div>
               <p className="text-sm text-(--text-muted) leading-relaxed">

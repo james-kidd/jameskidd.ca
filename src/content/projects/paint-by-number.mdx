@@ -1,0 +1,82 @@
+---
+slug: paint-by-number
+title: Paint-by-Number Generator
+readingTime: 6
+---
+
+## Overview
+
+A deterministic computer-vision pipeline that converts any photograph into a
+print-ready paint-by-number template. The system segments the image using SLIC
+superpixels in CIELAB space, quantizes colors via k-means, and generates clean
+numbered outlines — deployed as a Gradio app on Hugging Face Spaces.
+
+<Callout title="The honest version">
+I wanted a project that was end-to-end: from algorithm choice through
+deployment. Paint-by-number happened to be a domain where deterministic methods
+beat a neural network on every axis I cared about — reproducibility, speed,
+and being able to explain what the model is doing to a non-technical user.
+</Callout>
+
+## Why it matters
+
+This project solves a real creative workflow, but it's also groundwork for an
+applied goal I care more about: **automated crop health and maturity detection
+from satellite imagery**. The same SLIC segmentation and LAB-space palette
+extraction can track vegetation color progressions for commodity-market
+analysis. The paint-by-number app is the playground; the agricultural pipeline
+is the destination.
+
+## Technical approach
+
+The pipeline runs in five stages.
+
+### 1. Preprocessing
+Resize → convert RGB to CIELAB → bilateral filter to smooth noise while
+preserving edges. Working in LAB matters: equal distances in LAB correspond to
+equal *perceived* color differences. Almost every step that follows is cheaper
+or more correct because of it.
+
+### 2. SLIC superpixel segmentation
+SLIC clusters pixels in joint 5D space (L, a, b, x, y) with roughly O(N)
+complexity. The output: compact, paintable regions that respect both color
+and spatial proximity. The alternative (Felzenszwalb) is exposed in the UI
+for comparison.
+
+### 3. Region Adjacency Graph merging
+Adjacent superpixels with similar mean color get merged. Without this step you
+get hundreds of micro-regions and a painting nobody wants to attempt. The
+threshold is a UI knob.
+
+### 4. Palette extraction
+K-means on the *region* mean colors (not pixels) — fast, and produces a
+palette that's faithful to the dominant tones rather than dragged toward
+outliers.
+
+### 5. Rendering
+Contour extraction, then number placement via distance transform so each
+number sits at the most "interior" point of its region. Palette swatches
+render alongside.
+
+<Callout type="aside" title="Why deterministic?">
+A neural approach would absolutely work here. I chose deterministic methods
+because (a) the user can sweep parameters and immediately see why an output
+changed, (b) no GPU dependency, and (c) the output is reproducible — same
+input + same params → same template, forever.
+</Callout>
+
+## What I'd do differently
+
+- **Cache intermediate stages** so users tweaking only the palette size don't
+  re-run SLIC.
+- **Smarter number placement** for thin regions — the distance transform
+  occasionally places a number outside what *feels* like the visual center.
+- **Batch mode** for processing a folder, which is what an agricultural use
+  case would actually need.
+
+## Why this is relevant
+
+End-to-end product thinking: pipeline design, deployment, an interactive UI
+people can actually use. The judgment call — picking deterministic methods
+over a neural net because the constraints favored it — matters more to me
+than the project itself.
