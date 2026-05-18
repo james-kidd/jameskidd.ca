@@ -125,8 +125,11 @@ export const sectionData = {
         date: "May 2026 — Present",
         title: "Distribution Enablement Co-op",
         company: "CI Financial",
-        description:
-          "Architected Seismic LiveDocs templates via a .NET application plugin, SQL, and Cinchy to auto-populate fund performance and $450B+ AUM data, saving the Equities team 40+ hours monthly. Engineered a tracking architecture using NLP and Excel key-sort logic to map disparate Seismic content IDs to client interaction URLs, extracting precise KPIs on optimal sending periods and engagement. Designed a content schema to govern the ETF and Mutual Fund advisory merger and Invesco Canada transition, restructuring universal SharePoint libraries to prepare enterprise data for Microsoft Copilot deployment.",
+        bullets: [
+          "Architected Seismic LiveDocs templates via a .NET application plugin, SQL, and Cinchy to auto-populate fund performance and $450B+ AUM data, saving the Equities team 40+ hours monthly.",
+          "Engineered a tracking architecture using NLP and Excel key-sort logic to map disparate Seismic content IDs to client interaction URLs, extracting precise KPIs on optimal sending periods and engagement.",
+          "Designed a content schema to govern the ETF and Mutual Fund advisory merger and Invesco Canada transition, restructuring universal SharePoint libraries to prepare enterprise data for Microsoft Copilot deployment.",
+        ],
         skills: ["SQL", ".NET", "Cinchy", "NLP", "Advanced Excel", "Seismic", "SharePoint"],
         link: "https://www.cifinancial.com",
       },
@@ -134,8 +137,11 @@ export const sectionData = {
         date: "Jan 2026 — Apr 2026",
         title: "Investment Advisory Analyst Co-op",
         company: "CI Financial",
-        description:
-          "Synthesized capital flow trends to underwrite PM-published macro-research. Co-authored pieces on AI infrastructure credit yields, AI agents disrupting legacy SaaS, and private markets software resets. Authored evergreen positioning collateral for Global Alpha Innovators, Emerging Markets, and Small Cap funds, directly bridging portfolio manager strategy with global sales distribution. Automated regulatory translation workflows using Morningstar bulk data and custom glossaries, reducing a 146-page manual task to 34 automated pages, ensuring 34 Know-Your-Product documents met Quebec language laws ahead of deadline.",
+        bullets: [
+          "Synthesized capital flow trends to underwrite PM-published macro-research. Co-authored pieces on AI infrastructure credit yields, AI agents disrupting legacy SaaS, and private markets software resets.",
+          "Authored evergreen positioning collateral for Global Alpha Innovators, Emerging Markets, and Small Cap funds, directly bridging portfolio manager strategy with global sales distribution.",
+          "Automated regulatory translation workflows using Morningstar bulk data and custom glossaries, reducing a 146-page manual task to 34 automated pages, ensuring 34 Know-Your-Product documents met Quebec language laws ahead of deadline.",
+        ],
         skills: ["SQL", "Morningstar Direct", "Regulatory Automation", "Advanced Excel"],
         link: "https://www.cifinancial.com",
       },
@@ -210,6 +216,32 @@ export const sectionData = {
   ========================= */
   projects: [
     {
+      slug: "paint-by-number",
+      featured: true,
+      title: "Commodity Forecasting via Deterministic Vision",
+      description:
+        "An automated, deterministic computer vision pipeline designed to track vegetation progressions across satellite imagery to predict agricultural yields, with a Paint-by-Number sandbox for the core segmentation engine.",
+      skills: ["Python", "OpenCV", "SLIC Superpixels", "scikit-learn"],
+      link: "https://github.com/james-kidd/pbn_flask_demo",
+      demo: "https://huggingface.co/spaces/jkiddmtl/paint-by-number",
+      embed: "https://jkiddmtl-paint-by-number.hf.space",
+      detail: {
+        overview:
+          "In commodity markets, accurate supply forecasting often comes down to tracking the physical maturation of crops from space. This project is the groundwork for an automated, deterministic computer vision pipeline designed to track vegetation progressions across satellite imagery to predict agricultural yields. The core engine is currently exposed as an interactive Paint-by-Number web application.",
+        whyItMatters:
+          "While the industry default is often to throw deep learning at image problems, I explicitly avoided black-box neural networks in favor of classical, deterministic methods. When dealing with massive time-series multispectral agricultural data, interpretability, strict reproducibility, and scale matter most.",
+        technicalApproach: [
+          "Operates entirely in the CIELAB color space, ensuring mathematical distances between pixels match human-perceived color differences",
+          "Uses Simple Linear Iterative Clustering (SLIC) in a joint 5D LAB+XY space, allowing precise control over the trade-off between color adherence and shape regularity",
+          "Extracts region mean colors into k-means clustering to define a representative palette, applying a Region Adjacency Graph (RAG) to collapse similar adjacent superpixels",
+          "Guarantees O(N) complexity, demonstrating that the best solution for commercial data processing isn't always the trendiest AI model",
+          "Deployed on Hugging Face Spaces with a Gradio interface for interactive parameter tuning",
+        ],
+        recruiterRelevance:
+          "Demonstrates end-to-end product thinking: taking a data processing pipeline from algorithm design through deployment. Shows comfort with Python, computer vision, and the judgment to choose mathematically sound, highly scalable deterministic pipelines over neural approaches.",
+      },
+    },
+    {
       slug: "manager-dna",
       title: "Manager DNA: The Dynamic Style Box",
       description:
@@ -229,27 +261,6 @@ export const sectionData = {
         ],
         recruiterRelevance:
           "Demonstrates the ability to apply rigorous econometrics and unsupervised learning to noisy financial data, separating true conviction from cyclical luck.",
-      },
-    },
-    {
-      slug: "personal-portfolio",
-      title: "jameskidd.info",
-      description:
-        "A modular, data-driven React application built to cleanly present quantitative research, software systems, and professional experience.",
-      skills: ["React", "JavaScript", "Data Architecture", "UI/UX"],
-      link: "https://jameskidd.info",
-      detail: {
-        overview:
-          "The platform you are currently viewing. Rather than using a rigid website builder, I built a custom React application where all content is dynamically driven by structured JavaScript data files, making it highly maintainable and extensible.",
-        whyItMatters:
-          "First impressions matter. In the intersection of finance and tech, the ability to communicate complex information clearly and cleanly is just as important as the underlying math.",
-        technicalApproach: [
-          "Architected with React and modular data structures, separating content from presentation logic",
-          "Implemented fully responsive design focusing on readability and intuitive navigation",
-          "Deployed via continuous integration for seamless updates as the portfolio evolves",
-        ],
-        recruiterRelevance:
-          "Shows front-end competency, attention to detail, and a strong understanding of product positioning and user experience.",
       },
     },
     {
@@ -275,28 +286,24 @@ export const sectionData = {
       },
     },
     {
-      slug: "paint-by-number",
-      title: "Commodity Forecasting via Deterministic Vision",
+      slug: "personal-portfolio",
+      title: "jameskidd.info",
       description:
-        "An automated, deterministic computer vision pipeline designed to track vegetation progressions across satellite imagery to predict agricultural yields, with a Paint-by-Number sandbox for the core segmentation engine.",
-      skills: ["Python", "OpenCV", "SLIC Superpixels", "scikit-learn"],
-      link: "https://github.com/james-kidd/pbn_flask_demo",
-      demo: "https://huggingface.co/spaces/jkiddmtl/paint-by-number",
-      embed: "https://jkiddmtl-paint-by-number.hf.space",
+        "A modular, data-driven React application built to cleanly present quantitative research, software systems, and professional experience.",
+      skills: ["React", "JavaScript", "Data Architecture", "UI/UX"],
+      link: "https://jameskidd.info",
       detail: {
         overview:
-          "In commodity markets, accurate supply forecasting often comes down to tracking the physical maturation of crops from space. This project is the groundwork for an automated, deterministic computer vision pipeline designed to track vegetation progressions across satellite imagery to predict agricultural yields. The core engine is currently exposed as an interactive Paint-by-Number web application.",
+          "The platform you are currently viewing. Rather than using a rigid website builder, I built a custom React application where all content is dynamically driven by structured JavaScript data files, making it highly maintainable and extensible.",
         whyItMatters:
-          "While the industry default is often to throw deep learning at image problems, I explicitly avoided black-box neural networks in favor of classical, deterministic methods. When dealing with massive time-series multispectral agricultural data, interpretability, strict reproducibility, and scale matter most.",
+          "First impressions matter. In the intersection of finance and tech, the ability to communicate complex information clearly and cleanly is just as important as the underlying math.",
         technicalApproach: [
-          "Operates entirely in the CIELAB color space, ensuring mathematical distances between pixels match human-perceived color differences",
-          "Uses Simple Linear Iterative Clustering (SLIC) in a joint 5D LAB+XY space, allowing precise control over the trade-off between color adherence and shape regularity",
-          "Extracts region mean colors into k-means clustering to define a representative palette, applying a Region Adjacency Graph (RAG) to collapse similar adjacent superpixels",
-          "Guarantees O(N) complexity, demonstrating that the best solution for commercial data processing isn't always the trendiest AI model",
-          "Deployed on Hugging Face Spaces with a Gradio interface for interactive parameter tuning",
+          "Architected with React and modular data structures, separating content from presentation logic",
+          "Implemented fully responsive design focusing on readability and intuitive navigation",
+          "Deployed via continuous integration for seamless updates as the portfolio evolves",
         ],
         recruiterRelevance:
-          "Demonstrates end-to-end product thinking: taking a data processing pipeline from algorithm design through deployment. Shows comfort with Python, computer vision, and the judgment to choose mathematically sound, highly scalable deterministic pipelines over neural approaches.",
+          "Shows front-end competency, attention to detail, and a strong understanding of product positioning and user experience.",
       },
     },
   ],
@@ -429,9 +436,9 @@ export const sectionData = {
     },
     instagram: "https://www.instagram.com/jameskidd__/",
     gallery: [
-      { id: "about-0", src: "photos/about-me-0.jpg" },
-      { id: "about-1", src: "photos/about-me-1.jpg" },
-      { id: "about-2", src: "photos/about-me-2.jpg" },
+      { id: "skiing-alps", src: "photos/about-me-0.jpg", alt: "Skiing in the Alps", caption: "Alps" },
+      { id: "nyc", src: "photos/about-me-1.jpg", alt: "New York City", caption: "New York" },
+      { id: "portrait-glasgow", src: "photos/about-me-2.jpg", alt: "James Kidd in Glasgow", caption: "Glasgow" },
     ],
   },
 };

@@ -5,7 +5,8 @@ import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "./components/ProjectCard";
 
 export default function ProjectsSection({ data = [] }) {
-  const [expandedIndex, setExpandedIndex] = useState(null);
+  const featuredIndex = data.findIndex((p) => p.featured);
+  const [expandedIndex, setExpandedIndex] = useState(featuredIndex >= 0 ? featuredIndex : null);
 
   return (
     <SectionPanel className="space-y-8">
