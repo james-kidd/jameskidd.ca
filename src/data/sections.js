@@ -429,9 +429,9 @@ export const sectionData = {
     },
     instagram: "https://www.instagram.com/jameskidd__/",
     gallery: [
-      { id: "about-0", src: "photos/about-me-0.jpg" },
-      { id: "about-1", src: "photos/about-me-1.jpg" },
-      { id: "about-2", src: "photos/about-me-2.jpg" },
+      { id: "skiing-alps", src: "photos/about-me-0.jpg", alt: "Skiing in the Alps", caption: "Alps" },
+      { id: "nyc", src: "photos/about-me-1.jpg", alt: "New York City", caption: "New York" },
+      { id: "portrait-glasgow", src: "photos/about-me-2.jpg", alt: "James Kidd in Glasgow", caption: "Glasgow" },
     ],
   },
 };
