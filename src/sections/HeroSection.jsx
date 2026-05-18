@@ -1,18 +1,11 @@
-import React from "react";
 import { FileText, Linkedin, ChevronDown } from "lucide-react";
+import ContactInfo from "../components/ContactInfo";
 
 export default function HeroSection({ data }) {
   const { emails } = data;
 
   return (
-    <div
-      className="
-        relative flex flex-col justify-center
-        min-h-[90dvh]
-        md:min-h-[60vh]
-        mb-0 md:mb-12
-      "
-    >
+    <div className="relative flex flex-col justify-center min-h-[90dvh] md:min-h-[60vh] mb-0 md:mb-12">
       {/* CONTENT */}
       <div className="flex-1 flex flex-col justify-center items-start md:block md:flex-none">
         <span className="eyebrow text-(--primary) mb-4 block">
@@ -24,9 +17,22 @@ export default function HeroSection({ data }) {
           <span className="text-(--primary)">.</span>
         </h1>
 
-        <p className="section-lead md:text-2xl text-body mb-2 md:max-w-xl">
+        <p className="section-lead md:text-2xl text-body mb-6 md:max-w-xl">
           {data.tagline}
         </p>
+
+        {data.stack?.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {data.stack.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1 text-xs font-semibold rounded-full border border-(--primary)/20 bg-(--primary)/8 text-(--primary)"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ACTIONS */}
@@ -58,21 +64,7 @@ export default function HeroSection({ data }) {
             )}
           </div>
 
-          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted) leading-snug">
-            <div>
-              <span className="font-medium">Recruiters:</span>{" "}
-              contact details are included in my resume
-            </div>
-            <div>
-              <span className="font-medium">Contract inquiries:</span>{" "}
-              <a
-                href={`mailto:${emails.dev}?subject=Contract Inquiry`}
-                className="text-(--primary) hover:underline"
-              >
-                {emails.dev}
-              </a>
-            </div>
-          </div>
+          <ContactInfo emails={emails} />
         </div>
 
         {/* MOBILE */}
@@ -83,7 +75,7 @@ export default function HeroSection({ data }) {
                 href={data.resumeLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center py-4 bg-(--primary) text-white rounded-xl font-medium shadow-lg active:scale-95 transition-transform"
+                className="btn btn-primary rounded-xl active:scale-95 transition-transform"
               >
                 <FileText className="w-5 h-5 mr-2" />
                 Resume
@@ -95,7 +87,7 @@ export default function HeroSection({ data }) {
                 href={data.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center py-4 bg-white border border-(--border) text-gray-900 rounded-xl font-medium shadow-sm active:bg-gray-50 transition-colors"
+                className="btn btn-outline rounded-xl active:bg-gray-50 transition-colors"
               >
                 <Linkedin className="w-5 h-5 mr-2 text-(--primary)" />
                 LinkedIn
@@ -103,21 +95,7 @@ export default function HeroSection({ data }) {
             )}
           </div>
 
-          <div className="bg-white border border-(--border)/40 rounded-md px-3 py-2 text-[11px] text-(--text-muted) leading-snug">
-            <div>
-              <span className="font-medium">Recruiters:</span>{" "}
-              contact details are included in my resume
-            </div>
-            <div>
-              <span className="font-medium">Contract inquiries:</span>{" "}
-              <a
-                href={`mailto:${emails.dev}?subject=Contract Inquiry`}
-                className="text-(--primary) hover:underline"
-              >
-                {emails.dev}
-              </a>
-            </div>
-          </div>
+          <ContactInfo emails={emails} />
 
           <div className="flex flex-col items-center mt-6 opacity-40">
             <span className="text-[10px] uppercase tracking-widest text-(--primary-dark) mb-1">

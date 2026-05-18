@@ -201,36 +201,52 @@ export const sectionData = {
   ========================= */
   projects: [
     {
+      slug: "squash-no-friends",
       title: "SquashNoFriends",
       description:
         "Squash partner-matching platform built at McGill CodeJam. Used NLP to parse availability and a Python scheduler to generate weekly matches.",
       skills: ["Python", "NLP", "Next.js", "MySQL"],
       link: "https://devpost.com/software/squash-no-friends",
+      detail: {
+        overview:
+          "SquashNoFriends is a scheduling platform that matches squash players at McGill based on their availability. Users describe their free time in plain language, and the system uses NLP to parse those descriptions into structured time blocks, then runs a constraint-based scheduler to generate optimal weekly pairings.",
+        whyItMatters:
+          "Finding a consistent playing partner is a real friction point in recreational sports. This project demonstrates how natural language processing can remove barriers to adoption — users don't need to fill out rigid forms, they just describe their schedule naturally.",
+        technicalApproach: [
+          "Built an NLP parser that converts free-text availability descriptions into structured time intervals",
+          "Designed a Python scheduling algorithm that maximizes pairings while respecting time constraints",
+          "Used Next.js for the frontend with MySQL for persistent storage of user profiles and match history",
+          "Developed and shipped the full prototype during a 24-hour hackathon at McGill CodeJam",
+        ],
+        recruiterRelevance:
+          "This project shows my ability to scope, design, and deliver a working product under time pressure. It combines NLP, algorithm design, and full-stack development — skills that translate directly to building data-driven internal tools and automation systems.",
+      },
     },
-    // {
-    //   title: "Paint-By-Number Pipeline",
-    //   description:
-    //     "Designed a deterministic computer-vision pipeline that converts images into print-ready paint-by-number outlines using segmentation and color quantization.",
-    //   skills: [
-    //     "Python",
-    //     "Computer Vision",
-    //     "OpenCV",
-    //     "scikit-image",
-    //     "NumPy",
-    //     "Image Processing",
-    //     "Jupyter",
-    //   ],
-    //   link: "https://github.com/james-kidd/",
-    // },
-
     {
+      slug: "paint-by-number",
       title: "Paint-by-Number Generator",
       description:
-        "Deterministic image-to-paint-by-number pipeline in Python (segmentation + color quantization), exposed via a Flask API and integrated with a React frontend.",      skills: ["Python", "Flask", "Image Processing", "OpenCV"],
+        "Deterministic image-to-paint-by-number pipeline in Python (segmentation + color quantization), exposed via a Gradio app on Hugging Face Spaces.",
+      skills: ["Python", "Gradio", "Image Processing", "OpenCV"],
       link: "https://github.com/james-kidd/pbn_flask_demo",
-      demo: "https://pbn-flask-demo.onrender.com",   // NEW
-    }
-
+      demo: "https://huggingface.co/spaces/jkiddmtl/paint-by-number",
+      embed: "https://jkiddmtl-paint-by-number.hf.space",
+      detail: {
+        overview:
+          "A deterministic computer vision pipeline that converts any photograph into a print-ready paint-by-number template. The system segments the image using SLIC superpixels in CIELAB space, quantizes colors via k-means, and generates clean numbered outlines — deployed as a Gradio app on Hugging Face Spaces.",
+        whyItMatters:
+          "This project solves a real creative workflow while serving as groundwork for a more applied goal: automated crop health and maturity detection from satellite imagery, where the same SLIC segmentation and LAB-space palette extraction can track vegetation color progressions for commodity market analysis.",
+        technicalApproach: [
+          "Five-stage pipeline: preprocessing (CIELAB + bilateral filter), SLIC superpixel segmentation, k-means palette extraction, connected-component finalization, and distance-transform number placement",
+          "All color math in CIELAB space for perceptual uniformity — equal distances correspond to equal perceived color differences",
+          "SLIC clusters pixels in joint 5D LAB+XY space with O(N) complexity, producing compact paintable regions",
+          "Region Adjacency Graph merging collapses similar adjacent superpixels for clean artifact-free boundaries",
+          "Deployed on Hugging Face Spaces with a Gradio interface for interactive parameter tuning",
+        ],
+        recruiterRelevance:
+          "This project demonstrates end-to-end product thinking: taking a data processing pipeline from algorithm design through deployment. It shows comfort with Python, computer vision, and the judgment to choose deterministic methods over neural approaches when reproducibility and speed matter.",
+      },
+    },
   ],
 
   /* =========================
@@ -240,31 +256,16 @@ skills: {
   blocks: [
     {
       id: "primary",
-      title: "Core Strengths",
+      title: "Main Stack",
       icon: "star",
       items: [
-        "End-to-end ML pipelines",
-        "Algorithm design & complexity analysis",
-        "Data-intensive backend systems",
-        "Production Python services",
-        "Relational data modeling",
-        "Linux-based development",
-      ],
-    },
-
-    {
-      id: "languages",
-      title: "Programming Languages",
-      icon: "terminal",
-      items: [
         "Python",
-        "Java",
-        "JavaScript / TypeScript",
+        "PyTorch",
+        "Pandas / NumPy",
         "SQL",
-        "C",
-        "C++",
-        "Scala",
-        "OCaml",
+        "Flask / FastAPI",
+        "React",
+        "Linux / Docker",
       ],
     },
 
@@ -298,6 +299,22 @@ skills: {
     },
 
     {
+      id: "languages",
+      title: "Programming Languages",
+      icon: "terminal",
+      items: [
+        "Python",
+        "Java",
+        "JavaScript / TypeScript",
+        "SQL",
+        "C",
+        "C++",
+        "Scala",
+        "OCaml",
+      ],
+    },
+
+    {
       id: "web",
       title: "Web & API Development",
       icon: "cloud",
@@ -314,7 +331,7 @@ skills: {
     {
       id: "systems",
       title: "Systems & Infrastructure",
-      icon: "terminal",
+      icon: "systems",
       items: [
         "Linux",
         "Docker",
@@ -342,7 +359,7 @@ skills: {
     {
       id: "tooling",
       title: "Tooling, Automation & Analytics",
-      icon: "terminal",
+      icon: "tooling",
       items: [
         "Git",
         "Jira",
@@ -363,16 +380,42 @@ skills: {
   personal: {
     description:
       "There’s life beyond coding. As much as I enjoy building software, I value time spent outdoors, traveling, and real human connection.",
-    favorites: [
-      { label: "Current Read", value: "Options, Futures, and Other Derivatives — John Hull" },
+    stats: [
       { label: "Countries Visited", value: "39" },
+      { label: "Current Read", value: "Options, Futures, and Other Derivatives — John Hull" },
     ],
+    milestones: [
+      { date: "2026", title: "Investment Advisory Intern", description: "CI Global Asset Management, Toronto", location: "Toronto, Canada" },
+      { date: "2025", title: "Exchange Semester", description: "University of Glasgow, Scotland", location: "Glasgow, UK" },
+      { date: "2024", title: "Software Developer Intern", description: "ITM Instruments, Montreal", location: "Montreal, Canada" },
+      { date: "2023", title: "Started at McGill University", description: "B.Sc. Joint Mathematics & Computer Science", location: "Montreal, Canada" },
+      { date: "2021", title: "KPMG Hungary Internship", description: "Technology Enablement Advisor", location: "Budapest, Hungary" },
+      { date: "2020", title: "Started at Queen’s University", description: "Computer Engineering", location: "Kingston, Canada" },
+    ],
+    favorites: {
+      books: [
+        "Options, Futures, and Other Derivatives — John Hull",
+        "Designing Data-Intensive Applications — Martin Kleppmann",
+        "The Pragmatic Programmer — Hunt & Thomas",
+      ],
+      websites: [
+        "Hacker News",
+        "ArXiv (cs.LG)",
+        "Matt Levine’s Money Stuff",
+      ],
+      technologies: [
+        "PyTorch",
+        "Docker",
+        "Neovim",
+        "Gradio",
+        "Tailwind CSS",
+      ],
+    },
     instagram: "https://www.instagram.com/jameskidd__/",
     gallery: [
       { id: "about-0", src: "photos/about-me-0.jpg" },
       { id: "about-1", src: "photos/about-me-1.jpg" },
       { id: "about-2", src: "photos/about-me-2.jpg" },
-    ]
-
+    ],
   },
 };
