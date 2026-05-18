@@ -52,7 +52,15 @@ export default function ExperienceCard({ role }) {
         }`}
       >
         <div className="overflow-hidden">
-          <p className="text-body text-sm mb-6">{role.description}</p>
+          {role.bullets ? (
+            <ul className="list-disc pl-4 space-y-2 mb-6">
+              {role.bullets.map((point, i) => (
+                <li key={i} className="text-sm text-body leading-relaxed">{point}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-body text-sm mb-6">{role.description}</p>
+          )}
 
           {role.skills.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
