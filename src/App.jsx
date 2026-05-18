@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { createElement, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import Layout from "./layout/Layout";
@@ -7,6 +7,7 @@ import { SECTIONS } from "./sections/registry";
 import { heroData, sectionData } from "./data";
 import SkillsPage from "./pages/SkillsPage";
 import ProjectPage from "./pages/ProjectPage";
+import PersonalPage from "./sections/PersonalPage";
 
 function HomePage() {
   return (
@@ -15,7 +16,7 @@ function HomePage() {
 
       {SECTIONS.map(({ id, Component }) => (
         <section id={id} key={id} className="section-block first:border-0">
-          <Component data={sectionData[id]} />
+          {createElement(Component, { data: sectionData[id] })}
         </section>
       ))}
     </>
@@ -41,17 +42,15 @@ function AppRoutes({ currentTheme, setTheme }) {
       />
       <Route path="/skills" element={<SkillsPage />} />
       <Route path="/projects/:slug" element={<ProjectPage />} />
+      <Route path="/personal" element={<PersonalPage />} />
     </Routes>
   );
 }
 
 function App() {
-  const [currentTheme, setCurrentTheme] = useState("tech");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("portfolio-theme");
-    if (saved) setCurrentTheme(saved);
-  }, []);
+  const [currentTheme, setCurrentTheme] = useState(
+    () => localStorage.getItem("portfolio-theme") || "tech"
+  );
 
   useEffect(() => {
     document.documentElement.dataset.theme = currentTheme;

@@ -1,6 +1,18 @@
-import { Camera, Coffee, Instagram, MapPin, Book, Globe, Cpu } from "lucide-react";
+import { createElement } from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Book,
+  Camera,
+  Coffee,
+  Cpu,
+  Globe,
+  Instagram,
+  MapPin,
+} from "lucide-react";
 import SectionPanel from "../components/SectionPanel";
 import SectionTitle from "../components/SectionTitle";
+import { travelData } from "../data/travel";
 
 function QuickStats({ stats }) {
   return (
@@ -19,6 +31,53 @@ function QuickStats({ stats }) {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function TravelPreview() {
+  const { stats } = travelData;
+  const topCities = travelData.cities
+    .filter((city) => !["CA", "US"].includes(city.countryCode))
+    .slice(0, 6);
+
+  return (
+    <div className="surface-muted p-6 space-y-5">
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { label: "Countries", value: stats.countriesVisited, Icon: Globe },
+          { label: "Cities", value: stats.citiesExplored, Icon: MapPin },
+          {
+            label: "Photos",
+            value: stats.totalPhotos.toLocaleString(),
+            Icon: Camera,
+          },
+        ].map(({ label, value, Icon }) => (
+          <div key={label} className="text-center">
+            {createElement(Icon, {
+              className: "w-5 h-5 mx-auto mb-2 text-(--primary)",
+            })}
+            <div className="text-xl font-bold text-gray-900">{value}</div>
+            <div className="text-[10px] text-gray-400 uppercase tracking-wider">
+              {label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {topCities.map((city) => (
+          <span key={`${city.city}-${city.countryCode}`} className="tag-pill">
+            {city.city}, {city.country}
+          </span>
+        ))}
+        <span className="tag-pill">+{travelData.cities.length - topCities.length} more</span>
+      </div>
+
+      <Link to="/personal" className="btn btn-outline w-full group">
+        Explore where I've been
+        <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+      </Link>
     </div>
   );
 }
@@ -124,7 +183,6 @@ function Gallery({ gallery, instagram }) {
 export default function PersonalSection({ data }) {
   return (
     <SectionPanel>
-      {/* TOP: TEXT + STATS */}
       <div className="grid md:grid-cols-3 gap-8 items-start">
         <div className="md:col-span-2">
           <SectionTitle className="mb-6">Offline Mode</SectionTitle>
@@ -133,17 +191,14 @@ export default function PersonalSection({ data }) {
         <QuickStats stats={data.stats} />
       </div>
 
-      {/* MILESTONES TIMELINE */}
+      <TravelPreview />
+
       {data.milestones?.length > 0 && (
         <MilestonesTimeline milestones={data.milestones} />
       )}
 
-      {/* FAVORITES */}
-      {data.favorites && (
-        <FavoritesLists favorites={data.favorites} />
-      )}
+      {data.favorites && <FavoritesLists favorites={data.favorites} />}
 
-      {/* GALLERY */}
       <Gallery gallery={data.gallery} instagram={data.instagram} />
     </SectionPanel>
   );
