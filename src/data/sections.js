@@ -233,18 +233,18 @@ export const sectionData = {
       embed: "https://jkiddmtl-paint-by-number.hf.space",
       detail: {
         overview:
-          "A deterministic computer vision pipeline that converts any photograph into a print-ready paint-by-number template. The system segments the image, quantizes colors to a manageable palette, and generates clean numbered outlines — all exposed through a Flask API with a React frontend.",
+          "A deterministic computer vision pipeline that converts any photograph into a print-ready paint-by-number template. The system segments the image using SLIC superpixels in CIELAB space, quantizes colors via k-means, and generates clean numbered outlines — deployed as a Gradio app on Hugging Face Spaces.",
         whyItMatters:
-          "This project solves a real creative workflow: generating custom paint-by-number sheets from personal photos. It also demonstrates how to take a complex image processing pipeline and make it accessible through a clean web interface — a pattern common in productizing ML and data science work.",
+          "This project solves a real creative workflow while serving as groundwork for a more applied goal: automated crop health and maturity detection from satellite imagery, where the same SLIC segmentation and LAB-space palette extraction can track vegetation color progressions for commodity market analysis.",
         technicalApproach: [
-          "Built a multi-stage pipeline: image segmentation, color quantization (k-means), region detection, and outline generation",
-          "Used OpenCV and scikit-image for deterministic (non-ML) image processing — chosen deliberately over neural approaches for reproducibility and speed",
-          "Exposed the pipeline as a stateless Flask API with file upload, processing, and result download",
-          "Built a React frontend for drag-and-drop image upload with real-time preview of generated templates",
-          "Deployed on Render with a live demo available for immediate testing",
+          "Five-stage pipeline: preprocessing (CIELAB + bilateral filter), SLIC superpixel segmentation, k-means palette extraction, connected-component finalization, and distance-transform number placement",
+          "All color math in CIELAB space for perceptual uniformity — equal distances correspond to equal perceived color differences",
+          "SLIC clusters pixels in joint 5D LAB+XY space with O(N) complexity, producing compact paintable regions",
+          "Region Adjacency Graph merging collapses similar adjacent superpixels for clean artifact-free boundaries",
+          "Deployed on Hugging Face Spaces with a Gradio interface for interactive parameter tuning",
         ],
         recruiterRelevance:
-          "This project demonstrates end-to-end product thinking: taking a data processing pipeline from algorithm design through API development to user-facing deployment. It shows comfort with Python, computer vision, API design, and full-stack integration — plus the judgment to choose the right tool for the job.",
+          "This project demonstrates end-to-end product thinking: taking a data processing pipeline from algorithm design through deployment. It shows comfort with Python, computer vision, and the judgment to choose deterministic methods over neural approaches when reproducibility and speed matter.",
       },
     },
   ],
