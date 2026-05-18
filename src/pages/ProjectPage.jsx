@@ -66,6 +66,25 @@ export default function ProjectPage() {
         )}
       </div>
 
+      {/* EMBEDDED DEMO */}
+      {project.embed && (
+        <div className="mb-10">
+          <h2 className="font-bold text-lg text-(--text-strong) mb-4">
+            Try It
+          </h2>
+          <div className="section-panel overflow-hidden p-0">
+            <iframe
+              src={project.embed}
+              title={`${project.title} demo`}
+              className="w-full border-0 rounded-lg"
+              style={{ height: "720px" }}
+              allow="accelerometer; clipboard-write"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      )}
+
       {/* DETAIL SECTIONS */}
       <div className="space-y-8">
         <div className="section-panel space-y-8">

@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { FolderGit2 } from "lucide-react";
 import SectionPanel from "../components/SectionPanel";
 import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "./components/ProjectCard";
 
 export default function ProjectsSection({ data = [] }) {
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
   return (
     <SectionPanel className="space-y-8">
       <SectionTitle icon={FolderGit2}>Selected Projects</SectionTitle>
@@ -20,9 +23,14 @@ export default function ProjectsSection({ data = [] }) {
       )}
 
       {data.length > 0 && (
-        <div className="grid gap-6 md:grid-cols-2">
-          {data.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+        <div className="section-panel p-0">
+          {data.map((project, i) => (
+            <ProjectCard
+              key={project.title}
+              project={project}
+              isExpanded={expandedIndex === i}
+              onToggle={() => setExpandedIndex(expandedIndex === i ? null : i)}
+            />
           ))}
         </div>
       )}

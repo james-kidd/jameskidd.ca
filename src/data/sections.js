@@ -226,10 +226,11 @@ export const sectionData = {
       slug: "paint-by-number",
       title: "Paint-by-Number Generator",
       description:
-        "Deterministic image-to-paint-by-number pipeline in Python (segmentation + color quantization), exposed via a Flask API and integrated with a React frontend.",
-      skills: ["Python", "Flask", "Image Processing", "OpenCV"],
+        "Deterministic image-to-paint-by-number pipeline in Python (segmentation + color quantization), exposed via a Gradio app on Hugging Face Spaces.",
+      skills: ["Python", "Gradio", "Image Processing", "OpenCV"],
       link: "https://github.com/james-kidd/pbn_flask_demo",
-      demo: "https://pbn-flask-demo.onrender.com",
+      demo: "https://huggingface.co/spaces/jkiddmtl/paint-by-number",
+      embed: "https://jkiddmtl-paint-by-number.hf.space",
       detail: {
         overview:
           "A deterministic computer vision pipeline that converts any photograph into a print-ready paint-by-number template. The system segments the image, quantizes colors to a manageable palette, and generates clean numbered outlines — all exposed through a Flask API with a React frontend.",
@@ -379,16 +380,42 @@ skills: {
   personal: {
     description:
       "There’s life beyond coding. As much as I enjoy building software, I value time spent outdoors, traveling, and real human connection.",
-    favorites: [
-      { label: "Current Read", value: "Options, Futures, and Other Derivatives — John Hull" },
+    stats: [
       { label: "Countries Visited", value: "39" },
+      { label: "Current Read", value: "Options, Futures, and Other Derivatives — John Hull" },
     ],
+    milestones: [
+      { date: "2026", title: "Investment Advisory Intern", description: "CI Global Asset Management, Toronto", location: "Toronto, Canada" },
+      { date: "2025", title: "Exchange Semester", description: "University of Glasgow, Scotland", location: "Glasgow, UK" },
+      { date: "2024", title: "Software Developer Intern", description: "ITM Instruments, Montreal", location: "Montreal, Canada" },
+      { date: "2023", title: "Started at McGill University", description: "B.Sc. Joint Mathematics & Computer Science", location: "Montreal, Canada" },
+      { date: "2021", title: "KPMG Hungary Internship", description: "Technology Enablement Advisor", location: "Budapest, Hungary" },
+      { date: "2020", title: "Started at Queen’s University", description: "Computer Engineering", location: "Kingston, Canada" },
+    ],
+    favorites: {
+      books: [
+        "Options, Futures, and Other Derivatives — John Hull",
+        "Designing Data-Intensive Applications — Martin Kleppmann",
+        "The Pragmatic Programmer — Hunt & Thomas",
+      ],
+      websites: [
+        "Hacker News",
+        "ArXiv (cs.LG)",
+        "Matt Levine’s Money Stuff",
+      ],
+      technologies: [
+        "PyTorch",
+        "Docker",
+        "Neovim",
+        "Gradio",
+        "Tailwind CSS",
+      ],
+    },
     instagram: "https://www.instagram.com/jameskidd__/",
     gallery: [
       { id: "about-0", src: "photos/about-me-0.jpg" },
       { id: "about-1", src: "photos/about-me-1.jpg" },
       { id: "about-2", src: "photos/about-me-2.jpg" },
-    ]
-
+    ],
   },
 };

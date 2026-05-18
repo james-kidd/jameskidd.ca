@@ -1,13 +1,12 @@
-import { Lightbulb, Rocket, Settings } from "lucide-react";
+import { Settings, Rocket, BarChart3 } from "lucide-react";
 import PageShell from "../components/PageShell";
-import SectionPanel from "../components/SectionPanel";
 import SkillCard from "../sections/components/SkillCard";
 import { skillsDetailData, sectionData } from "../data";
 
 const PILLAR_ICONS = {
-  insightful: Lightbulb,
+  systematic: Settings,
   innovative: Rocket,
-  structured: Settings,
+  quantitative: BarChart3,
 };
 
 function Pillar({ pillar }) {
@@ -75,7 +74,7 @@ export default function SkillsPage() {
 
       {/* TECHNICAL SKILLS */}
       <div className="mb-8">
-        <h2 className="section-title mb-8">Technical Proficiencies</h2>
+        <h2 className="section-title mb-8">Core Technologies</h2>
         <div className="grid gap-5 sm:grid-cols-2">
           {blocks.map((block) => (
             <SkillCard key={block.id} block={block} />

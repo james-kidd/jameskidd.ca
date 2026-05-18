@@ -1,82 +1,91 @@
 import { Link } from "react-router-dom";
-import { Github, ArrowUpRight, ArrowRight } from "lucide-react";
-import IconBox from "../../components/IconBox";
+import { Github, ArrowUpRight, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import TagPill from "../../components/TagPill";
 
-export default function ProjectCard({ project }) {
+export default function ProjectCard({ project, isExpanded, onToggle }) {
   return (
-    <div className="card card-hover group flex flex-col">
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex items-center">
-          <IconBox>
-            <Github className="w-5 h-5" />
-          </IconBox>
-          <h3 className="ml-3 font-bold text-lg text-gray-900 leading-tight">
+    <div className="border-b border-(--border) last:border-b-0">
+      <div
+        onClick={onToggle}
+        className="flex items-center justify-between py-5 px-2 cursor-pointer group"
+      >
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-(--text-strong) group-hover:text-(--primary) transition-colors">
             {project.title}
           </h3>
+          <p className="text-sm text-(--text-muted) mt-1 line-clamp-1">
+            {project.description}
+          </p>
         </div>
 
-        {project.link && (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-400 hover:text-(--primary) transition-colors p-1"
-            aria-label={`View ${project.title} repository`}
-          >
-            <ArrowUpRight className="w-5 h-5" />
-          </a>
-        )}
+        <div className="ml-4 shrink-0 text-(--text-muted)">
+          {isExpanded ? (
+            <ChevronUp className="w-5 h-5" />
+          ) : (
+            <ChevronDown className="w-5 h-5" />
+          )}
+        </div>
       </div>
 
-      <p className="text-gray-600 mb-6 grow leading-relaxed text-[15px]">
-        {project.description}
-      </p>
+      <div
+        className={`grid transition-all duration-500 ease-in-out ${
+          isExpanded
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-2 pb-6 space-y-4">
+            <p className="text-sm text-(--text-muted) leading-relaxed">
+              {project.description}
+            </p>
 
-      <div className="flex items-center gap-4 mb-6">
-        {project.demo && (
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-(--primary) hover:underline"
-          >
-            Live Demo
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
-        )}
+            {project.skills?.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {project.skills.map((skill) => (
+                  <TagPill key={skill}>{skill}</TagPill>
+                ))}
+              </div>
+            )}
 
-        {project.link && (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-gray-500 hover:text-gray-800"
-          >
-            GitHub
-          </a>
-        )}
+            <div className="flex items-center gap-4">
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-(--primary) hover:underline"
+                >
+                  Live Demo
+                  <ArrowUpRight className="w-4 h-4" />
+                </a>
+              )}
 
-        {project.slug && project.detail && (
-          <Link
-            to={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1 text-sm font-medium text-(--text-muted) hover:text-(--primary) transition-colors ml-auto"
-          >
-            Details
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        )}
-      </div>
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-(--text-muted) hover:text-(--text-strong)"
+                >
+                  <Github className="w-4 h-4" />
+                  GitHub
+                </a>
+              )}
 
-      {project.skills?.length > 0 && (
-        <div className="border-t border-gray-100 pt-4 mt-auto">
-          <div className="flex flex-wrap gap-2">
-            {project.skills.map((skill) => (
-              <TagPill key={skill}>{skill}</TagPill>
-            ))}
+              {project.slug && project.detail && (
+                <Link
+                  to={`/projects/${project.slug}`}
+                  className="inline-flex items-center gap-1 text-sm font-medium text-(--text-muted) hover:text-(--primary) transition-colors ml-auto"
+                >
+                  Details
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              )}
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

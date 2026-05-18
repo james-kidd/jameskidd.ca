@@ -5,16 +5,16 @@ export const skillsDetailData = {
 
   pillars: [
     {
-      id: "insightful",
-      title: "Insightful",
-      subtitle: "Depth in AI, data, finance, and algorithmic thinking",
+      id: "systematic",
+      title: "Systematic",
+      subtitle: "Systems-driven, organized, and execution-focused",
       description:
-        "My Math and Computer Science degree at McGill gave me strong foundations in algorithm design, statistical reasoning, and computational theory. I apply that rigor to machine learning pipelines, data-intensive systems, and financial analysis. I think carefully about time complexity, data architecture, and the tradeoffs behind every technical decision — not just whether something works, but why it works and when it breaks.",
+        "I build repeatable processes and well-organized systems. Whether it's automating data migration pipelines, designing containerized services, or coordinating logistics for a large-scale event, I work from first principles and connect high-level strategy to implementation details. I'm comfortable with Linux, Docker, CI/CD, and the engineering workflows that keep production systems running.",
       evidence: [
-        "Applied ML coursework: built end-to-end pipelines with PyTorch, classical ML, and NLP",
-        "Algorithm design and complexity analysis across competitive and academic settings",
-        "Incoming role at CI Global Asset Management — investment advisory across multiple asset classes",
-        "Comfortable reasoning about data systems, bottlenecks, and production tradeoffs",
+        "Built production automation at ITM Instruments — data migration, extraction, and workflow tooling",
+        "Designed RPA workflows at KPMG Hungary — analyzed operations and recommended automation strategies",
+        "Comfortable with Linux, Docker, AWS, and end-to-end deployment pipelines",
+        "Connect business requirements to technical implementation cleanly and reliably",
       ],
     },
     {
@@ -31,16 +31,16 @@ export const skillsDetailData = {
       ],
     },
     {
-      id: "structured",
-      title: "Structured",
-      subtitle: "Systems-driven, organized, and execution-focused",
+      id: "quantitative",
+      title: "Quantitative",
+      subtitle: "Depth in mathematics, statistics, and financial analysis",
       description:
-        "I build repeatable processes and well-organized systems. Whether it's automating data migration pipelines, designing containerized services, or coordinating logistics for a large-scale event, I work from first principles and connect high-level strategy to implementation details. I'm comfortable with Linux, Docker, CI/CD, and the engineering workflows that keep production systems running.",
+        "My Math and Computer Science degree at McGill gave me strong foundations in algorithm design, statistical reasoning, and computational theory. I apply that rigor to machine learning pipelines, data-intensive systems, and financial analysis. I think carefully about time complexity, data architecture, and the tradeoffs behind every technical decision — not just whether something works, but why it works and when it breaks.",
       evidence: [
-        "Built production automation at ITM Instruments — data migration, extraction, and workflow tooling",
-        "Designed RPA workflows at KPMG Hungary — analyzed operations and recommended automation strategies",
-        "Comfortable with Linux, Docker, AWS, and end-to-end deployment pipelines",
-        "Connect business requirements to technical implementation cleanly and reliably",
+        "Applied ML coursework: built end-to-end pipelines with PyTorch, classical ML, and NLP",
+        "Algorithm design and complexity analysis across competitive and academic settings",
+        "Incoming role at CI Global Asset Management — investment advisory across multiple asset classes",
+        "Comfortable reasoning about data systems, bottlenecks, and production tradeoffs",
       ],
     },
   ],
