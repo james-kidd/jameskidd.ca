@@ -28,15 +28,48 @@ React 19 + Vite 7 + Tailwind CSS v4 portfolio site deployed on Vercel. JavaScrip
 
 `Layout` wraps only the home route and provides the sticky nav (built from `SECTIONS` registry) and theme switcher. All other pages use `PageShell` (a centered content container with a back link).
 
-### Data vs. MDX content
+### Content architecture
 
-All site content falls into one of three categories:
+Content is split between **MDX files** (prose you edit as Markdown) and **JS data files** (structured data like arrays, URLs, configs). The rule: if it's sentences/paragraphs, it's MDX. If it's a list of tags, a URL, or tabular data, it stays in JS.
 
-**`src/data/*.js`** — Structured JS objects consumed directly by section components. `hero.js` has identity/contact info; `sections.js` has all section content (about, experience, skills, projects); `travel.js` feeds the personal section and travel map; `skills-detail.js` has only the skills page headline/positioning (not the pillars).
+#### MDX content (`src/content/`)
 
-**`src/content/pillars/*.mdx`** — Skills pillars with YAML frontmatter (`id`, `order`, `title`, `subtitle`, `icon`, `evidence[]`) and MDX body text. Loaded eagerly via `import.meta.glob` and sorted by `order`. `SkillsPage` consumes the `pillars` export from `src/content/pillars/index.js`.
+All MDX files use YAML frontmatter for structured metadata and Markdown body for prose. Loaded eagerly via `import.meta.glob` in each directory's `index.js` loader.
 
-**`src/content/projects/*.mdx`** — Optional deep-dive chapters for projects. Lazy-loaded via `import.meta.glob`. A project gets a chapter if its `slug` from `sections.js` matches a filename in this directory. `ProjectPage` renders either the MDX chapter or a `StructuredDetail` fallback from `project.detail` in sections data.
+| Directory | What it contains | Frontmatter keys |
+|---|---|---|
+| `src/content/experience/*.mdx` | One file per role (7 total). Body is the description/bullets as paragraphs. | `order`, `group` (internships/academic/freelance), `date`, `title`, `company`, `skills[]`, `link?` |
+| `src/content/projects/*.mdx` | One file per project (4 total). Body is the full project write-up with Markdown headings. | `slug`, `featured?`, `title`, `description`, `skills[]`, `link`, `demo?`, `embed?` |
+| `src/content/pillars/*.mdx` | Skills pillars (3 total). Body is pillar description prose. | `id`, `order`, `title`, `subtitle`, `icon`, `evidence[]` |
+| `src/content/about.mdx` | About section intro paragraphs. No frontmatter. | — |
+| `src/content/personal.mdx` | Personal section description. | `instagram` |
+
+**To add a new experience:** Create a new `.mdx` file in `src/content/experience/`, set frontmatter fields, write the description as the body. The loader picks it up automatically via glob.
+
+**To add a new project:** Create a new `.mdx` file in `src/content/projects/` with a `slug` in frontmatter. Write the project detail as Markdown body with `## Overview`, `## Why It Matters`, etc. headings.
+
+**To edit prose:** Open the relevant `.mdx` file and write Markdown. Splitting a paragraph is just pressing Enter twice.
+
+#### JS data files (`src/data/`)
+
+These hold only structured/tabular data that doesn't benefit from Markdown formatting:
+
+| File | What it contains |
+|---|---|
+| `hero.js` | Name, title, tagline, stack tags, contact emails, social URLs, resume link |
+| `sections.js` | Education coursework records, skill tag blocks, personal milestones/favorites/gallery config |
+| `skills-detail.js` | Skills page headline and positioning text |
+| `travel.js` | Auto-generated from photo EXIF — country/city lists, stats (do not edit manually) |
+
+#### Content loaders
+
+Each MDX content directory has an `index.js` that globs and exports parsed content:
+
+- `src/content/experience/index.js` → exports `experiences` (sorted array) and `experiencesByGroup` (object keyed by group)
+- `src/content/projects/index.js` → exports `projects` (array with `Chapter` component), `projectChapters` (slug→component map), `hasChapter()`
+- `src/content/pillars/index.js` → exports `pillars` (sorted array with `Description` component)
+
+Components import directly from these loaders, not from `src/data/` for content that has been migrated to MDX.
 
 ### Section registry (`src/sections/registry.js`)
 
@@ -52,7 +85,7 @@ Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<ht
 - **`src/sections/`** — One component per home section, plus `TravelMap` (uses `react-simple-maps`) and `PersonalPage` (dedicated `/personal` route with gallery, life timeline, and travel map)
 - **`src/sections/components/`** — Section-scoped cards (`ExperienceCard`, `ProjectCard`, etc.)
 - **`src/components/`** — Shared UI primitives (`SectionPanel`, `TagPill`, `GalleryLightbox`, etc.)
-- **`src/components/mdx/`** — MDX component overrides (`mdxComponents.jsx`) used by `ProjectPage` via `MDXProvider`
+- **`src/components/mdx/`** — MDX component overrides (`mdxComponents.jsx`) used by project pages, experience cards, and other MDX-rendering components via `MDXProvider`
 
 ### CSS conventions
 
