@@ -3,7 +3,7 @@ import { MDXProvider } from "@mdx-js/react";
 import SectionPanel from "../components/SectionPanel";
 import SectionTitle from "../components/SectionTitle";
 import EducationCard from "./components/EducationCard";
-import AboutIntro, { frontmatter as aboutFrontmatter } from "../content/about.mdx";
+import AboutIntro from "../content/about.mdx";
 import { mdxComponents } from "../components/mdx/mdxComponents";
 
 export default function AboutSection({ data }) {

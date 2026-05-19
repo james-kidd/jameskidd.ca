@@ -3,17 +3,12 @@ import SectionPanel from "../components/SectionPanel";
 import SectionTitle from "../components/SectionTitle";
 import ExperienceCard from "./components/ExperienceCard";
 import { experiencesByGroup } from "../content/experience";
-
-const GROUPS = [
-  { key: "internships", label: "Internships" },
-  { key: "academic", label: "Leadership" },
-  { key: "freelance", label: "Freelance" },
-];
+import { experienceGroups } from "../data";
 
 export default function ExperienceSection() {
   return (
     <SectionPanel className="space-y-12">
-      {GROUPS.map(({ key, label }) => (
+      {experienceGroups.map(({ key, label }) => (
         <div key={key} className="space-y-6">
           <SectionTitle icon={FolderGit2}>{label}</SectionTitle>
 

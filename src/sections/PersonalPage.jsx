@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { ArrowLeft, Book, Cpu, Globe, MapPin, Camera, GraduationCap } from "lucide-react";
+import { Book, Cpu, Globe, MapPin, Camera, GraduationCap } from "lucide-react";
 import { MDXProvider } from "@mdx-js/react";
+import PageShell from "../components/PageShell";
 import TravelMap from "./TravelMap";
 import GalleryLightbox from "../components/GalleryLightbox";
 import { travelData } from "../data/travel";
@@ -78,26 +79,11 @@ export default function PersonalPage() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--surface-muted)" }}>
-      <div className="max-w-5xl mx-auto px-6 py-12 md:px-12 md:py-16">
-        {/* Back */}
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            window.location.hash = "";
-            window.scrollTo({ top: 0 });
-          }}
-          className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-700 transition-colors mb-8"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
-        </a>
-
+    <PageShell width="wide">
         {/* Hero */}
         <div className="section-panel mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-            Offline Mode
+            {personalMeta.title}
           </h1>
           <MDXProvider components={mdxComponents}>
             <div className="section-lead max-w-2xl [&>p]:m-0">
@@ -261,7 +247,6 @@ export default function PersonalPage() {
           </div>
         )}
 
-      </div>
-    </div>
+    </PageShell>
   );
 }

@@ -1,3 +1,3 @@
 export { heroData } from "./hero";
-export { sectionData } from "./sections";
+export { sectionData, experienceGroups } from "./sections";
 export { skillsDetailData } from "./skills-detail";

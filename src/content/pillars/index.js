@@ -1,8 +1,15 @@
+import { Settings, Rocket, BarChart3, Sparkles } from "lucide-react";
+import { byOrder, collectMdx } from "../mdxCollection";
+
 const modules = import.meta.glob("./*.mdx", { eager: true });
 
-export const pillars = Object.values(modules)
-  .map((mod) => ({
-    ...mod.frontmatter,
-    Description: mod.default,
-  }))
-  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+const PILLAR_ICONS = {
+  settings: Settings,
+  rocket: Rocket,
+  barChart: BarChart3,
+};
+
+export const pillars = collectMdx(modules, {
+  componentName: "Description",
+  sort: byOrder,
+}).map((p) => ({ ...p, Icon: PILLAR_ICONS[p.icon] ?? Sparkles }));

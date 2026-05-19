@@ -1,15 +1,13 @@
+import { collectMdx, keyBy } from "../mdxCollection";
+
 const modules = import.meta.glob("./*.mdx", { eager: true });
 
-export const projects = Object.values(modules)
-  .map((mod) => ({
-    ...mod.frontmatter,
-    Chapter: mod.default,
-  }))
-  .filter((p) => p.slug);
+export const projects = collectMdx(modules, {
+  componentName: "Chapter",
+  filter: (project) => project.slug,
+});
 
-export const projectChapters = Object.fromEntries(
-  projects.map((p) => [p.slug, p.Chapter])
-);
+export const projectChapters = keyBy(projects, "slug", (project) => project.Chapter);
 
 export function hasChapter(slug) {
   return Boolean(projectChapters[slug]);
