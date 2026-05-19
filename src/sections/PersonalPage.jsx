@@ -165,28 +165,66 @@ export default function PersonalPage() {
           </div>
         </div>
 
-        {/* Milestones */}
+        {/* Life Story + Gallery */}
         {personal.milestones?.length > 0 && (
           <div className="section-panel mb-8">
             <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
               <MapPin className="w-5 h-5" style={{ color: "var(--primary)" }} />
-              Life Milestones
+              Life Story
             </h2>
-            <div>
-              {personal.milestones.map((m) => (
-                <div key={m.date + m.title} className="timeline-item group">
-                  <div className="timeline-dot" />
-                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-                    <h4 className="font-semibold" style={{ color: "var(--text-strong)" }}>{m.title}</h4>
-                    <span className="text-sm" style={{ color: "var(--text-muted)" }}>{m.date}</span>
+            <div className="grid md:grid-cols-[1fr_260px] gap-10 items-start">
+              {/* Timeline */}
+              <div>
+                {personal.milestones.map((m) => (
+                  <div key={m.date + m.title} className="timeline-item group">
+                    <div className="timeline-dot" />
+                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+                      <h4 className="font-semibold" style={{ color: "var(--text-strong)" }}>{m.title}</h4>
+                      <span className="text-sm font-medium shrink-0 ml-3" style={{ color: "var(--primary)" }}>{m.date}</span>
+                    </div>
+                    <p className="text-sm" style={{ color: "var(--text-muted)" }}>{m.description}</p>
+                    {m.location && (
+                      <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        {m.location}
+                      </p>
+                    )}
                   </div>
-                  <p className="text-sm" style={{ color: "var(--text-muted)" }}>{m.description}</p>
-                  {m.location && (
-                    <p className="text-xs text-gray-400 mt-1">{m.location}</p>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* Gallery — linear vertical stack */}
+              <div className="space-y-3 md:sticky md:top-6">
+                {personal.gallery.map((img, i) => (
+                  <button
+                    key={img.id}
+                    onClick={() => setLightboxIndex(i)}
+                    className="relative overflow-hidden rounded-xl bg-gray-100 group w-full aspect-[4/3] cursor-pointer"
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt || ""}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-end">
+                      {img.caption && (
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-sm font-medium px-3 py-2">
+                          {img.caption}
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {lightboxIndex !== null && (
+              <GalleryLightbox
+                images={personal.gallery}
+                index={lightboxIndex}
+                onClose={() => setLightboxIndex(null)}
+              />
+            )}
           </div>
         )}
 
@@ -216,45 +254,6 @@ export default function PersonalPage() {
           </div>
         )}
 
-        {/* Gallery */}
-        {personal.gallery?.length > 0 && (
-          <div className="section-panel">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <Camera className="w-5 h-5" style={{ color: "var(--primary)" }} />
-              Gallery
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {personal.gallery.map((img, i) => (
-                <button
-                  key={img.id}
-                  onClick={() => setLightboxIndex(i)}
-                  className="relative overflow-hidden rounded-xl bg-gray-100 group aspect-[4/3] cursor-pointer"
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt || ""}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-end">
-                    {img.caption && (
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-sm font-medium px-3 py-2">
-                        {img.caption}
-                      </span>
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {lightboxIndex !== null && (
-              <GalleryLightbox
-                images={personal.gallery}
-                index={lightboxIndex}
-                onClose={() => setLightboxIndex(null)}
-              />
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
