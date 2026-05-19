@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Calendar, Building2, ArrowUpRight, ChevronDown, ChevronUp } from "lucide-react";
+import { MDXProvider } from "@mdx-js/react";
 import TagPill from "../../components/TagPill";
+import { mdxComponents } from "../../components/mdx/mdxComponents";
 
 export default function ExperienceCard({ role }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { Body } = role;
 
   return (
     <div className="timeline-item group">
@@ -52,15 +55,11 @@ export default function ExperienceCard({ role }) {
         }`}
       >
         <div className="overflow-hidden">
-          {role.bullets ? (
-            <ul className="list-disc pl-4 space-y-2 mb-6">
-              {role.bullets.map((point, i) => (
-                <li key={i} className="text-sm text-body leading-relaxed">{point}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-body text-sm mb-6">{role.description}</p>
-          )}
+          <div className="text-body text-sm mb-6 space-y-3 [&>p]:m-0">
+            <MDXProvider components={mdxComponents}>
+              <Body />
+            </MDXProvider>
+          </div>
 
           {role.skills.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">

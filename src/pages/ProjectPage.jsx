@@ -4,78 +4,17 @@ import { MDXProvider } from "@mdx-js/react";
 import { Github, ExternalLink } from "lucide-react";
 import PageShell from "../components/PageShell";
 import TagPill from "../components/TagPill";
-import { sectionData } from "../data";
-import { projectChapters } from "../content/projects";
+import { projects, projectChapters } from "../content/projects";
 import { mdxComponents } from "../components/mdx/mdxComponents";
-
-function DetailSection({ title, children }) {
-  return (
-    <div>
-      <h2 className="font-bold text-lg text-(--text-strong) mb-3">{title}</h2>
-      {children}
-    </div>
-  );
-}
-
-function StructuredDetail({ detail }) {
-  return (
-    <div className="section-panel space-y-8">
-      <DetailSection title="Overview">
-        <p className="text-body text-[15px] leading-relaxed">{detail.overview}</p>
-      </DetailSection>
-
-      <DetailSection title="Why It Matters">
-        <p className="text-body text-[15px] leading-relaxed">
-          {detail.whyItMatters}
-        </p>
-      </DetailSection>
-
-      <DetailSection title="Technical Approach">
-        <ul className="space-y-2">
-          {detail.technicalApproach.map((point) => (
-            <li
-              key={point}
-              className="flex items-start gap-2 text-sm text-(--text-muted)"
-            >
-              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-(--primary) shrink-0" />
-              {point}
-            </li>
-          ))}
-        </ul>
-      </DetailSection>
-
-      <DetailSection title="Why This Is Relevant">
-        <p className="text-body text-[15px] leading-relaxed">
-          {detail.recruiterRelevance}
-        </p>
-      </DetailSection>
-    </div>
-  );
-}
-
-function MdxChapter({ children }) {
-  return (
-    <div className="section-panel">
-      <MDXProvider components={mdxComponents}>
-        <Suspense
-          fallback={<p className="text-body text-sm">Loading chapter…</p>}
-        >
-          {children}
-        </Suspense>
-      </MDXProvider>
-    </div>
-  );
-}
 
 export default function ProjectPage() {
   const { slug } = useParams();
-  const project = sectionData.projects.find((p) => p.slug === slug);
+  const project = projects.find((p) => p.slug === slug);
 
   if (!project) return <Navigate to="/" replace />;
 
-  const Chapter = projectChapters[slug];
-  const hasContent = Chapter || project.detail;
-  if (!hasContent) return <Navigate to="/" replace />;
+  const Chapter = projectChapters[slug] ?? project.Chapter;
+  if (!Chapter) return <Navigate to="/" replace />;
 
   return (
     <PageShell>
@@ -97,7 +36,7 @@ export default function ProjectPage() {
               Live Demo
             </a>
           )}
-          {project.link && (
+          {project.link && project.link !== "#" && (
             <a
               href={project.link}
               target="_blank"
@@ -136,13 +75,15 @@ export default function ProjectPage() {
       )}
 
       <div className="space-y-8">
-        {Chapter ? (
-          <MdxChapter>
-            <Chapter />
-          </MdxChapter>
-        ) : (
-          <StructuredDetail detail={project.detail} />
-        )}
+        <div className="section-panel">
+          <MDXProvider components={mdxComponents}>
+            <Suspense
+              fallback={<p className="text-body text-sm">Loading chapter...</p>}
+            >
+              <Chapter />
+            </Suspense>
+          </MDXProvider>
+        </div>
       </div>
     </PageShell>
   );
