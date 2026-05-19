@@ -87,7 +87,7 @@ export default function ProjectCard({ project, isExpanded, onToggle }) {
                 </a>
               )}
 
-              {project.slug && project.detail && (
+              {project.slug && (
                 <Link
                   to={`/projects/${project.slug}`}
                   onClick={(e) => e.stopPropagation()}

@@ -1,0 +1,45 @@
+---
+slug: manager-dna
+title: "Manager DNA: The Dynamic Style Box"
+description: A quantitative research pipeline that reverse-engineers the behavioral tendencies of active ETF managers using regime-aware factor analysis, PCA, and network theory.
+skills:
+  - Python
+  - Financial Econometrics
+  - GMM
+  - PCA
+  - Network Theory
+link: "#"
+---
+
+## Overview
+
+In active management, the most critical question is whether a fund manager is
+generating genuine alpha or simply taking on disguised factor risk. Manager DNA
+is a quantitative research pipeline built to reverse-engineer the behavioral
+tendencies of active ETF managers.
+
+## Why It Matters
+
+Traditional fund analysis relies heavily on static models, like the standard
+Morningstar 3x3 style box. Markets aren't static. A static grid fails to
+capture how a manager adapts when the market is under stress. This tool
+explicitly detects style drift, revealing whether a manager holds firm to their
+mandate during a downturn or tactically rotates their exposures.
+
+## Technical Approach
+
+- Extracts active return factor loadings using a rolling 63-day OLS regression
+  against the Fama-French 5-Factor model
+- Applies Gaussian Mixture Modeling (GMM) over macroeconomic indicators (SPY
+  returns, VIX, credit spreads, 10Y yields) for probabilistic market regime
+  classification
+- Uses Principal Component Analysis to extract orthogonal Super-Styles from the
+  beta matrix, then layers cosine similarity networks over GMM-defined regimes
+  to construct a bipartite conviction network
+- Calculates Louvain communities and spectral distances across multi-layer
+  graphs to quantify style drift at both intra-fund and universe levels
+
+## Why This Is Relevant
+
+Demonstrates the ability to apply rigorous econometrics and unsupervised
+learning to noisy financial data, separating true conviction from cyclical luck.

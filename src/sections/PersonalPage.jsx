@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { ArrowLeft, Book, Cpu, Globe, MapPin, Camera, GraduationCap } from "lucide-react";
+import { MDXProvider } from "@mdx-js/react";
 import TravelMap from "./TravelMap";
 import GalleryLightbox from "../components/GalleryLightbox";
 import { travelData } from "../data/travel";
 import { sectionData } from "../data";
+import PersonalDescription, { frontmatter as personalMeta } from "../content/personal.mdx";
+import { mdxComponents } from "../components/mdx/mdxComponents";
 
 const CONTINENTS = [
   {
@@ -96,7 +99,11 @@ export default function PersonalPage() {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
             Offline Mode
           </h1>
-          <p className="section-lead max-w-2xl">{personal.description}</p>
+          <MDXProvider components={mdxComponents}>
+            <div className="section-lead max-w-2xl [&>p]:m-0">
+              <PersonalDescription />
+            </div>
+          </MDXProvider>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             {[

@@ -8,10 +8,13 @@ import {
   Instagram,
   MapPin,
 } from "lucide-react";
+import { MDXProvider } from "@mdx-js/react";
 import SectionPanel from "../components/SectionPanel";
 import SectionTitle from "../components/SectionTitle";
 import GalleryLightbox from "../components/GalleryLightbox";
 import { travelData } from "../data/travel";
+import PersonalDescription, { frontmatter as personalMeta } from "../content/personal.mdx";
+import { mdxComponents } from "../components/mdx/mdxComponents";
 
 function QuickStats({ stats }) {
   return (
@@ -143,12 +146,16 @@ export default function PersonalSection({ data }) {
       <div className="grid md:grid-cols-3 gap-8 items-start">
         <div className="md:col-span-2">
           <SectionTitle className="mb-6">Offline Mode</SectionTitle>
-          <p className="section-lead">{data.description}</p>
+          <MDXProvider components={mdxComponents}>
+            <div className="section-lead [&>p]:m-0">
+              <PersonalDescription />
+            </div>
+          </MDXProvider>
         </div>
         <QuickStats stats={data.stats} />
       </div>
 
-      <Gallery gallery={data.gallery} instagram={data.instagram} />
+      <Gallery gallery={data.gallery} instagram={personalMeta.instagram} />
 
       <TravelPreview />
     </SectionPanel>

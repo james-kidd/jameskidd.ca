@@ -1,12 +1,14 @@
-import { lazy } from "react";
+const modules = import.meta.glob("./*.mdx", { eager: true });
 
-const modules = import.meta.glob("./*.mdx");
+export const projects = Object.values(modules)
+  .map((mod) => ({
+    ...mod.frontmatter,
+    Chapter: mod.default,
+  }))
+  .filter((p) => p.slug);
 
 export const projectChapters = Object.fromEntries(
-  Object.entries(modules).map(([path, loader]) => {
-    const slug = path.replace(/^\.\//, "").replace(/\.mdx$/, "");
-    return [slug, lazy(loader)];
-  })
+  projects.map((p) => [p.slug, p.Chapter])
 );
 
 export function hasChapter(slug) {
