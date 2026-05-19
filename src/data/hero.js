@@ -14,11 +14,10 @@ export const heroData = {
   contactGuidance: {
     recruiter: {
       label: "Recruiters",
-      emailKey: "school",
-      text: "please use my McGill email",
+      text: "contact details are included in my resume",
     },
     contract: {
-      label: "Contract work",
+      label: "Contract inquiries",
       emailKey: "dev",
     },
   },

@@ -55,7 +55,7 @@ function Gallery({ gallery, instagram }) {
             className="flex items-center text-sm hover:text-(--primary) transition-colors"
             aria-label="Instagram"
           >
-            jameskidd__
+            {personalMeta.instagramHandle}
             <Instagram className="w-5 h-5 ml-1" />
           </a>
         )}
@@ -145,7 +145,7 @@ export default function PersonalSection({ data }) {
     <SectionPanel>
       <div className="grid md:grid-cols-3 gap-8 items-start">
         <div className="md:col-span-2">
-          <SectionTitle className="mb-6">Offline Mode</SectionTitle>
+          <SectionTitle className="mb-6">{personalMeta.title}</SectionTitle>
           <MDXProvider components={mdxComponents}>
             <div className="section-lead [&>p]:m-0">
               <PersonalDescription />

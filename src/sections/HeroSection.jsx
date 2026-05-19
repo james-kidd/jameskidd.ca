@@ -9,7 +9,7 @@ export default function HeroSection({ data }) {
       {/* CONTENT */}
       <div className="flex-1 flex flex-col justify-center items-start md:block md:flex-none">
         <span className="eyebrow text-(--primary) mb-4 block">
-          Software Developer & Data Scientist
+          {data.title}
         </span>
 
         <h1 className="text-6xl md:text-7xl font-extrabold text-gray-900 tracking-tighter mb-6 leading-tight">
