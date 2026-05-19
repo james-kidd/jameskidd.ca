@@ -79,7 +79,7 @@ export const sectionData = {
         },
 
         {
-          school: "Queen’s University",
+          school: "Queen's University",
           degree: "B.Sc. Computer Engineering (Transferred)",
           year: "2020 — 2022",
           description:
@@ -171,7 +171,7 @@ export const sectionData = {
         title: "Executive Committee Member",
         company: "McGill CodeJam (Engineering Hackathon)",
         description:
-          "Leadership role supporting academic and technical programming for McGill’s largest engineering hackathon. Organized logistics for 350+ participants across facilities, sponsors, and staff. Also prepared and delivered four MERN-stack workshops spanning backend, frontend, and cloud deployment while mentoring first-time hackers.",
+          "Leadership role supporting academic and technical programming for McGill's largest engineering hackathon. Organized logistics for 350+ participants across facilities, sponsors, and staff. Also prepared and delivered four MERN-stack workshops spanning backend, frontend, and cloud deployment while mentoring first-time hackers.",
         skills: [
           "Event Operations",
           "Technical Mentorship",
@@ -182,9 +182,9 @@ export const sectionData = {
       {
         date: "2021 — 2022",
         title: "Director of Sponsorships",
-        company: "QCTF (Queen’s Cybersecurity Hackathon)",
+        company: "QCTF (Queen's Cybersecurity Hackathon)",
         description:
-          "Led sponsor outreach and external relations for Queen’s University’s annual cybersecurity hackathon, managing sponsor communications, event publicity, and securing funding to support competition operations and growth.",
+          "Led sponsor outreach and external relations for Queen's University's annual cybersecurity hackathon, managing sponsor communications, event publicity, and securing funding to support competition operations and growth.",
         skills: [
           "Sponsorship Strategy",
           "Stakeholder Management",
@@ -392,7 +392,7 @@ export const sectionData = {
   ========================= */
   personal: {
     description:
-      "There’s life beyond coding. As much as I enjoy building software, I value time spent outdoors, traveling, and real human connection.",
+      "There's life beyond coding. As much as I enjoy building software, I value time spent outdoors, traveling, and real human connection.",
     stats: [
       { label: "Countries Visited", value: "39" },
       { label: "Current Read", value: "Options, Futures, and Other Derivatives — John Hull" },
@@ -401,13 +401,13 @@ export const sectionData = {
       {
         date: "2000s",
         title: "Childhood in the Philippines",
-        description: ‘Grew up in the Philippines and attended Lycée Français de Manille. I still say "Salamat" to Filipinos I meet today because the country gave me some of my strongest early memories.’,
+        description: 'Grew up in the Philippines and attended Lycée Français de Manille. I still say "Salamat" to Filipinos I meet today because the country gave me some of my strongest early memories.',
         location: "Manila, Philippines",
       },
       {
         date: "2010s",
         title: "Kuala Lumpur, Malaysia",
-        description: ‘"Malaysia, Truly Asia" holds true. I miss Bastari and the people I grew up with there.’,
+        description: '"Malaysia, Truly Asia" holds true. I miss Bastari and the people I grew up with there.',
         location: "Kuala Lumpur, Malaysia",
       },
       {
@@ -442,8 +442,8 @@ export const sectionData = {
       },
       {
         date: "2020",
-        title: "Queen’s University",
-        description: "Moved to Kingston to study Computer Engineering at Queen’s University, where I became more interested in math, software, and AI.",
+        title: "Queen's University",
+        description: "Moved to Kingston to study Computer Engineering at Queen's University, where I became more interested in math, software, and AI.",
         location: "Kingston, Canada",
       },
       {

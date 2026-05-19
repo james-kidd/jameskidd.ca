@@ -105,15 +105,19 @@ function TravelPreview() {
           { label: "Countries", value: stats.countriesVisited, Icon: Globe },
           { label: "Cities", value: stats.citiesExplored, Icon: MapPin },
           { label: "Photos", value: stats.totalPhotos.toLocaleString(), Icon: Camera },
-        ].map(({ label, value, Icon }) => (
-          <div key={label} className="text-center">
-            <Icon className="w-5 h-5 mx-auto mb-2 text-(--primary)" />
-            <div className="text-xl font-bold text-gray-900">{value}</div>
-            <div className="text-[10px] text-gray-400 uppercase tracking-wider">
-              {label}
+        ].map((stat) => {
+          const StatIcon = stat.Icon;
+
+          return (
+            <div key={stat.label} className="text-center">
+              <StatIcon className="w-5 h-5 mx-auto mb-2 text-(--primary)" />
+              <div className="text-xl font-bold text-gray-900">{stat.value}</div>
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider">
+                {stat.label}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="flex flex-wrap gap-2">
