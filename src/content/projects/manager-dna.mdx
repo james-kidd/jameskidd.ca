@@ -11,35 +11,22 @@ skills:
 link: "#"
 ---
 
-## Overview
+## The Core Question: Alpha or Disguised Risk?
 
-In active management, the most critical question is whether a fund manager is
-generating genuine alpha or simply taking on disguised factor risk. Manager DNA
-is a quantitative research pipeline built to reverse-engineer the behavioral
-tendencies of active ETF managers.
+In active management, the most critical question is whether a fund manager is generating genuine alpha or simply taking on disguised factor risk. "Manager DNA" is a quantitative research pipeline I built to reverse-engineer the behavioral tendencies of active ETF managers.
 
-## Why It Matters
+## Beyond the Static Grid
 
-Traditional fund analysis relies heavily on static models, like the standard
-Morningstar 3x3 style box. Markets aren't static. A static grid fails to
-capture how a manager adapts when the market is under stress. This tool
-explicitly detects style drift, revealing whether a manager holds firm to their
-mandate during a downturn or tactically rotates their exposures.
+Traditional fund analysis relies heavily on static models, like the standard Morningstar 3x3 style box. The problem? Markets aren't static. A static grid fails to capture how a manager adapts when the market is under stress. I wanted to build a tool that explicitly detects "style drift"—revealing whether a manager holds firm to their mandate during a downturn or tactically rotates their exposures.
 
-## Technical Approach
+## The Quantitative Engine
 
-- Extracts active return factor loadings using a rolling 63-day OLS regression
-  against the Fama-French 5-Factor model
-- Applies Gaussian Mixture Modeling (GMM) over macroeconomic indicators (SPY
-  returns, VIX, credit spreads, 10Y yields) for probabilistic market regime
-  classification
-- Uses Principal Component Analysis to extract orthogonal Super-Styles from the
-  beta matrix, then layers cosine similarity networks over GMM-defined regimes
-  to construct a bipartite conviction network
-- Calculates Louvain communities and spectral distances across multi-layer
-  graphs to quantify style drift at both intra-fund and universe levels
+To track this behavior dynamically, I designed a three-stage regime-aware pipeline:
 
-## Why This Is Relevant
+- **Factor Extraction:** The system first extracts active return factor loadings using a rolling 63-day OLS regression against the Fama-French 5-Factor model.
+- **Market Regime Classification:** Rather than using arbitrary cutoffs, I applied Gaussian Mixture Modeling (GMM) over macroeconomic indicators (SPY returns, VIX, credit spreads, 10Y yields) to provide a soft, probabilistic classification of current market states.
+- **Mapping the DNA:** I used Principal Component Analysis (PCA) to extract orthogonal 'Super-Styles' from the beta matrix. By layering cosine similarity networks over the GMM-defined market regimes, the pipeline constructs a bipartite conviction network.
 
-Demonstrates the ability to apply rigorous econometrics and unsupervised
-learning to noisy financial data, separating true conviction from cyclical luck.
+## The Edge
+
+By calculating Louvain communities and spectral distances across these multi-layer graphs, the tool quantifies style drift at both the intra-fund and universe levels. It applies rigorous econometrics and unsupervised learning to noisy financial data to help separate true conviction from cyclical luck.
