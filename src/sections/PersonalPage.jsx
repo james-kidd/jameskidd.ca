@@ -6,7 +6,7 @@ import TravelMap from "./TravelMap";
 import GalleryLightbox from "../components/GalleryLightbox";
 import { travelData } from "../data/travel";
 import { sectionData } from "../data";
-import PersonalDescription from "../content/personal.mdx";
+import PersonalDescription, { frontmatter as personalMeta } from "../content/personal.mdx";
 import { mdxComponents } from "../components/mdx/mdxComponents";
 
 const CONTINENTS = [
