@@ -78,9 +78,9 @@ For every distinct regime in S, the manager's behavioral vector becomes a clean 
 
 This is where the framework becomes solvable in polynomial time. I construct a **Bipartite Network Graph** to map managers to their regime-specific behaviors.
 
-<div className="text-sm text-gray-500 mb-6 italic border-l-2 border-gray-300 pl-4 dark:border-gray-600 dark:text-gray-400">
-  **Algorithmic Note:** While calculating bipartite edges is strictly polynomial (O(N x M)), finding the absolute perfect community structure (maximizing "modularity") is mathematically NP-Hard. To resolve this, the graph uses greedy heuristic clustering (the Louvain method). By searching for a good local optimum rather than an exhaustive perfect match, community detection executes in near-linear time (O(V log V)).
-</div>
+<Callout type="aside" title="Algorithmic Note">
+While calculating bipartite edges is strictly polynomial (O(N x M)), finding the absolute perfect community structure (maximizing "modularity") is mathematically NP-Hard. To resolve this, the graph uses greedy heuristic clustering (the Louvain method). By searching for a good local optimum rather than an exhaustive perfect match, community detection executes in near-linear time (O(V log V)).
+</Callout>
 
 The graph G = (U, V, E) is defined as:
 * **Set U (The Left Nodes):** The Institutional Managers (M1, M2, ..., Mn).
