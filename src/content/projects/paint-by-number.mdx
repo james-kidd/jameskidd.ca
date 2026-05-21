@@ -1,8 +1,8 @@
 ---
 slug: paint-by-number
 featured: true
-title: Commodity Forecasting via Deterministic Vision
-description: An automated, deterministic computer vision pipeline designed to track vegetation progressions across satellite imagery to predict agricultural yields, with a Paint-by-Number sandbox for the core segmentation engine.
+title: Deterministic Vision Pipeline
+description: A classical computer vision pipeline that segments imagery into discrete color regions without neural networks. Currently being applied to satellite vegetation tracking for agricultural yield prediction. Paint-by-Number is the sandbox.
 skills:
   - Python
   - OpenCV
@@ -13,22 +13,19 @@ demo: https://huggingface.co/spaces/jkiddmtl/paint-by-number
 embed: https://jkiddmtl-paint-by-number.hf.space
 ---
 
-## From Pixels to Futures
+## Where This Is Going
 
-In commodity markets, accurate supply forecasting often comes down to tracking the physical maturation of crops from space. This project serves as the groundwork for an automated, deterministic computer vision pipeline designed to track vegetation progressions (from healthy green, to yellowing, to harvest-ready brown) across satellite imagery to predict agricultural yields.
+The core idea: take complex visual data and reduce it to discrete, interpretable regions using deterministic math — no black-box models. The same pipeline can apply to satellite imagery, medical scans, industrial inspection, or anything where you need reproducible segmentation at scale.
 
-## The "Paint-by-Number" Sandbox
+I thought agriculture was the most interesting place to start. Tracking vegetation as it progresses from green to yellowing to harvest-ready brown, across satellite time-series, to forecast commodity yields. That's what I'm currently building toward.
 
-To refine the segmentation logic in a controlled environment, I currently expose the core engine as an interactive "Paint-by-Number" web application. It takes complex visual data and cleanly reduces it into discrete, contiguous regions based on color and spatial proximity.
+## The Sandbox
 
-## The Algorithmic Architecture
+Paint-by-Number is the controlled environment where I refine the segmentation logic. Upload any image, and it cleanly reduces it into numbered, contiguous regions based on color and spatial proximity. Same engine, friendlier interface.
 
-While the industry default is often to throw deep learning at image problems, I explicitly avoided black-box neural networks in favor of classical, deterministic methods. When dealing with massive time-series multispectral agricultural data, interpretability, strict reproducibility, and scale matter most.
+## How It Works
 
-- **Perceptual Uniformity:** The pipeline operates entirely in the CIELAB color space, ensuring that mathematical distances between pixels perfectly match human-perceived color differences.
-- **Superpixel Clustering:** I used Simple Linear Iterative Clustering (SLIC) in a joint 5D LAB+XY space, allowing precise control over the trade-off between color adherence and shape regularity.
-- **Palette Reduction:** The system extracts region mean colors into k-means clustering to define a representative palette, applying a Region Adjacency Graph (RAG) to seamlessly collapse similar adjacent superpixels.
-
-## The Edge
-
-This architecture guarantees highly efficient $O(N)$ complexity. It demonstrates that the best solution for commercial data processing isn't always the trendiest AI model, but rather a mathematically sound, highly scalable deterministic pipeline.
+- Operates entirely in CIELAB color space — mathematical distances match human-perceived color differences
+- SLIC superpixel clustering in a joint 5D LAB+XY space for precise control over color adherence vs. shape regularity
+- K-means palette reduction with Region Adjacency Graph merging to collapse similar adjacent regions
+- No neural networks — deterministic, reproducible, O(N) complexity
