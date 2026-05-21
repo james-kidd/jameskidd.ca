@@ -7,7 +7,7 @@ import { SECTIONS } from "./sections/registry";
 import { heroData, sectionData } from "./data";
 import SkillsPage from "./pages/SkillsPage";
 import ProjectPage from "./pages/ProjectPage";
-import PersonalPage from "./sections/PersonalPage";
+import PersonalPage from "./pages/PersonalPage";
 
 function HomePage() {
   return (

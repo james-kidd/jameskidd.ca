@@ -233,7 +233,7 @@ export const sectionData = {
       },
       {
         date: "2018",
-        title: "GMAA Varsity Basketball MVP",
+        title: "GMAA Varsity Volleyball MVP",
         description: "Named GMAA Juvenile Boys Varsity Finals MVP — one of my proudest high school athletic moments.",
         location: "Montreal, Canada",
       },

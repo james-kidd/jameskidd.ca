@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Book, Cpu, Globe, MapPin, Camera, GraduationCap } from "lucide-react";
 import { MDXProvider } from "@mdx-js/react";
 import PageShell from "../components/PageShell";
-import TravelMap from "./TravelMap";
+import TravelMap from "../sections/TravelMap";
 import GalleryLightbox from "../components/GalleryLightbox";
 import { travelData } from "../data/travel";
 import { sectionData } from "../data";
