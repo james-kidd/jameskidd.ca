@@ -1,9 +1,11 @@
 import Callout from "./Callout";
 import Figure from "./Figure";
+import BipartiteVisual from "../BipartiteVisual";
 
 export const mdxComponents = {
   Callout,
   Figure,
+  BipartiteVisual,
   h2: (props) => (
     <h2
       className="text-2xl font-bold text-(--text-strong) mt-10 mb-4 tracking-tight"

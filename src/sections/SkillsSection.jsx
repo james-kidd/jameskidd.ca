@@ -20,22 +20,30 @@ export default function SkillsSection() {
       </p>
 
       {/* THREE PILLARS */}
-      <div className="grid gap-5 md:grid-cols-3 mb-10">
-        {pillars.map((pillar) => {
-          return (
-            <div key={pillar.id} className="surface-muted p-5">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="icon-box">
-                  <pillar.Icon className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-(--text-strong)">{pillar.title}</h3>
+      <div className="space-y-4 mb-10">
+        {pillars.map((pillar) => (
+          <div key={pillar.id} className="surface-muted p-6">
+            <div className="flex items-start gap-4">
+              <div className="icon-box shrink-0 mt-0.5">
+                <pillar.Icon className="w-5 h-5" />
               </div>
-              <p className="text-sm text-(--text-muted) leading-relaxed">
-                {pillar.subtitle}
-              </p>
+              <div className="min-w-0">
+                <h3 className="font-bold text-(--text-strong) text-lg">{pillar.title}</h3>
+                <p className="text-sm text-(--text-muted) mt-1">{pillar.subtitle}</p>
+                {pillar.evidence?.length > 0 && (
+                  <ul className="mt-3 space-y-1.5">
+                    {pillar.evidence.map((item) => (
+                      <li key={item} className="text-sm text-(--text-muted) flex items-start gap-2">
+                        <span className="text-(--primary) mt-1.5 shrink-0 w-1 h-1 rounded-full bg-(--primary)" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
       {/* QUICK LANGUAGES */}
