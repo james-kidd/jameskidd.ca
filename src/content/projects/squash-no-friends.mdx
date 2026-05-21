@@ -1,28 +1,29 @@
 ---
 slug: squash-no-friends
+tag: "'23 — First pseudo-AI agent"
 title: SquashNoFriends
-description: Squash partner-matching platform built at McGill CodeJam. Used NLP to parse availability and a Python scheduler to generate weekly matches.
+description: Squash matchmaking platform built at McGill CodeJam. Fed an LLM ambiguous schedule descriptions and watched it return structured data. That was the moment.
 skills:
   - Python
-  - NLP
+  - OpenAI API
   - Next.js
   - MySQL
 link: https://devpost.com/software/squash-no-friends
 ---
 
-## The Friction Point
+## What It Does
 
-Finding a consistent playing partner is a real friction point in recreational sports. SquashNoFriends is a scheduling platform that matches squash players based on their availability. Users describe their free time in plain language, and the system handles the rest.
+A matchmaking platform for McGill's squash gym. You describe your week in plain English, and the system pairs you with an opponent and emails you your match. Built for 1v1, but the scheduler handles 2v2 and 3v3 — we scoped down for the hackathon, not because it couldn't scale.
 
-## Technical Execution
+## The Idea
 
-I wanted to demonstrate how natural language processing can remove barriers to product adoption—users shouldn't have to fill out rigid forms if they can just describe their schedule naturally.
+First time calling an LLM API. 2023. I fed it messy, ambiguous availability descriptions and it handed back clean, structured time slots. In 2026 I understand how unremarkable that sounds. But you had to see it — it was like a caveman discovering fire.
 
-- Built an NLP parser that converts free-text availability descriptions into structured time intervals.
-- Designed a Python scheduling algorithm that maximizes optimal pairings while respecting time constraints.
-- Developed the full stack using a Next.js frontend and a MySQL backend.
-- Shipped the working prototype during a 24-hour hackathon environment.
+Ambiguous input in, structured data out. That was the entire premise. Not everything here is polished, but the idea was good and it actually worked.
 
-## The Edge
+## How It Works
 
-This project proves my ability to scope, design, and deliver a working product under extreme time pressure. It successfully combines NLP, algorithm design, and full-stack development into a practical tool.
+- Users describe their weekly availability in natural language
+- An LLM parses the text into structured time intervals
+- A Python scheduler maximizes optimal pairings across all registered players
+- Match confirmations go out by email at the start of each week

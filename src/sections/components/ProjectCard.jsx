@@ -14,6 +14,11 @@ export default function ProjectCard({ project, isExpanded, onToggle }) {
             <h3 className="font-semibold text-(--text-strong) group-hover:text-(--primary) transition-colors">
               {project.title}
             </h3>
+            {project.tag && (
+              <span className="text-[10px] font-medium italic text-(--text-muted) whitespace-nowrap">
+                {project.tag}
+              </span>
+            )}
             {project.featured && (
               <span className="text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full bg-(--primary) text-white">
                 Featured

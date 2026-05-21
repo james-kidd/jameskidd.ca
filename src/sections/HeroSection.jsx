@@ -1,5 +1,6 @@
 import { FileText, Linkedin, ChevronDown } from "lucide-react";
 import ContactInfo from "../components/ContactInfo";
+import TypingAnimation from "../components/TypingAnimation";
 
 export default function HeroSection({ data }) {
   const { emails } = data;
@@ -17,9 +18,13 @@ export default function HeroSection({ data }) {
           <span className="text-(--primary)">.</span>
         </h1>
 
-        <p className="section-lead md:text-2xl text-body mb-6 md:max-w-xl">
+        <p className="section-lead md:text-2xl text-body mb-4 md:max-w-xl">
           {data.tagline}
         </p>
+
+        <div className="mb-6 md:max-w-xl">
+          <TypingAnimation />
+        </div>
 
         {data.stack?.length > 0 && (
           <div className="flex flex-wrap gap-2">
