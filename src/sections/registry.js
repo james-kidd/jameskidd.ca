@@ -7,15 +7,15 @@ import PersonalSection from "./PersonalSection";
 
 export const SECTIONS = [
   {
-    id: "about",
-    label: "About",
-    Component: AboutSection,
-    nav: true,
-  },
-  {
     id: "experience",
     label: "Experience",
     Component: ExperienceSection,
+    nav: true,
+  },
+  {
+    id: "about",
+    label: "About",
+    Component: AboutSection,
     nav: true,
   },
   {
