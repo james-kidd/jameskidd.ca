@@ -1,42 +1,23 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
 
 /* ===============================
    1. THEMES
-   =============================== */
+   ===============================
+   Every design token lives in tokens/ as W3C DTCG JSON and is compiled to
+   src/styles/tokens.css by `npm run tokens` (wired into `prebuild`, so a
+   production build always regenerates it). Edit tokens/*.json, never the
+   generated CSS. See docs/figma-tokens.md for the Figma workflow. */
+@import "./styles/tokens.css";
+
+/* Tailwind's automatic detection scans the whole project root, and prose that
+   names a utility is indistinguishable from markup that uses one — CLAUDE.md's
+   `bg-(--surface)` example and this pipeline's `$description` strings both leak
+   phantom utilities into the bundle. An allowlist stays correct as files are
+   added; `source(none)` above turns the auto-detection off. */
+@source "../src";
+@source "../index.html";
+
 @layer base {
-  :root {
-    --primary: #2563eb;
-    --primary-dark: #1e40af;
-    --secondary: #eff6ff;
-    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --surface: #ffffff;
-    --surface-muted: #f8fafc;
-    --border: #e5e7eb;
-    --text-strong: #0f172a;
-    --text-muted: #475569;
-    --shadow-soft: 0 1px 3px rgba(15, 23, 42, 0.06);
-    --shadow-hover: 0 2px 6px rgba(15, 23, 42, 0.1);
-    --radius-lg: 18px;
-  }
-
-  [data-theme='nature'] {
-    --primary: #059669;
-    --primary-dark: #064e3b;
-    --secondary: #ecfdf5;
-    --font-sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --surface-muted: #f0fdf4;
-    --border: #d1fae5;
-  }
-
-  [data-theme='editorial'] {
-    --primary: #be123c;
-    --primary-dark: #881337;
-    --secondary: #fff1f2;
-    --font-sans: Georgia, "Times New Roman", serif;
-    --surface-muted: #fff7fb;
-    --border: #ffe4ed;
-  }
-
   body {
     font-family: var(--font-sans);
     background: var(--surface-muted);
@@ -47,12 +28,40 @@
 
 /* ===============================
    2. TAILWIND TOKENS (v4)
-   =============================== */
+   ===============================
+   Bridges the raw tokens into Tailwind's theme namespaces so they also drive
+   generated utilities (`bg-primary`, `font-sans`, …) alongside the arbitrary-
+   variable syntax used throughout the JSX (`text-(--text-muted)`).
+
+   A Tailwind namespace name may never alias a raw token of the *same* name —
+   `--font-sans: var(--font-sans)` is a self-reference that is only saved by the
+   cascade. Hence the raw typeface token is `--font-family-sans`; `--font-sans`
+   is declared here and nowhere else, so it resolves cleanly and still re-resolves
+   per theme because `--font-family-sans` is redeclared on each `[data-theme]`.
+
+   Deliberately NOT registered here, because their token names collide with a
+   Tailwind namespace and registering them would change rendered output:
+     --shadow-soft / --shadow-hover  (`--shadow-*` namespace)
+     --radius-sm / -md / -lg / -full (`--radius-*`; `:root` already overrides
+                                      Tailwind's defaults from @layer base)
+     --text-micro / -eyebrow / -body (`--text-*` is the font-size namespace, and
+                                      a generated `.text-body` utility would
+                                      shadow the `.text-body` component class)
+   Those are consumed as `var(--token)`, or as an arbitrary utility. Mind the
+   `text-*` shorthand: `text-(--text-body)` compiles to a *colour*, so a font size
+   must be written `text-[length:var(--text-body)]`. */
 @theme {
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
   --color-secondary: var(--secondary);
-  --font-sans: var(--font-sans);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-text-strong: var(--text-strong);
+  --color-text-muted: var(--text-muted);
+  --color-accent-warn: var(--accent-warn);
+
+  --font-sans: var(--font-family-sans);
 }
 
 /* 

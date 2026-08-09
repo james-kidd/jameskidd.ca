@@ -1,0 +1,47 @@
+{
+  "_readme": "Declarative map of published Google Sheet tabs to generated JSON. Run `npm run sync-content` to pull. Full spec + worked example: docs/content-sheet.md. Keys starting with _ are documentation and ignored by the script.",
+  "outDir": "src/data/generated",
+  "tabs": [],
+  "_tabSchema": {
+    "key": "required string. Stable identifier for the tab; also the value for `--tab <key>`.",
+    "description": "optional string. Free-text note about what lives in this tab.",
+    "csvUrl": "required string. The tab's published CSV URL (File > Share > Publish to web > pick the tab > Comma-separated values). Must end in output=csv. Publishing makes the tab publicly readable.",
+    "output": "required string. Bare .json filename written under outDir. No slashes.",
+    "requiredColumns": "optional string[]. Each must exist in the header row AND be non-empty in every data row, or the sync fails and writes nothing.",
+    "columns": "optional object. Column name -> type: string (default), number, boolean, string-array (splits on |).",
+    "sortBy": "optional string. Column to sort rows by. Defaults to `order` when that column exists; omit both and rows keep sheet order (the script warns).",
+    "sortDirection": "optional \"asc\" (default) or \"desc\".",
+    "ignoreColumns": "optional string[]. Columns present in the sheet but kept out of the JSON. May not overlap requiredColumns, sortBy, or groupBy.column.",
+    "groupBy": "optional object { column, references? }. Emits `groups` (a map of column value -> rows) instead of a flat `rows` array — the child half of a parent/child pair. `references: { tab, column }` additionally asserts every value has a matching parent row."
+  },
+  "_exampleTabs": [
+    {
+      "key": "education",
+      "description": "One row per school. Parent of the `coursework` tab.",
+      "csvUrl": "https://docs.google.com/spreadsheets/d/e/PUBLISHED_ID/pub?gid=0&single=true&output=csv",
+      "output": "education.json",
+      "requiredColumns": ["id", "order", "school", "credential", "start", "end"],
+      "columns": {
+        "order": "number",
+        "highlights": "string-array"
+      },
+      "sortBy": "order"
+    },
+    {
+      "key": "coursework",
+      "description": "Many rows per school, joined to `education` on school_id.",
+      "csvUrl": "https://docs.google.com/spreadsheets/d/e/PUBLISHED_ID/pub?gid=1234567890&single=true&output=csv",
+      "output": "coursework.json",
+      "requiredColumns": ["school_id", "order", "title"],
+      "columns": {
+        "order": "number",
+        "featured": "boolean"
+      },
+      "sortBy": "order",
+      "groupBy": {
+        "column": "school_id",
+        "references": { "tab": "education", "column": "id" }
+      }
+    }
+  ]
+}
