@@ -69,10 +69,12 @@ Components import from these loaders, not from `src/data/` for content that has 
 | File | What it contains |
 |---|---|
 | `hero.js` | Name, title, tagline, stack tags, contact emails, social URLs, resume link |
-| `sections.js` | Education coursework, skill tag blocks, personal milestones/favorites/gallery config |
+| `sections/` | One module per data slice, assembled into `sectionData` by `sections/index.js` (which also exports `experienceGroups`): `education.js`, `skills.js`, and `personal/{stats,milestones,favorites,gallery}.js` |
 | `skills-detail.js` | Skills page headline and positioning text |
 | `travel.js` | Auto-generated from photo EXIF — country/city lists, stats (do not edit manually) |
 | `index.js` | Re-exports `heroData`, `sectionData`, `experienceGroups`, `skillsDetailData` |
+
+`sectionData` keeps a fixed shape regardless of how the slices are split: `about.education.details[]`, `skills.blocks[]`, and `personal.{stats,milestones,favorites,gallery}`. Edit a slice in its own file. There are two barrels: `sections/index.js` composes the top-level `about`/`skills`/`personal` keys, and `sections/personal/index.js` composes the four `personal.*` keys — add or remove a key in whichever one owns that level.
 
 ### Section Registry (`src/sections/registry.js`)
 
