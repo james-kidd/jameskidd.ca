@@ -1,6 +1,7 @@
-import { createElement, useEffect, useState } from "react";
+import { createElement, useSyncExternalStore } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
+import { useRouteMeta } from "./hooks/useRouteMeta";
 import Layout from "./layout/Layout";
 import HeroSection from "./sections/HeroSection";
 import { SECTIONS } from "./sections/registry";
@@ -8,6 +9,12 @@ import { heroData, sectionData } from "./data";
 import SkillsPage from "./pages/SkillsPage";
 import ProjectPage from "./pages/ProjectPage";
 import PersonalPage from "./pages/PersonalPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import {
+  subscribeTheme,
+  getThemeSnapshot,
+  getServerThemeSnapshot,
+} from "./theme";
 
 function HomePage() {
   return (
@@ -23,19 +30,16 @@ function HomePage() {
   );
 }
 
-function AppRoutes({ currentTheme, setTheme }) {
+function AppRoutes({ currentTheme }) {
   useScrollToTop();
+  useRouteMeta();
 
   return (
     <Routes>
       <Route
         path="/"
         element={
-          <Layout
-            sections={SECTIONS}
-            currentTheme={currentTheme}
-            setTheme={setTheme}
-          >
+          <Layout sections={SECTIONS} currentTheme={currentTheme}>
             <HomePage />
           </Layout>
         }
@@ -43,23 +47,37 @@ function AppRoutes({ currentTheme, setTheme }) {
       <Route path="/skills" element={<SkillsPage />} />
       <Route path="/projects/:slug" element={<ProjectPage />} />
       <Route path="/personal" element={<PersonalPage />} />
+      {/* Prerendered to dist/404.html, which Vercel serves for unknown paths. */}
+      <Route path="/404" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
 
-function App() {
-  const [currentTheme, setCurrentTheme] = useState(
-    () => localStorage.getItem("portfolio-theme") || "tech"
+/**
+ * Router-agnostic app body. The client wraps this in <BrowserRouter>; the
+ * prerenderer wraps it in <StaticRouter>.
+ *
+ * `localStorage` and `document` do not exist during prerendering, so the theme
+ * is read through an external store whose server snapshot is `null`. The
+ * server markup and the first client render therefore always match, and the
+ * stored theme takes over immediately after hydration. First paint is still
+ * correct because index.html applies `data-theme` inline before any CSS runs.
+ */
+export function AppShell() {
+  const currentTheme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot
   );
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = currentTheme;
-    localStorage.setItem("portfolio-theme", currentTheme);
-  }, [currentTheme]);
+  return <AppRoutes currentTheme={currentTheme} />;
+}
 
+function App() {
   return (
     <BrowserRouter>
-      <AppRoutes currentTheme={currentTheme} setTheme={setCurrentTheme} />
+      <AppShell />
     </BrowserRouter>
   );
 }

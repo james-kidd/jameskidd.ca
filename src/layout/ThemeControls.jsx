@@ -1,10 +1,6 @@
-const THEMES = [
-  { id: "tech", color: "#2563eb", label: "Tech" },
-  { id: "nature", color: "#059669", label: "Nature" },
-  { id: "editorial", color: "#be123c", label: "Editorial" },
-];
+import { THEMES, setTheme } from "../theme";
 
-export default function ThemeControls({ currentTheme, setTheme }) {
+export default function ThemeControls({ currentTheme }) {
   return (
     <div className="pt-4 border-t border-gray-100">
       <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">

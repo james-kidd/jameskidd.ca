@@ -6,16 +6,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run dev      # Start Vite dev server with HMR
-npm run build    # Production build to dist/
+npm run build    # Full production build: client + SSR bundle + prerender
 npm run lint     # ESLint
 npm run preview  # Preview production build
 ```
 
-No test runner is configured.
+No test runner is configured. Treat `npm run lint` plus a clean `npm run build` as the test suite.
 
 ## Architecture
 
-React 19 + Vite 7 + Tailwind CSS v4 portfolio site deployed on Vercel. JavaScript/JSX only (no TypeScript). Client-side rendering with no backend.
+React 19 + Vite 7 + Tailwind CSS v4 portfolio site deployed on Vercel. JavaScript/JSX only (no TypeScript). No backend — every route is prerendered to static HTML at build time and hydrated in the browser.
+
+### Build & prerendering
+
+`npm run build` runs three stages:
+
+1. `build:client` — `vite build` → `dist/` (assets + `index.html` template)
+2. `build:ssr` — `vite build --ssr src/entry-server.jsx` → `dist-ssr/entry-server.js`
+3. `prerender` — `node scripts/prerender.js`
+
+The prerender step renders each route with `renderToString` inside a `StaticRouter`, injects the markup into `#root`, and swaps the `<!--seo:start-->…<!--seo:end-->` block in the template for that route's head tags. Output is flat `.html` files (`dist/skills.html`, `dist/projects/<slug>.html`, `dist/404.html`) plus `sitemap.xml` and `robots.txt`. `vercel.json` sets `cleanUrls` so `/skills` resolves to `skills.html`; **there is no SPA catch-all rewrite** — it would shadow the prerendered files.
+
+Anything touching `window`, `document` or `localStorage` must stay inside an effect or be guarded, otherwise the prerender pass crashes. `src/main.jsx` hydrates when `#root` already has markup and falls back to `createRoot` otherwise.
+
+### Per-route metadata
+
+`src/seo.js` is the single source of truth for titles, descriptions, canonicals and OG/Twitter tags. It is consumed by `scripts/prerender.js` at build time and by `src/hooks/useRouteMeta.js` at runtime (client-side navigation). Copy is derived from existing content — `src/data/hero.js`, `skills-detail.js`, `travel.js` and MDX frontmatter — rather than duplicated. `index.html` carries the sitewide fallback tags; the prerenderer warns if they drift from `DEFAULT_META`.
 
 ### Routing (React Router v7)
 
@@ -25,6 +41,7 @@ React 19 + Vite 7 + Tailwind CSS v4 portfolio site deployed on Vercel. JavaScrip
 | `/skills` | `SkillsPage` | `PageShell` (no nav) |
 | `/projects/:slug` | `ProjectPage` | `PageShell` (no nav) |
 | `/personal` | `PersonalPage` | `PageShell` (no nav) |
+| `/404` and `*` | `NotFoundPage` | `PageShell` (no nav) |
 
 `Layout` wraps only the home route and provides the sticky nav (built from `SECTIONS` registry) and theme switcher. All other pages use `PageShell` (a centered content container with a back link).
 
@@ -82,15 +99,17 @@ Canonical list of home page sections. Drives: section rendering order on `HomePa
 
 Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<html>`. CSS custom properties defined in `src/index.css` `@layer base`. Tokens bridged into Tailwind v4 via `@theme`. Theme persists to `localStorage` key `portfolio-theme`.
 
+`src/theme.js` owns the theme list and a small external store over `localStorage`, read via `useSyncExternalStore` in `App.jsx`. Its server snapshot is `null` so prerendered markup and the first client render always agree. An inline script in `index.html` applies `data-theme` before first paint to avoid a flash of the default palette — keep its hardcoded theme ids in sync with `THEMES`.
+
 ### Component Layers
 
 - **`src/layout/`** — `Layout` (home shell), `Navigation` (scroll-spy nav), `IdentityBlock` (hero sidebar), `ThemeControls`
 - **`src/sections/`** — One component per home section, plus `TravelMap` (react-simple-maps)
 - **`src/sections/components/`** — Section-scoped cards (`ExperienceCard`, `ProjectCard`, `SkillCard`, `EducationCard`)
-- **`src/pages/`** — Full-page routes: `PersonalPage`, `ProjectPage`, `SkillsPage`
+- **`src/pages/`** — Full-page routes: `PersonalPage`, `ProjectPage`, `SkillsPage`, `NotFoundPage`
 - **`src/components/`** — Shared UI primitives (`SectionPanel`, `TagPill`, `GalleryLightbox`, `BipartiteVisual`, etc.)
 - **`src/components/mdx/`** — MDX component overrides and custom components (`mdxComponents.jsx`, `Callout`, `Figure`) used via `MDXProvider`
-- **`src/hooks/`** — `useScrollSpy` (Intersection Observer for active nav), `useScrollToTop` (auto-scroll on route change)
+- **`src/hooks/`** — `useScrollSpy` (Intersection Observer for active nav), `useScrollToTop` (auto-scroll on route change, skips initial mount so browser scroll restoration still works), `useRouteMeta` (syncs `<head>` on client-side navigation)
 
 ### CSS Conventions
 
@@ -100,5 +119,5 @@ Tailwind v4 with `@tailwindcss/vite` plugin. Custom component classes (`.section
 
 - ESLint: `no-unused-vars` allows uppercase or `_`-prefixed identifiers
 - Icons from `lucide-react` exclusively
-- Vercel SPA rewrites in `vercel.json`
+- `vercel.json` sets `cleanUrls` only — no SPA rewrite (it would shadow the prerendered HTML)
 - `react-simple-maps` peer dep override in `package.json` for React 19 compat

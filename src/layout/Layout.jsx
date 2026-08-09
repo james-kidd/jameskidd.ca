@@ -5,7 +5,7 @@ import Navigation from "./Navigation";
 import ThemeControls from "./ThemeControls";
 import IdentityBlock from "./IdentityBlock";
 
-export default function Layout({ children, sections, currentTheme, setTheme }) {
+export default function Layout({ children, sections, currentTheme }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const sectionIds = sections.map((s) => s.id);
@@ -41,10 +41,7 @@ export default function Layout({ children, sections, currentTheme, setTheme }) {
               activeSection={activeSection}
               onNavigate={scrollToSection}
             />
-            <ThemeControls
-              currentTheme={currentTheme}
-              setTheme={setTheme}
-            />
+            <ThemeControls currentTheme={currentTheme} />
           </nav>
         </div>
       )}
@@ -56,10 +53,7 @@ export default function Layout({ children, sections, currentTheme, setTheme }) {
       >
         <div className="flex flex-col h-full px-10 py-10">
           <div className="mb-6 scale-90 origin-left opacity-80">
-            <ThemeControls
-              currentTheme={currentTheme}
-              setTheme={setTheme}
-            />
+            <ThemeControls currentTheme={currentTheme} />
           </div>
 
           <div className="flex-1" />

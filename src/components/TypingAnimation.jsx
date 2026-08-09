@@ -27,11 +27,16 @@ export default function TypingAnimation() {
   useEffect(() => {
     let cancelled = false;
 
-    setCompleted([]);
-    setCurrent(null);
-    setDone(false);
-
     async function run() {
+      // Reset asynchronously so a StrictMode remount replays from the top
+      // without setting state synchronously inside the effect body.
+      await Promise.resolve();
+      if (cancelled) return;
+
+      setCompleted([]);
+      setCurrent(null);
+      setDone(false);
+
       for (let i = 0; i < LINES.length; i++) {
         const line = LINES[i];
         const oldFull = line.prefix + line.old + line.suffix;
@@ -71,6 +76,7 @@ export default function TypingAnimation() {
         await sleep(200);
       }
 
+      if (cancelled) return;
       setDone(true);
     }
 
