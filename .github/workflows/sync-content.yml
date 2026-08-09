@@ -1,0 +1,68 @@
+name: Sync content from Google Sheets
+
+# Pulls every tab listed in content.config.json, writes JSON into
+# src/data/generated/, and commits only if something actually changed.
+# Pushing to the default branch is what triggers the existing Vercel deploy.
+on:
+  schedule:
+    # 06:17 UTC daily. Off-the-hour to avoid GitHub's cron congestion.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+# Read-only by default; the commit step needs contents: write.
+permissions:
+  contents: write
+
+# Never let two syncs race for the same branch.
+concurrency:
+  group: sync-content
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    # Don't burn scheduled minutes on forks.
+    if: github.repository_owner == 'james-kidd'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync content
+        run: npm run sync-content
+
+      - name: Commit and push if changed
+        env:
+          # Built-in token. Pushes made with GITHUB_TOKEN do not trigger further
+          # workflow runs, which is the primary guard against this job
+          # retriggering itself; [skip ci] in the message is belt-and-braces.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # -A so a brand-new generated file (untracked) counts as a change too.
+          git add -A -- src/data/generated
+
+          if git diff --cached --quiet -- src/data/generated; then
+            echo "No content changes — nothing to commit."
+            exit 0
+          fi
+
+          echo "Changed files:"
+          git diff --cached --stat -- src/data/generated
+
+          git commit -m "chore(content): sync from Google Sheets [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
