@@ -1,0 +1,72 @@
+{
+  "$description": "Mode-independent design tokens. In Figma these belong to a single-mode collection (suggested name: 'Global'). Every token name here is emitted verbatim as a CSS custom property, so the Figma variable name must equal the CSS name without the leading '--'.",
+
+  "surface": {
+    "$type": "color",
+    "$value": "#ffffff",
+    "$description": "Card / panel background."
+  },
+  "text-strong": {
+    "$type": "color",
+    "$value": "#0f172a",
+    "$description": "Headings and high-emphasis body copy."
+  },
+  "text-muted": {
+    "$type": "color",
+    "$value": "#475569",
+    "$description": "Secondary body copy."
+  },
+  "accent-warn": {
+    "$type": "color",
+    "$value": "#f59e0b",
+    "$description": "Amber highlight, e.g. university markers on the travel map."
+  },
+
+  "radius-sm": {
+    "$type": "dimension",
+    "$value": "0.25rem",
+    "$description": "Matches Tailwind's default --radius-sm so `rounded-sm` is unchanged."
+  },
+  "radius-md": {
+    "$type": "dimension",
+    "$value": "0.375rem",
+    "$description": "Matches Tailwind's default --radius-md so `rounded-md` is unchanged."
+  },
+  "radius-lg": {
+    "$type": "dimension",
+    "$value": "18px",
+    "$description": "Signature panel radius. Intentionally overrides Tailwind's 0.5rem default, so `rounded-lg` renders at 18px."
+  },
+  "radius-full": {
+    "$type": "dimension",
+    "$value": "9999px",
+    "$description": "Pills and dots. Tailwind's `rounded-full` uses calc(infinity * 1px) and does not read this token."
+  },
+
+  "text-micro": {
+    "$type": "dimension",
+    "$value": "10px",
+    "$description": "Smallest label size (project card meta, stat captions)."
+  },
+  "text-eyebrow": {
+    "$type": "dimension",
+    "$value": "11px",
+    "$description": "Uppercase eyebrow / kicker labels."
+  },
+  "text-body": {
+    "$type": "dimension",
+    "$value": "15px",
+    "$description": "Long-form prose size used by MDX paragraphs and callouts."
+  },
+
+  "shadow-soft": {
+    "$type": "shadow",
+    "$value": "0 1px 3px rgba(15, 23, 42, 0.06)",
+    "$description": "Resting card elevation. Authored as a CSS shorthand string rather than a DTCG composite: Figma effects are styles, not variables, so shadows never arrive from a variable export and keeping the literal string guarantees byte-identical CSS."
+  },
+  "shadow-hover": {
+    "$type": "shadow",
+    "$value": "0 2px 6px rgba(15, 23, 42, 0.1)",
+    "$description": "Raised card elevation. See shadow-soft for why this is a string."
+  }
+}

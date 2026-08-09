@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "tokens": "node scripts/build-tokens.mjs",
+    "prebuild": "npm run tokens",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -39,6 +41,7 @@
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "remark-mdx-frontmatter": "^5.2.0",
+    "style-dictionary": "^5.5.1",
     "vite": "^7.2.4"
   }
 }

@@ -1,0 +1,33 @@
+{
+  "$description": "'editorial' mode of the Theme collection. All three theme files must declare exactly the same token names — scripts/build-tokens.mjs fails the build if they drift.",
+
+  "primary": {
+    "$type": "color",
+    "$value": "#be123c"
+  },
+  "primary-dark": {
+    "$type": "color",
+    "$value": "#881337"
+  },
+  "secondary": {
+    "$type": "color",
+    "$value": "#fff1f2"
+  },
+  "surface-muted": {
+    "$type": "color",
+    "$value": "#fff7fb"
+  },
+  "border": {
+    "$type": "color",
+    "$value": "#ffe4ed"
+  },
+  "font-family-sans": {
+    "$type": "fontFamily",
+    "$value": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "$description": "Raw typeface token. index.css aliases it to Tailwind's --font-sans via @theme; consume --font-sans in CSS/JSX, not this."
+  }
+}
