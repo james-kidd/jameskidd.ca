@@ -4,7 +4,47 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>jameskidd</title>
+
+    <!--
+      Everything between the seo markers is the SITEWIDE DEFAULT.
+      scripts/prerender.js swaps this block out per route at build time.
+    -->
+    <!--seo:start-->
+    <title>James Kidd — Software Developer &amp; Data Scientist</title>
+    <meta name="description" content="I design reliable data systems and internal tools. James Kidd is a Software Developer &amp; Data Scientist working across Python, PyTorch, Pandas / NumPy, SQL." />
+    <link rel="canonical" href="https://jameskidd.info/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="James Kidd" />
+    <meta property="og:title" content="James Kidd — Software Developer &amp; Data Scientist" />
+    <meta property="og:description" content="I design reliable data systems and internal tools. James Kidd is a Software Developer &amp; Data Scientist working across Python, PyTorch, Pandas / NumPy, SQL." />
+    <meta property="og:url" content="https://jameskidd.info/" />
+    <meta property="og:image" content="https://jameskidd.info/photos/about-me-2.jpg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="James Kidd — Software Developer &amp; Data Scientist" />
+    <meta name="twitter:description" content="I design reliable data systems and internal tools. James Kidd is a Software Developer &amp; Data Scientist working across Python, PyTorch, Pandas / NumPy, SQL." />
+    <meta name="twitter:image" content="https://jameskidd.info/photos/about-me-2.jpg" />
+    <!--seo:end-->
+
+    <!--
+      Apply the persisted theme before first paint. Without this the page paints
+      with the default palette and then snaps to the stored one.
+      Keep the theme ids in sync with src/theme.js.
+    -->
+    <script>
+      (function () {
+        var fallback = "tech";
+        var theme = fallback;
+        try {
+          var stored = window.localStorage.getItem("portfolio-theme");
+          if (stored === "tech" || stored === "nature" || stored === "editorial") {
+            theme = stored;
+          }
+        } catch (e) {
+          /* storage blocked — fall through to the default */
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
