@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: Inter, system-ui, sans-serif;
+        font-size: 11px;
+      }
+      body {
+        margin: 0;
+        color: var(--figma-color-text, #1e1e1e);
+        background: var(--figma-color-bg, #fff);
+      }
+      #plugin-root {
+        padding: 12px 14px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      h1 {
+        font-size: 12px;
+        margin: 0;
+      }
+      p {
+        margin: 0;
+        color: var(--figma-color-text-secondary, #666);
+        line-height: 1.45;
+      }
+      fieldset {
+        border: 1px solid var(--figma-color-border, #e6e6e6);
+        border-radius: 6px;
+        padding: 8px 10px;
+        margin: 0;
+        display: grid;
+        gap: 6px;
+      }
+      legend {
+        font-weight: 600;
+        padding: 0 4px;
+      }
+      label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+      label span.hint {
+        color: var(--figma-color-text-secondary, #666);
+        margin-left: auto;
+      }
+      button {
+        font: inherit;
+        font-weight: 600;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        background: var(--figma-color-bg-brand, #0d99ff);
+        color: var(--figma-color-text-onbrand, #fff);
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      #log {
+        border: 1px solid var(--figma-color-border, #e6e6e6);
+        border-radius: 6px;
+        padding: 8px 10px;
+        max-height: 160px;
+        overflow: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        background: var(--figma-color-bg-secondary, #f5f5f5);
+      }
+      #log .warn {
+        color: var(--figma-color-text-warning, #b45309);
+      }
+      #log .error {
+        color: var(--figma-color-text-danger, #dc2626);
+      }
+      #log .done {
+        color: var(--figma-color-text-success, #16a34a);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="plugin-root">
+      <h1>jameskidd.ca · Design Kit builder</h1>
+      <p>
+        Generates the site's tokens, components, screens and motion states from the
+        committed content (<code>design/content/site-content.json</code>). Run it in an
+        empty Design file, or tick "Replace" to rebuild the kit pages in place.
+      </p>
+
+      <fieldset>
+        <legend>Build</legend>
+        <label><input type="checkbox" id="opt-foundations" checked /> Foundations <span class="hint">variables · text + effect styles · docs</span></label>
+        <label><input type="checkbox" id="opt-components" checked /> Components <span class="hint">every element with its states</span></label>
+        <label><input type="checkbox" id="opt-screens" checked /> Screens <span class="hint">home (desktop + mobile), skills, project, personal, 404</span></label>
+        <label><input type="checkbox" id="opt-motion" checked /> Motion &amp; States <span class="hint">each animation / toggle isolated + prototype links</span></label>
+        <label><input type="checkbox" id="opt-content" checked /> Content model <span class="hint">copy deck, one frame per collection</span></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Options</legend>
+        <label><input type="checkbox" id="opt-photos" /> Load gallery photos from jameskidd.info</label>
+        <label><input type="checkbox" id="opt-replace" /> Replace existing kit pages, variables and styles</label>
+      </fieldset>
+
+      <button id="run" type="submit">Build design kit</button>
+      <div id="log">Ready.</div>
+    </div>
+
+    <script>
+      const post = (message) => parent.postMessage({ pluginMessage: message }, "*");
+      const $ = (id) => document.getElementById(id);
+      const log = $("log");
+      const run = $("run");
+
+      function append(text, cls) {
+        const line = document.createElement("div");
+        if (cls) line.className = cls;
+        line.textContent = text;
+        log.appendChild(line);
+        log.scrollTop = log.scrollHeight;
+      }
+
+      run.addEventListener("click", () => {
+        log.textContent = "";
+        run.disabled = true;
+        post({
+          type: "build",
+          options: {
+            foundations: $("opt-foundations").checked,
+            components: $("opt-components").checked,
+            screens: $("opt-screens").checked,
+            motion: $("opt-motion").checked,
+            content: $("opt-content").checked,
+            photos: $("opt-photos").checked,
+            replace: $("opt-replace").checked,
+          },
+        });
+      });
+
+      window.onmessage = (event) => {
+        const msg = event.data.pluginMessage;
+        if (!msg) return;
+        if (msg.type === "status") append(msg.text);
+        if (msg.type === "warn") append("⚠ " + msg.text, "warn");
+        if (msg.type === "error") {
+          append("✕ " + msg.text, "error");
+          run.disabled = false;
+        }
+        if (msg.type === "done") {
+          append(msg.text, "done");
+          run.disabled = false;
+        }
+      };
+
+      const root = $("plugin-root");
+      new ResizeObserver(() => {
+        post({ type: "resize", height: Math.ceil(root.getBoundingClientRect().height) });
+      }).observe(root);
+    </script>
+  </body>
+</html>
