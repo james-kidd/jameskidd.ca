@@ -5,8 +5,8 @@ import { useState } from "react";
 /**
  * Three-step walkthrough of the Managerial DNA graph: the bipartite factor
  * map, its projection onto managers, and the degenerate "everyone matches"
- * case. All geometry is in a fixed 640x340 viewBox so it scales with the
- * column.
+ * case. Positions are percentages of a fixed-height SVG, so the drawing
+ * follows the column width while the labels stay at their normal text size.
  */
 
 type Step = 0 | 1 | 2;
@@ -41,20 +41,23 @@ const NOTES: Record<Step, { title: string; body: string } | null> = {
   },
 };
 
-// Fund positions per step.
-const FUNDS: Record<Step, [number, number][]> = {
-  0: [[140, 85], [140, 170], [140, 255]],
-  1: [[320, 105], [320, 160], [140, 270]],
-  2: [[270, 140], [370, 140], [320, 220]],
+// Fund positions per step, as [x, y] percentages of the drawing.
+const FUNDS: Record<Step, [string, string][]> = {
+  0: [["22%", "25%"], ["22%", "50%"], ["22%", "75%"]],
+  1: [["50%", "32%"], ["50%", "52%"], ["22%", "80%"]],
+  2: [["38%", "40%"], ["62%", "40%"], ["50%", "66%"]],
 };
+const FUND_R = 28;
 
-const REGIMES: { y: number; label: string; dashed?: boolean }[] = [
-  { y: 60, label: "Crash: Defensive" },
-  { y: 130, label: "Bull: Aggressive" },
-  { y: 200, label: "Stagnant: Yield" },
-  { y: 270, label: "… Regime n", dashed: true },
+const REGIMES: { y: string; label: string; dashed?: boolean }[] = [
+  { y: "18%", label: "Crash: Defensive" },
+  { y: "39%", label: "Bull: Aggressive" },
+  { y: "60%", label: "Stagnant: Yield" },
+  { y: "81%", label: "… Regime n", dashed: true },
 ];
-const REGIME_X = 480;
+const REGIME_X = "76%";
+const REGIME_W = 144;
+const REGIME_H = 36;
 
 // Which fund (index) is drawn to which regime (index) in the bipartite view.
 const EDGES: [number, number][] = [
@@ -91,10 +94,9 @@ export function BipartiteVisual() {
       </div>
 
       <svg
-        viewBox="0 0 640 340"
         role="img"
         aria-label={STEPS[step]?.title}
-        className="mt-5 w-full rounded-sm border border-line bg-surface"
+        className="mt-5 h-80 w-full rounded-sm border border-line bg-surface"
       >
         {/* Bipartite edges */}
         <g className={`${FADE} ${projected ? "opacity-0" : "opacity-100"}`}>
@@ -107,7 +109,7 @@ export function BipartiteVisual() {
                 key={`${fund}-${regime}`}
                 x1={from[0]}
                 y1={from[1]}
-                x2={REGIME_X - 58}
+                x2={REGIME_X}
                 y2={to.y}
                 className="stroke-line"
                 strokeWidth={2}
@@ -133,11 +135,12 @@ export function BipartiteVisual() {
           {REGIMES.map(({ y, label, dashed }) => (
             <g key={label}>
               <rect
-                x={REGIME_X - 58}
-                y={y - 18}
-                width={116}
-                height={36}
+                x={REGIME_X}
+                y={y}
+                width={REGIME_W}
+                height={REGIME_H}
                 rx={6}
+                transform={`translate(${-REGIME_W / 2}, ${-REGIME_H / 2})`}
                 className={dashed ? "fill-transparent stroke-ink-muted" : "fill-ink-muted"}
                 strokeWidth={dashed ? 1.5 : 0}
                 strokeDasharray={dashed ? "4 4" : undefined}
@@ -163,7 +166,7 @@ export function BipartiteVisual() {
               <circle
                 cx={x}
                 cy={y}
-                r={24}
+                r={FUND_R}
                 className={`${MOVE} ${matched ? "fill-accent" : "fill-ink-muted"}`}
               />
               <text

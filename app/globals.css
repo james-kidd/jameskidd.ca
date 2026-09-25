@@ -10,8 +10,8 @@
   html {
     color-scheme: light dark;
     scroll-behavior: smooth;
-    /* Keep anchored sections clear of the sticky nav. */
-    scroll-padding-top: 4.5rem;
+    /* Keep anchored sections clear of the sticky nav (two rows on phones). */
+    scroll-padding-top: 6rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -233,7 +233,8 @@
   }
   .timeline-dot {
     position: absolute;
-    left: -0.3125rem;
+    /* Centred on the 1px rule, which sits 1.5rem left of the row's content. */
+    left: calc(-1.5rem - 0.25rem);
     top: 0.45rem;
     width: 0.5625rem;
     height: 0.5625rem;

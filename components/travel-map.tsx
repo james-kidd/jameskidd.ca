@@ -119,7 +119,8 @@ export function TravelMap() {
             </Geographies>
 
             {shown.map((city) => {
-              const r = markerRadius(city.photos);
+              // The group is scaled by the zoom; divide so markers keep their size.
+              const r = markerRadius(city.photos) / view.zoom;
               return (
                 <Marker
                   key={`${city.name}-${city.country}`}
@@ -133,8 +134,8 @@ export function TravelMap() {
                   aria-label={`${city.name}, ${countryName.get(city.country) ?? city.country}`}
                   className="cursor-pointer outline-none"
                 >
-                  <circle r={r + 3} className="fill-accent/20" />
-                  <circle r={r} className="fill-accent stroke-surface" strokeWidth={1.5} />
+                  <circle r={r + 3 / view.zoom} className="fill-accent/20" />
+                  <circle r={r} className="fill-accent stroke-surface" strokeWidth={1.5 / view.zoom} />
                 </Marker>
               );
             })}
