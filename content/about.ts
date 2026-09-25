@@ -1,0 +1,12 @@
+// content/about.ts
+// The "About" copy on the home page. One string per paragraph.
+
+export const about: string[] = [
+  "Graduating from McGill with a degree in Mathematics and Computer Science. Over the last few years I've split time between capital markets at CI Financial and building software systems — automation tooling, data pipelines, NLP workflows. I've also run McGill CodeJam as President, which meant coordinating 400 students, enterprise partners, and a competition pivot toward applied AI evaluation.",
+
+  "My coursework grounded me in the theory that changes how you actually think: statistical learning, algorithm design, information theory, graph theory. The internships showed me where that theory runs into messy data and real business constraints. The interesting work lives in that gap.",
+
+  "I take a principled approach to quantitative methods. In finance, that means factor-based frameworks over narrative-driven investing. In ML, it means interpretable models and honest evaluation over benchmark chasing. I've watched AI get oversold in environments where I've also seen it genuinely deliver — the difference is usually whether the method is rigorous or just convenient.",
+
+  "Looking for a role where the technical bar is high, the domain is quantitative, and the track has room to grow.",
+];
