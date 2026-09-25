@@ -1,0 +1,198 @@
+"use client";
+
+import { useState } from "react";
+
+/**
+ * Three-step walkthrough of the Managerial DNA graph: the bipartite factor
+ * map, its projection onto managers, and the degenerate "everyone matches"
+ * case. All geometry is in a fixed 640x340 viewBox so it scales with the
+ * column.
+ */
+
+type Step = 0 | 1 | 2;
+
+const STEPS: { title: string; subtitle: string; button: string }[] = [
+  {
+    title: "The Factor Map (Bipartite Graph)",
+    subtitle: "Managers (left) map to their factor behaviors across n distinct market regimes (right).",
+    button: "Execute projection",
+  },
+  {
+    title: "Structural Equivalence (Scenario A)",
+    subtitle: "Regime nodes are removed. Managers 1 and 2 are linked by shared DNA across all n environments.",
+    button: "What if they all match?",
+  },
+  {
+    title: "The Monoculture (Scenario B)",
+    subtitle: "All managers share the exact same DNA. Further analysis is required to find differentiation.",
+    button: "Reset to bipartite",
+  },
+];
+
+const NOTES: Record<Step, { title: string; body: string } | null> = {
+  0: null,
+  1: {
+    title: "Scenario A: Partial match",
+    body: "Fund 1 and Fund 2 reacted identically across all n market regimes. The algorithm collapses them into a single heavy cluster. Fund 3 drifted differently and is isolated.",
+  },
+  2: {
+    title: "Scenario B: The monoculture",
+    body: "If all funds collapse into a single structural clone, the sector is a monoculture. Further analysis is required (e.g., hidden liquidity constraints, sub-factor tilts) to find true diversification.",
+  },
+};
+
+// Fund positions per step.
+const FUNDS: Record<Step, [number, number][]> = {
+  0: [[140, 85], [140, 170], [140, 255]],
+  1: [[320, 105], [320, 160], [140, 270]],
+  2: [[270, 140], [370, 140], [320, 220]],
+};
+
+const REGIMES: { y: number; label: string; dashed?: boolean }[] = [
+  { y: 60, label: "Crash: Defensive" },
+  { y: 130, label: "Bull: Aggressive" },
+  { y: 200, label: "Stagnant: Yield" },
+  { y: 270, label: "… Regime n", dashed: true },
+];
+const REGIME_X = 480;
+
+// Which fund (index) is drawn to which regime (index) in the bipartite view.
+const EDGES: [number, number][] = [
+  [0, 0], [0, 1], [0, 3],
+  [1, 0], [1, 1], [1, 3],
+  [2, 2],
+];
+
+const MOVE = "motion-safe:transition-all motion-safe:duration-700 motion-safe:ease-in-out";
+const FADE = "motion-safe:transition-opacity motion-safe:duration-500";
+
+export function BipartiteVisual() {
+  const [step, setStep] = useState<Step>(0);
+  const funds = FUNDS[step];
+  const projected = step > 0;
+  const monoculture = step === 2;
+  const note = NOTES[step];
+  const [f1, f2, f3] = funds;
+
+  return (
+    <div className="card p-5 md:p-6">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="max-w-xl">
+          <p className="t-heading">{STEPS[step]?.title}</p>
+          <p className="t-small mt-1 text-ink-muted">{STEPS[step]?.subtitle}</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setStep(((step + 1) % 3) as Step)}
+          className={`${monoculture ? "btn" : "btn-ghost"} t-label shrink-0`}
+        >
+          {STEPS[step]?.button}
+        </button>
+      </div>
+
+      <svg
+        viewBox="0 0 640 340"
+        role="img"
+        aria-label={STEPS[step]?.title}
+        className="mt-5 w-full rounded-sm border border-line bg-surface"
+      >
+        {/* Bipartite edges */}
+        <g className={`${FADE} ${projected ? "opacity-0" : "opacity-100"}`}>
+          {EDGES.map(([fund, regime]) => {
+            const from = FUNDS[0][fund];
+            const to = REGIMES[regime];
+            if (!from || !to) return null;
+            return (
+              <line
+                key={`${fund}-${regime}`}
+                x1={from[0]}
+                y1={from[1]}
+                x2={REGIME_X - 58}
+                y2={to.y}
+                className="stroke-line"
+                strokeWidth={2}
+                strokeDasharray="4 4"
+              />
+            );
+          })}
+        </g>
+
+        {/* Projected (unipartite) edges */}
+        {f1 && f2 && f3 && (
+          <g className={`${FADE} ${projected ? "opacity-100" : "opacity-0"}`}>
+            <line x1={f1[0]} y1={f1[1]} x2={f2[0]} y2={f2[1]} className="stroke-accent" strokeWidth={7} />
+            <g className={`${FADE} ${monoculture ? "opacity-100" : "opacity-0"}`}>
+              <line x1={f2[0]} y1={f2[1]} x2={f3[0]} y2={f3[1]} className="stroke-accent" strokeWidth={7} />
+              <line x1={f1[0]} y1={f1[1]} x2={f3[0]} y2={f3[1]} className="stroke-accent" strokeWidth={7} />
+            </g>
+          </g>
+        )}
+
+        {/* Regime nodes */}
+        <g className={`${FADE} ${projected ? "opacity-0" : "opacity-100"}`}>
+          {REGIMES.map(({ y, label, dashed }) => (
+            <g key={label}>
+              <rect
+                x={REGIME_X - 58}
+                y={y - 18}
+                width={116}
+                height={36}
+                rx={6}
+                className={dashed ? "fill-transparent stroke-ink-muted" : "fill-ink-muted"}
+                strokeWidth={dashed ? 1.5 : 0}
+                strokeDasharray={dashed ? "4 4" : undefined}
+              />
+              <text
+                x={REGIME_X}
+                y={y}
+                textAnchor="middle"
+                dominantBaseline="central"
+                className={`t-label ${dashed ? "fill-ink-muted" : "fill-surface"}`}
+              >
+                {label}
+              </text>
+            </g>
+          ))}
+        </g>
+
+        {/* Fund nodes */}
+        {funds.map(([x, y], i) => {
+          const matched = i < 2 || monoculture;
+          return (
+            <g key={i}>
+              <circle
+                cx={x}
+                cy={y}
+                r={24}
+                className={`${MOVE} ${matched ? "fill-accent" : "fill-ink-muted"}`}
+              />
+              <text
+                x={x}
+                y={y}
+                textAnchor="middle"
+                dominantBaseline="central"
+                className={`t-label ${MOVE} ${matched ? "fill-accent-ink" : "fill-surface"}`}
+              >
+                Fund {i + 1}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+
+      <div className="t-small mt-4 min-h-[3.5rem]" aria-live="polite">
+        {note ? (
+          <>
+            <p className="text-ink">{note.title}</p>
+            <p className="mt-1 text-ink-muted">{note.body}</p>
+          </>
+        ) : (
+          <p className="text-ink-muted">
+            Edges are weighted by inverse Euclidean distance: the closer a manager&apos;s behaviour to a regime-specific
+            risk profile, the heavier the edge.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
