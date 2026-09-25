@@ -1,0 +1,244 @@
+@import "tailwindcss" source(none);
+@import "./tokens.css";
+
+/* Only app/ and components/ are scanned for class names, so prose in the
+   README or a token description can never generate a stray utility. */
+@source "../app";
+@source "../components";
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    /* Keep anchored sections clear of the sticky nav. */
+    scroll-padding-top: 4.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* The lightbox is a <dialog>; freeze the page behind it. */
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  /* react-simple-maps sizes its <svg> with CSS. */
+  .rsm-svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   TEXT STYLES
+   The whole type system. Every piece of text on the site uses exactly one of
+   these eight classes; components never set font-size, weight, line-height,
+   letter-spacing or family themselves. Sizes come from tokens (type/*).
+   ------------------------------------------------------------------------- */
+@layer components {
+  .t-display {
+    font-family: var(--font-sans);
+    font-size: clamp(var(--type-display-min), 9vw, var(--type-display));
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .t-title {
+    font-family: var(--font-sans);
+    font-size: var(--type-title);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  .t-lead {
+    font-family: var(--font-sans);
+    font-size: var(--type-lead);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .t-heading {
+    font-family: var(--font-sans);
+    font-size: var(--type-heading);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+  .t-body {
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: 400;
+    line-height: 1.65;
+  }
+  .t-small {
+    font-family: var(--font-sans);
+    font-size: var(--type-small);
+    font-weight: 400;
+    line-height: 1.55;
+  }
+  .t-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-label);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+  .t-code {
+    font-family: var(--font-mono);
+    font-size: var(--type-code);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* ----------------------------------------------------------------------
+     A few shared surfaces. Everything else is Tailwind utilities backed by
+     the same tokens (bg-surface, text-ink-muted, border-line, rounded-md).
+     ---------------------------------------------------------------------- */
+
+  /* Inline text link. */
+  .link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 150ms ease;
+  }
+  .link:hover {
+    text-decoration-color: var(--color-accent);
+  }
+
+  /* Quiet link: no underline until hovered. Nav, footer, meta links. */
+  .link-quiet {
+    color: inherit;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .link-quiet:hover {
+    color: var(--color-accent);
+  }
+
+  /* Buttons. `.btn` is the filled primary; `.btn-ghost` the outlined one. */
+  .btn,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+  .btn {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+  .btn:hover {
+    background: color-mix(in srgb, var(--color-accent) 88%, var(--color-ink));
+  }
+  .btn-ghost {
+    background: var(--color-surface-raised);
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  /* A raised panel: cards, demo frames, stat tiles. */
+  .card {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+  }
+
+  /* A tag: skills on a role, technologies on a project, a course code. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-raised);
+    color: var(--color-ink-muted);
+    white-space: nowrap;
+  }
+  a.tag:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  /* A selectable chip (map filters). `aria-pressed` marks the active one. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-raised);
+    color: var(--color-ink-muted);
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+  .chip:hover {
+    color: var(--color-ink);
+    border-color: var(--color-ink-muted);
+  }
+  .chip[aria-pressed="true"] {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  /* Timeline rows (experience, education, milestones). */
+  .timeline {
+    position: relative;
+    border-left: 1px solid var(--color-line);
+    padding-left: 1.5rem;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: -0.3125rem;
+    top: 0.45rem;
+    width: 0.5625rem;
+    height: 0.5625rem;
+    border-radius: 9999px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-ink-muted);
+  }
+}
