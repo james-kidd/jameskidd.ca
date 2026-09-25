@@ -1,125 +1,95 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code when working in this repository.
+
+## What this is
+
+A one-page resume site plus a personal page. Next.js 16 (App Router),
+TypeScript (strict), Tailwind v4, React 19. Deployed on Vercel from `main`.
+The owner's use case is: add a project or a photo, push, done — keep it that
+simple. There is no CMS, no MDX, no external content source, no test runner.
 
 ## Commands
 
 ```bash
-npm run dev      # Start Vite dev server with HMR
-npm run build    # Full production build: client + SSR bundle + prerender
-npm run lint     # ESLint
-npm run preview  # Preview production build
+npm run dev          # regenerates tokens, then next dev
+npm run build        # regenerates tokens, then next build (runs tsc too)
+npm run lint         # eslint .
+npm run typecheck    # tsc --noEmit
+npm run tokens       # tokens/tokens.json -> app/tokens.css
 ```
 
-No test runner is configured. Treat `npm run lint` plus a clean `npm run build` as the test suite.
+`lint`, `typecheck` and `build` all clean is the definition of done.
 
-## Architecture
+## Layout
 
-React 19 + Vite 7 + Tailwind CSS v4 portfolio site deployed on Vercel. JavaScript/JSX only (no TypeScript). No backend — every route is prerendered to static HTML at build time and hydrated in the browser.
+```
+content/     typed data files — the only thing the owner edits
+  schema.ts  the types every content file must satisfy
+  site.ts    name, title, tagline, contact, socials, typing lines, OG image
+  about.ts   experience.ts  projects.ts  playground.ts  skills.ts
+  education.ts  personal.ts  travel.ts
+tokens/tokens.json   design tokens (Figma variable names as keys)
+scripts/build-tokens.mjs  -> app/tokens.css (generated, committed)
+app/         layout, page (home), personal/page, not-found, sitemap, robots
+components/  one file per section or interactive piece
+public/      photos/, resume.pdf, favicon.svg, world-110m.json
+```
 
-### Build & prerendering
+## Rules that keep it maintainable
 
-`npm run build` runs three stages:
+- **Content goes in `content/`, never in components.** A component that
+  needs a string reads it from there.
+- **The types are the guardrail.** `Project.links` requires at least one of
+  `github` / `live` / `writeup`, and every URL is typed `` `https://${string}` ``.
+  A project with no link, or a `"#"` placeholder, must keep failing `tsc`.
+  Do not loosen `schema.ts` to make an entry fit; fix the entry.
+- **Server components by default.** Only `typing-animation`, `bipartite-visual`,
+  `travel-map` and `gallery` are `"use client"`. Do not add client code for
+  things CSS or a native element can do (`<details>`, `<dialog>`,
+  `loading="lazy"`).
+- **Eight text styles, defined once** in `app/globals.css`: `t-display`,
+  `t-title`, `t-lead`, `t-heading`, `t-body`, `t-small`, `t-label`, `t-code`.
+  Every text element uses exactly one. Components never set font-size,
+  weight, line-height, letter-spacing or family. Tailwind's `text-sm` etc.
+  are deliberately removed (`--text-*: initial` in the generated tokens).
+- **Colours are tokens.** Tailwind's palette is cleared; only `surface`,
+  `surface-raised`, `ink`, `ink-muted`, `line`, `accent`, `accent-ink`,
+  `overlay`, `on-overlay` exist (`bg-surface`, `text-ink-muted`,
+  `border-line`, `fill-accent/25` …). Need a new colour? Add it to
+  `tokens.json` with a light and a dark value.
+- **Dark mode is automatic** (`prefers-color-scheme`). There is no toggle and
+  no `dark:` variant in use; a token's dark value is the whole story.
+- **Short dependency list.** next, react, react-dom, lucide-react,
+  react-simple-maps, and dev tooling. Anything else needs a reason in the PR.
 
-1. `build:client` — `vite build` → `dist/` (assets + `index.html` template)
-2. `build:ssr` — `vite build --ssr src/entry-server.jsx` → `dist-ssr/entry-server.js`
-3. `prerender` — `node scripts/prerender.js`
+## How the tokens flow
 
-The prerender step renders each route with `renderToString` inside a `StaticRouter`, injects the markup into `#root`, and swaps the `<!--seo:start-->…<!--seo:end-->` block in the template for that route's head tags. Output is flat `.html` files (`dist/skills.html`, `dist/projects/<slug>.html`, `dist/404.html`) plus `sitemap.xml` and `robots.txt`. `vercel.json` sets `cleanUrls` so `/skills` resolves to `skills.html`; **there is no SPA catch-all rewrite** — it would shadow the prerendered files.
+`tokens/tokens.json` key `color/ink` → CSS `--color-ink` → Tailwind `text-ink`.
+Groups `color`, `font`, `radius` are registered in `@theme` (so they become
+utilities); anything else (`type/*`) is a plain variable on `:root`. The
+font tokens point at `--font-plex-sans` / `--font-plex-mono`, which
+`app/layout.tsx` defines through `next/font` (IBM Plex Sans and Mono,
+self-hosted at build time). To change the typeface, change both.
 
-Anything touching `window`, `document` or `localStorage` must stay inside an effect or be guarded, otherwise the prerender pass crashes. `src/main.jsx` hydrates when `#root` already has markup and falls back to `createRoot` otherwise.
+## Redirects
 
-### Per-route metadata
+Old URLs `/skills` and `/projects/<slug>` are indexed. `next.config.ts` sends
+them to `/#skills`, `/#try-it-out` (manager-dna) and `/#projects`. Keep the
+section ids in `app/page.tsx` in sync with those.
 
-`src/seo.js` is the single source of truth for titles, descriptions, canonicals and OG/Twitter tags. It is consumed by `scripts/prerender.js` at build time and by `src/hooks/useRouteMeta.js` at runtime (client-side navigation). Copy is derived from existing content — `src/data/hero.js`, `skills-detail.js`, `travel.js` and MDX frontmatter — rather than duplicated. `index.html` carries the sitewide fallback tags; the prerenderer warns if they drift from `DEFAULT_META`.
+## Try it out
 
-### Routing (React Router v7)
+Any project in `projects.ts` with an `embed` URL is rendered as an iframe in
+the "Try it out" section, in addition to its card. The bipartite graph is a
+hand-built component (`components/bipartite-visual.tsx`); its surrounding
+copy lives in `content/playground.ts`.
 
-| Route | Component | Layout |
-|---|---|---|
-| `/` | `HomePage` (inline in App.jsx) | `Layout` (nav + theme controls) |
-| `/skills` | `SkillsPage` | `PageShell` (no nav) |
-| `/projects/:slug` | `ProjectPage` | `PageShell` (no nav) |
-| `/personal` | `PersonalPage` | `PageShell` (no nav) |
-| `/404` and `*` | `NotFoundPage` | `PageShell` (no nav) |
+## Things to know
 
-`Layout` wraps only the home route and provides the sticky nav (built from `SECTIONS` registry) and theme switcher. All other pages use `PageShell` (a centered content container with a back link).
-
-### Content Architecture
-
-Content is split between **MDX files** (prose) and **JS data files** (structured data). The rule: if it's sentences/paragraphs, it's MDX. If it's a list of tags, a URL, or tabular data, it stays in JS.
-
-#### MDX content (`src/content/`)
-
-All MDX files use YAML frontmatter for structured metadata and Markdown body for prose. Loaded eagerly via `import.meta.glob` in each directory's `index.js` loader. The generic loader lives in `src/content/mdxCollection.js` — it parses glob results into sorted/filtered arrays with the MDX default export attached under a configurable component name (`Chapter`, `Body`, `Description`).
-
-| Directory | What it contains | Frontmatter keys |
-|---|---|---|
-| `src/content/experience/*.mdx` | One file per role. Body is description/bullets. | `order`, `group` (internships/academic/freelance), `date`, `title`, `company`, `skills[]`, `link?` |
-| `src/content/projects/*.mdx` | One file per project. Body is the full write-up with Markdown headings. Can embed interactive React components. | `slug`, `featured?`, `title`, `description`, `skills[]`, `link`, `demo?`, `embed?` |
-| `src/content/pillars/*.mdx` | Skills pillars. Body is description prose. | `id`, `order`, `title`, `subtitle`, `icon`, `evidence[]` |
-| `src/content/about.mdx` | About section intro paragraphs. No frontmatter. | — |
-| `src/content/personal.mdx` | Personal section description. | `title`, `instagram` |
-
-**To add a new experience:** Create a `.mdx` file in `src/content/experience/`, set frontmatter fields, write description as body. The glob loader picks it up automatically.
-
-**To add a new project:** Create a `.mdx` file in `src/content/projects/` with a `slug` in frontmatter. The project detail page (`ProjectPage`) renders the MDX body inside an `MDXProvider` with themed components.
-
-**Using React components in MDX:** Register interactive components in `src/components/mdx/mdxComponents.jsx`, then use them directly in `.mdx` files as JSX tags (e.g., `<BipartiteVisual />`). The `MDXProvider` in `ProjectPage` makes them available automatically.
-
-#### MDX pipeline
-
-Vite processes MDX via `@mdx-js/rollup` (configured in `vite.config.js` with `enforce: 'pre'`). Remark plugins: `remark-frontmatter` + `remark-mdx-frontmatter` (exports frontmatter as named `frontmatter` export) + `remark-gfm`. The `MDXProvider` from `@mdx-js/react` supplies themed component overrides (`h2`, `h3`, `p`, `ul`, `ol`, `strong`, `em`, `a`, `code`) plus custom components (`Callout`, `Figure`, `BipartiteVisual`).
-
-#### Content loaders
-
-Each MDX content directory has an `index.js` that globs and exports parsed content:
-
-- `src/content/experience/index.js` → exports `experiences` (sorted array) and `experiencesByGroup` (object keyed by group)
-- `src/content/projects/index.js` → exports `projects` (array with `Chapter` component), `projectChapters` (slug→component map), `hasChapter()`
-- `src/content/pillars/index.js` → exports `pillars` (sorted array with `Description` component)
-
-Components import from these loaders, not from `src/data/` for content that has been migrated to MDX.
-
-#### JS data files (`src/data/`)
-
-| File | What it contains |
-|---|---|
-| `hero.js` | Name, title, tagline, stack tags, contact emails, social URLs, resume link |
-| `sections/` | One module per data slice, assembled into `sectionData` by `sections/index.js` (which also exports `experienceGroups`): `education.js`, `skills.js`, and `personal/{stats,milestones,favorites,gallery}.js` |
-| `skills-detail.js` | Skills page headline and positioning text |
-| `travel.js` | Auto-generated from photo EXIF — country/city lists, stats (do not edit manually) |
-| `index.js` | Re-exports `heroData`, `sectionData`, `experienceGroups`, `skillsDetailData` |
-
-`sectionData` keeps a fixed shape regardless of how the slices are split: `about.education.details[]`, `skills.blocks[]`, and `personal.{stats,milestones,favorites,gallery}`. Edit a slice in its own file. There are two barrels: `sections/index.js` composes the top-level `about`/`skills`/`personal` keys, and `sections/personal/index.js` composes the four `personal.*` keys — add or remove a key in whichever one owns that level.
-
-### Section Registry (`src/sections/registry.js`)
-
-Canonical list of home page sections. Drives: section rendering order on `HomePage`, nav menu population, and scroll spy tracking. Each entry has `{ id, label, Component, nav }`. Components receive `data={sectionData[id]}` automatically.
-
-### Theme System
-
-Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<html>`. CSS custom properties defined in `src/index.css` `@layer base`. Tokens bridged into Tailwind v4 via `@theme`. Theme persists to `localStorage` key `portfolio-theme`.
-
-`src/theme.js` owns the theme list and a small external store over `localStorage`, read via `useSyncExternalStore` in `App.jsx`. Its server snapshot is `null` so prerendered markup and the first client render always agree. An inline script in `index.html` applies `data-theme` before first paint to avoid a flash of the default palette — keep its hardcoded theme ids in sync with `THEMES`.
-
-### Component Layers
-
-- **`src/layout/`** — `Layout` (home shell), `Navigation` (scroll-spy nav), `IdentityBlock` (hero sidebar), `ThemeControls`
-- **`src/sections/`** — One component per home section, plus `TravelMap` (react-simple-maps)
-- **`src/sections/components/`** — Section-scoped cards (`ExperienceCard`, `ProjectCard`, `SkillCard`, `EducationCard`)
-- **`src/pages/`** — Full-page routes: `PersonalPage`, `ProjectPage`, `SkillsPage`, `NotFoundPage`
-- **`src/components/`** — Shared UI primitives (`SectionPanel`, `TagPill`, `GalleryLightbox`, `BipartiteVisual`, etc.)
-- **`src/components/mdx/`** — MDX component overrides and custom components (`mdxComponents.jsx`, `Callout`, `Figure`) used via `MDXProvider`
-- **`src/hooks/`** — `useScrollSpy` (Intersection Observer for active nav), `useScrollToTop` (auto-scroll on route change, skips initial mount so browser scroll restoration still works), `useRouteMeta` (syncs `<head>` on client-side navigation)
-
-### CSS Conventions
-
-Tailwind v4 with `@tailwindcss/vite` plugin. Custom component classes (`.section-block`, `.section-panel`, `.section-shell`, `.surface-muted`, `.eyebrow`, `.btn`, `.card`, `.tag-pill`, `.timeline-item`, etc.) defined in `src/index.css` `@layer components`. Prefer these over ad-hoc Tailwind strings for structural layout. Theme-aware colors reference CSS vars: `text-(--text-muted)`, `bg-(--surface)`.
-
-### Key Conventions
-
-- ESLint: `no-unused-vars` allows uppercase or `_`-prefixed identifiers
-- Icons from `lucide-react` exclusively
-- `vercel.json` sets `cleanUrls` only — no SPA rewrite (it would shadow the prerendered HTML)
-- `react-simple-maps` peer dep override in `package.json` for React 19 compat
+- `public/favicon.svg` is a 1.9 MB SVG wrapping a raster image. It was kept
+  as-is; a real vector or a small PNG would be a worthwhile swap.
+- Photos are served through `next/image`, so the multi-megabyte originals in
+  `public/photos/` are fine to keep.
+- The travel map matches countries by numeric ISO code (`Country.mapId`),
+  the id scheme of `public/world-110m.json`.
