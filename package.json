@@ -1,53 +1,36 @@
 {
   "name": "jameskidd.ca",
   "private": true,
-  "version": "0.0.0",
+  "version": "3.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
-    "dev": "vite",
-    "tokens": "node scripts/build-tokens.mjs",
+    "predev": "npm run tokens",
+    "dev": "next dev",
     "prebuild": "npm run tokens",
-    "build": "npm run build:client && npm run build:ssr && npm run prerender",
-    "build:client": "vite build",
-    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
-    "prerender": "node scripts/prerender.js",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "sync-content": "node scripts/sync-content.mjs",
-    "sync-content:check": "node scripts/sync-content.mjs --check"
+    "typecheck": "tsc --noEmit",
+    "tokens": "node scripts/build-tokens.mjs"
   },
   "dependencies": {
-    "@mdx-js/react": "^3.1.1",
-    "@tailwindcss/vite": "^4.1.18",
-    "lucide-react": "^0.562.0",
-    "prop-types": "^15.8.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.15.1",
-    "react-simple-maps": "^3.0.0",
-    "tailwindcss": "^4.1.18"
-  },
-  "overrides": {
-    "react-simple-maps": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    }
+    "lucide-react": "^1.48.0",
+    "next": "^16.3.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-simple-maps": "^5.0.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@mdx-js/rollup": "^3.1.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^20.19.0",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
-    "papaparse": "^5.5.4",
-    "remark-frontmatter": "^5.0.0",
-    "remark-gfm": "^4.0.1",
-    "remark-mdx-frontmatter": "^5.2.0",
-    "style-dictionary": "^5.5.1",
-    "vite": "^7.2.4"
+    "eslint-config-next": "^16.3.6",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
   }
 }
