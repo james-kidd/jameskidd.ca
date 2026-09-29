@@ -1,4 +1,7 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/resume.pdf", "destination": "/James_Kidd_Resume.pdf", "permanent": false }
+  ]
 }
