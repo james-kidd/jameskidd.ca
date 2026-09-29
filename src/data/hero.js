@@ -4,7 +4,7 @@ export const heroData = {
   title: "Software Developer & Data Scientist",
   tagline: "I design reliable data systems and internal tools",
   stack: ["Python", "PyTorch", "Pandas / NumPy", "SQL"],
-  resumeLink: "/resume.pdf",
+  resumeLink: "/James_Kidd_Resume.pdf",
 
   emails: {
     school: "james.kidd@mail.mcgill.ca",
