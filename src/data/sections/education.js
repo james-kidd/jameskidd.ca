@@ -8,7 +8,7 @@ export const educationDetails = [
     degree: "B.Sc. Joint Mathematics & Computer Science",
     year: "2023 — 2026",
     description:
-      "Concentration in data systems, statistical learning, automation, and algorithmic problem-solving.",
+      "Coursework: Applied ML, AI, Algorithm Design, Operating Systems, Probability, Statistics, Numerical Analysis, Big Data, Computational Theory. Exchange term at the University of Glasgow.",
     coursework: [
       {
         code: "COMP 551",
@@ -70,10 +70,10 @@ export const educationDetails = [
 
   {
     school: "Queen's University",
-    degree: "B.Sc. Computer Engineering (Transferred)",
+    degree: "BASc Computer Engineering (transferred)",
     year: "2020 — 2022",
     description:
-      "Strong foundation in engineering mathematics, computer architecture, and low-level systems programming.",
+      "Senator Frank Carrel Merit Scholarship, Dean's Honour List.",
     coursework: [
       {
         code: "ELEC 279",

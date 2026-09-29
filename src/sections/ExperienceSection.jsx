@@ -5,10 +5,15 @@ import ExperienceCard from "./components/ExperienceCard";
 import { experiencesByGroup } from "../content/experience";
 import { experienceGroups } from "../data";
 
+// A group whose entries are all held (`published: false`) gets no heading.
+const visibleGroups = experienceGroups.filter(
+  ({ key }) => experiencesByGroup[key].length > 0
+);
+
 export default function ExperienceSection() {
   return (
     <SectionPanel className="space-y-12">
-      {experienceGroups.map(({ key, label }) => (
+      {visibleGroups.map(({ key, label }) => (
         <div key={key} className="space-y-6">
           <SectionTitle icon={FolderGit2}>{label}</SectionTitle>
 

@@ -2,6 +2,9 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/resume.pdf", "destination": "/James_Kidd_Resume.pdf", "permanent": false }
+    { "source": "/resume.pdf", "destination": "/James_Kidd_Resume.pdf", "permanent": false },
+    { "source": "/skills", "destination": "/#skills", "permanent": true },
+    { "source": "/projects/personal-portfolio", "destination": "/#projects", "permanent": true },
+    { "source": "/projects/manager-dna", "destination": "/#projects", "permanent": false }
   ]
 }

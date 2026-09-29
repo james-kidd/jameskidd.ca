@@ -6,7 +6,6 @@ import Layout from "./layout/Layout";
 import HeroSection from "./sections/HeroSection";
 import { SECTIONS } from "./sections/registry";
 import { heroData, sectionData } from "./data";
-import SkillsPage from "./pages/SkillsPage";
 import ProjectPage from "./pages/ProjectPage";
 import PersonalPage from "./pages/PersonalPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -44,7 +43,6 @@ function AppRoutes({ currentTheme }) {
           </Layout>
         }
       />
-      <Route path="/skills" element={<SkillsPage />} />
       <Route path="/projects/:slug" element={<ProjectPage />} />
       <Route path="/personal" element={<PersonalPage />} />
       {/* Prerendered to dist/404.html, which Vercel serves for unknown paths. */}
