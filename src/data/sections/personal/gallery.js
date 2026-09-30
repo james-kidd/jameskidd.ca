@@ -7,10 +7,11 @@
 // Consumed by src/sections/PersonalSection.jsx and src/pages/PersonalPage.jsx
 
 export const gallery = [
+  // TODO(James): which country were the Alps photo taken in? Captions are countries.
   { id: "skiing-alps", src: "photos/about-me-0.jpg", alt: "Skiing in the Alps", caption: "Alps" },
-  { id: "nyc", src: "photos/about-me-1.jpg", alt: "New York City", caption: "New York" },
-  { id: "portrait-glasgow", src: "photos/about-me-2.jpg", alt: "James Kidd in Glasgow", caption: "Glasgow" },
-  { id: "scala-dei-turchi", src: "photos/about-me-3.jpg", alt: "Scala dei Turchi, Sicily", caption: "Sicily" },
+  { id: "nyc", src: "photos/about-me-1.jpg", alt: "New York City", caption: "United States" },
+  { id: "portrait-glasgow", src: "photos/about-me-2.jpg", alt: "James Kidd in Glasgow", caption: "Scotland" },
+  { id: "scala-dei-turchi", src: "photos/about-me-3.jpg", alt: "Scala dei Turchi, Sicily", caption: "Italy" },
   { id: "scottish-highlands", src: "photos/about-me-4.jpg", alt: "Scottish Highlands with Saltire flag", caption: "Scotland" },
   { id: "family-italy", src: "photos/about-me-5.jpg", alt: "Family in Italy", caption: "Italy" },
   { id: "croatia-coast", src: "photos/about-me-6.jpg", alt: "Croatian coastline", caption: "Croatia" },

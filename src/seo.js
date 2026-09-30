@@ -12,7 +12,6 @@
 // stats) rather than duplicated by hand.
 
 import { heroData } from "./data/hero";
-import { skillsDetailData } from "./data/skills-detail";
 import { travelData } from "./data/travel";
 import { projects } from "./content/projects";
 import { frontmatter as personalMeta } from "./content/personal.mdx";
@@ -45,16 +44,8 @@ export const DEFAULT_META = {
   path: "/",
   title: `${heroData.name} — ${heroData.title}`,
   description: clamp(
-    `${heroData.tagline}. ${heroData.name} is a ${heroData.title} working across ${heroData.stack.join(", ")}.`
+    `${heroData.tagline}. ${heroData.name} — ${heroData.title} — working across ${heroData.stack.join(", ")}.`
   ),
-  type: "website",
-  image: DEFAULT_OG_IMAGE,
-};
-
-const SKILLS_META = {
-  path: "/skills",
-  title: pageTitle(skillsDetailData.headline),
-  description: clamp(skillsDetailData.positioning),
   type: "website",
   image: DEFAULT_OG_IMAGE,
 };
@@ -90,7 +81,7 @@ function projectMeta(project) {
   };
 }
 
-const STATIC_META = [DEFAULT_META, SKILLS_META, PERSONAL_META];
+const STATIC_META = [DEFAULT_META, PERSONAL_META];
 
 /** Every route the build should prerender, in emit order. */
 export const ROUTE_META = [

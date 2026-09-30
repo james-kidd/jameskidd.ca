@@ -2,7 +2,7 @@
 slug: paint-by-number
 featured: true
 title: Deterministic Vision Pipeline
-description: A classical computer vision pipeline that segments imagery into discrete color regions without neural networks. Currently being applied to satellite vegetation tracking for agricultural yield prediction. Paint-by-Number is the sandbox.
+description: "A classical computer vision pipeline that segments imagery into discrete color regions without neural networks. Next step: applying the same segmentation to satellite vegetation time-series for crop-yield tracking. Paint-by-Number is the sandbox."
 skills:
   - Python
   - OpenCV
@@ -15,9 +15,9 @@ embed: https://jkiddmtl-paint-by-number.hf.space
 
 ## Where This Is Going
 
-The core idea: take complex visual data and reduce it to discrete, interpretable regions using deterministic math — no black-box models. The same pipeline can apply to satellite imagery, medical scans, industrial inspection, or anything where you need reproducible segmentation at scale.
+The core idea: take complex visual data and reduce it to discrete, interpretable regions using deterministic math — no black-box models.
 
-I thought agriculture was the most interesting place to start. Tracking vegetation as it progresses from green to yellowing to harvest-ready brown, across satellite time-series, to forecast commodity yields. That's what I'm currently building toward.
+Next step: applying the same segmentation to satellite vegetation time-series for crop-yield tracking.
 
 ## The Sandbox
 
@@ -28,4 +28,4 @@ Paint-by-Number is the controlled environment where I refine the segmentation lo
 - Operates entirely in CIELAB color space — mathematical distances match human-perceived color differences
 - SLIC superpixel clustering in a joint 5D LAB+XY space for precise control over color adherence vs. shape regularity
 - K-means palette reduction with Region Adjacency Graph merging to collapse similar adjacent regions
-- No neural networks — deterministic, reproducible, O(N) complexity
+- No neural networks — deterministic and reproducible

@@ -25,20 +25,19 @@ React 19 + Vite 7 + Tailwind CSS v4 portfolio site deployed on Vercel. JavaScrip
 2. `build:ssr` — `vite build --ssr src/entry-server.jsx` → `dist-ssr/entry-server.js`
 3. `prerender` — `node scripts/prerender.js`
 
-The prerender step renders each route with `renderToString` inside a `StaticRouter`, injects the markup into `#root`, and swaps the `<!--seo:start-->…<!--seo:end-->` block in the template for that route's head tags. Output is flat `.html` files (`dist/skills.html`, `dist/projects/<slug>.html`, `dist/404.html`) plus `sitemap.xml` and `robots.txt`. `vercel.json` sets `cleanUrls` so `/skills` resolves to `skills.html`; **there is no SPA catch-all rewrite** — it would shadow the prerendered files.
+The prerender step renders each route with `renderToString` inside a `StaticRouter`, injects the markup into `#root`, and swaps the `<!--seo:start-->…<!--seo:end-->` block in the template for that route's head tags. Output is flat `.html` files (`dist/personal.html`, `dist/projects/<slug>.html`, `dist/404.html`) plus `sitemap.xml` and `robots.txt`. `vercel.json` sets `cleanUrls` so `/personal` resolves to `personal.html`; **there is no SPA catch-all rewrite** — it would shadow the prerendered files.
 
 Anything touching `window`, `document` or `localStorage` must stay inside an effect or be guarded, otherwise the prerender pass crashes. `src/main.jsx` hydrates when `#root` already has markup and falls back to `createRoot` otherwise.
 
 ### Per-route metadata
 
-`src/seo.js` is the single source of truth for titles, descriptions, canonicals and OG/Twitter tags. It is consumed by `scripts/prerender.js` at build time and by `src/hooks/useRouteMeta.js` at runtime (client-side navigation). Copy is derived from existing content — `src/data/hero.js`, `skills-detail.js`, `travel.js` and MDX frontmatter — rather than duplicated. `index.html` carries the sitewide fallback tags; the prerenderer warns if they drift from `DEFAULT_META`.
+`src/seo.js` is the single source of truth for titles, descriptions, canonicals and OG/Twitter tags. It is consumed by `scripts/prerender.js` at build time and by `src/hooks/useRouteMeta.js` at runtime (client-side navigation). Copy is derived from existing content — `src/data/hero.js`, `travel.js` and MDX frontmatter — rather than duplicated. `index.html` carries the sitewide fallback tags; the prerenderer warns if they drift from `DEFAULT_META`.
 
 ### Routing (React Router v7)
 
 | Route | Component | Layout |
 |---|---|---|
 | `/` | `HomePage` (inline in App.jsx) | `Layout` (nav + theme controls) |
-| `/skills` | `SkillsPage` | `PageShell` (no nav) |
 | `/projects/:slug` | `ProjectPage` | `PageShell` (no nav) |
 | `/personal` | `PersonalPage` | `PageShell` (no nav) |
 | `/404` and `*` | `NotFoundPage` | `PageShell` (no nav) |
@@ -51,13 +50,12 @@ Content is split between **MDX files** (prose) and **JS data files** (structured
 
 #### MDX content (`src/content/`)
 
-All MDX files use YAML frontmatter for structured metadata and Markdown body for prose. Loaded eagerly via `import.meta.glob` in each directory's `index.js` loader. The generic loader lives in `src/content/mdxCollection.js` — it parses glob results into sorted/filtered arrays with the MDX default export attached under a configurable component name (`Chapter`, `Body`, `Description`).
+All MDX files use YAML frontmatter for structured metadata and Markdown body for prose. Loaded eagerly via `import.meta.glob` in each directory's `index.js` loader. Set `published: false` in frontmatter to hold an entry: the file stays but gets no card, route or sitemap entry. The generic loader lives in `src/content/mdxCollection.js` — it parses glob results into sorted/filtered arrays with the MDX default export attached under a configurable component name (`Chapter`, `Body`, `Description`).
 
 | Directory | What it contains | Frontmatter keys |
 |---|---|---|
 | `src/content/experience/*.mdx` | One file per role. Body is description/bullets. | `order`, `group` (internships/academic/freelance), `date`, `title`, `company`, `skills[]`, `link?` |
 | `src/content/projects/*.mdx` | One file per project. Body is the full write-up with Markdown headings. Can embed interactive React components. | `slug`, `featured?`, `title`, `description`, `skills[]`, `link`, `demo?`, `embed?` |
-| `src/content/pillars/*.mdx` | Skills pillars. Body is description prose. | `id`, `order`, `title`, `subtitle`, `icon`, `evidence[]` |
 | `src/content/about.mdx` | About section intro paragraphs. No frontmatter. | — |
 | `src/content/personal.mdx` | Personal section description. | `title`, `instagram` |
 
@@ -77,7 +75,6 @@ Each MDX content directory has an `index.js` that globs and exports parsed conte
 
 - `src/content/experience/index.js` → exports `experiences` (sorted array) and `experiencesByGroup` (object keyed by group)
 - `src/content/projects/index.js` → exports `projects` (array with `Chapter` component), `projectChapters` (slug→component map), `hasChapter()`
-- `src/content/pillars/index.js` → exports `pillars` (sorted array with `Description` component)
 
 Components import from these loaders, not from `src/data/` for content that has been migrated to MDX.
 
@@ -87,9 +84,8 @@ Components import from these loaders, not from `src/data/` for content that has 
 |---|---|
 | `hero.js` | Name, title, tagline, stack tags, contact emails, social URLs, resume link |
 | `sections/` | One module per data slice, assembled into `sectionData` by `sections/index.js` (which also exports `experienceGroups`): `education.js`, `skills.js`, and `personal/{stats,milestones,favorites,gallery}.js` |
-| `skills-detail.js` | Skills page headline and positioning text |
 | `travel.js` | Auto-generated from photo EXIF — country/city lists, stats (do not edit manually) |
-| `index.js` | Re-exports `heroData`, `sectionData`, `experienceGroups`, `skillsDetailData` |
+| `index.js` | Re-exports `heroData`, `sectionData`, `experienceGroups` |
 
 `sectionData` keeps a fixed shape regardless of how the slices are split: `about.education.details[]`, `skills.blocks[]`, and `personal.{stats,milestones,favorites,gallery}`. Edit a slice in its own file. There are two barrels: `sections/index.js` composes the top-level `about`/`skills`/`personal` keys, and `sections/personal/index.js` composes the four `personal.*` keys — add or remove a key in whichever one owns that level.
 
@@ -108,7 +104,7 @@ Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<ht
 - **`src/layout/`** — `Layout` (home shell), `Navigation` (scroll-spy nav), `IdentityBlock` (hero sidebar), `ThemeControls`
 - **`src/sections/`** — One component per home section, plus `TravelMap` (react-simple-maps)
 - **`src/sections/components/`** — Section-scoped cards (`ExperienceCard`, `ProjectCard`, `SkillCard`, `EducationCard`)
-- **`src/pages/`** — Full-page routes: `PersonalPage`, `ProjectPage`, `SkillsPage`, `NotFoundPage`
+- **`src/pages/`** — Full-page routes: `PersonalPage`, `ProjectPage`, `NotFoundPage`
 - **`src/components/`** — Shared UI primitives (`SectionPanel`, `TagPill`, `GalleryLightbox`, `BipartiteVisual`, etc.)
 - **`src/components/mdx/`** — MDX component overrides and custom components (`mdxComponents.jsx`, `Callout`, `Figure`) used via `MDXProvider`
 - **`src/hooks/`** — `useScrollSpy` (Intersection Observer for active nav), `useScrollToTop` (auto-scroll on route change, skips initial mount so browser scroll restoration still works), `useRouteMeta` (syncs `<head>` on client-side navigation)
@@ -121,5 +117,5 @@ Tailwind v4 with `@tailwindcss/vite` plugin. Custom component classes (`.section
 
 - ESLint: `no-unused-vars` allows uppercase or `_`-prefixed identifiers
 - Icons from `lucide-react` exclusively
-- `vercel.json` sets `cleanUrls` only — no SPA rewrite (it would shadow the prerendered HTML)
+- `vercel.json` sets `cleanUrls` plus redirects for retired routes (`/skills`, held/deleted projects) — no SPA rewrite (it would shadow the prerendered HTML)
 - `react-simple-maps` peer dep override in `package.json` for React 19 compat
