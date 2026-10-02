@@ -9,6 +9,11 @@ npm run dev      # Start Vite dev server with HMR
 npm run build    # Full production build: client + SSR bundle + prerender
 npm run lint     # ESLint
 npm run preview  # Preview production build
+
+npm run design:content    # Flatten src/data + src/content into design/content/site-content.json
+npm run design:kit        # Regenerate the Figma kit plugin bundle (design/figma-plugin/code.js)
+npm run design:kit:check  # Fail if either generated design file is stale
+npm run design:kit:smoke  # Run the plugin bundle against the mock Plugin API
 ```
 
 No test runner is configured. Treat `npm run lint` plus a clean `npm run build` as the test suite.
@@ -88,6 +93,10 @@ Components import from these loaders, not from `src/data/` for content that has 
 | `index.js` | Re-exports `heroData`, `sectionData`, `experienceGroups` |
 
 `sectionData` keeps a fixed shape regardless of how the slices are split: `about.education.details[]`, `skills.blocks[]`, and `personal.{stats,milestones,favorites,gallery}`. Edit a slice in its own file. There are two barrels: `sections/index.js` composes the top-level `about`/`skills`/`personal` keys, and `sections/personal/index.js` composes the four `personal.*` keys — add or remove a key in whichever one owns that level.
+
+### Figma design kit (`design/`)
+
+`design/figma-plugin/` is a Figma plugin that generates the site's design system file — variables (Global / Theme with a mode per theme / Primitives / Spacing / Motion), text + effect styles, one component set per React component with its states, every route as a screen, and a Motion & States page with each animation isolated. It is assembled by `scripts/build-figma-kit.mjs` from `design/figma-plugin/src/*.js` (ordered fragments sharing one scope), `design/content/site-content.json` (produced by `scripts/export-design-content.mjs` from `src/data` + `src/content`), `tokens/*.json` and the lucide icons in `node_modules`. Both generated files are committed; run `npm run design:kit` after changing content, tokens or the plugin source, and `npm run design:kit:smoke` to execute the bundle against the mock API in `design/figma-plugin/test/`. Full guide, component map, motion spec and the data-cleanup backlog: `docs/figma-kit.md`.
 
 ### Section Registry (`src/sections/registry.js`)
 

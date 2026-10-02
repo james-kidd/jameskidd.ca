@@ -14,7 +14,11 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "sync-content": "node scripts/sync-content.mjs",
-    "sync-content:check": "node scripts/sync-content.mjs --check"
+    "sync-content:check": "node scripts/sync-content.mjs --check",
+    "design:content": "node scripts/export-design-content.mjs",
+    "design:kit": "node scripts/build-figma-kit.mjs",
+    "design:kit:check": "node scripts/build-figma-kit.mjs --check",
+    "design:kit:smoke": "node design/figma-plugin/test/smoke.mjs"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",

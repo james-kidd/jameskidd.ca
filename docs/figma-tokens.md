@@ -16,6 +16,11 @@ so there is no CMS, no vendor account, and nothing to renew.
 Figma variables ──(plugin export)──► tokens/*.json ──(npm run tokens)──► src/styles/tokens.css
 ```
 
+The complete Figma file (variables, components, screens, motion) is generated
+from these tokens plus the site content by the plugin in `design/figma-plugin/`
+— see [figma-kit.md](./figma-kit.md). Its Global and Theme collections use the
+naming contract below, so the export flow here applies to the generated file.
+
 ## Why a plugin, and not the Figma API
 
 Figma exposes variables two ways, and only one of them is usable here:
