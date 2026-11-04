@@ -9,9 +9,10 @@ npm run dev      # Start Vite dev server with HMR
 npm run build    # Full production build: client + SSR bundle + prerender
 npm run lint     # ESLint
 npm run preview  # Preview production build
+npm run check:schema  # Validate the JSON-LD in dist/ (also runs at the end of build)
 ```
 
-No test runner is configured. Treat `npm run lint` plus a clean `npm run build` as the test suite.
+No test runner is configured. Treat `npm run lint` plus a clean `npm run build` as the test suite. The build ends with `check:schema`, which fails on broken JSON-LD.
 
 ## Architecture
 
@@ -32,6 +33,20 @@ Anything touching `window`, `document` or `localStorage` must stay inside an eff
 ### Per-route metadata
 
 `src/seo.js` is the single source of truth for titles, descriptions, canonicals and OG/Twitter tags. It is consumed by `scripts/prerender.js` at build time and by `src/hooks/useRouteMeta.js` at runtime (client-side navigation). Copy is derived from existing content — `src/data/hero.js`, `travel.js` and MDX frontmatter — rather than duplicated. `index.html` carries the sitewide fallback tags; the prerenderer warns if they drift from `DEFAULT_META`.
+
+### Structured data (schema.org JSON-LD)
+
+`src/structuredData.js` builds one `@graph` per route and is wired exactly like `src/seo.js`: the prerenderer bakes it into the `<!--seo:start-->` block as `<script type="application/ld+json" id="structured-data">`, and `useRouteMeta` swaps it on client-side navigation. Nothing is written per page by hand; the graph unrolls from content:
+
+| Content | schema.org output |
+|---|---|
+| `src/data/hero.js`, `sections/skills.js` | `Person` (`@id` `/#person`): name, jobTitle, sameAs, knowsAbout, knowsLanguage |
+| `sections/education.js` | `Person.alumniOf` as `OrganizationRole` with dates |
+| `content/experience/*.mdx` | `internships` -> `worksFor` `EmployeeRole`; `academic` -> `memberOf` `OrganizationRole`; `freelance` is left out |
+| `content/projects/*.mdx` | per project page: `WebPage` + `SoftwareSourceCode` (GitHub link) or `CreativeWork` + `BreadcrumbList`; home gets an `ItemList` of projects |
+| `sections/personal/gallery.js` | `/personal`: `ProfilePage` + `ImageGallery` of `ImageObject` |
+
+Every page repeats the same `WebSite` and `Person` nodes with stable `@id`s so crawlers merge them. The 404 route carries none. Display dates such as `"Jan 2026 — Apr 2026"` are parsed to ISO; set `startDate`/`endDate` in frontmatter to override. To add a route, add a builder to `PAGE_BUILDERS`.
 
 ### Routing (React Router v7)
 
@@ -54,8 +69,8 @@ All MDX files use YAML frontmatter for structured metadata and Markdown body for
 
 | Directory | What it contains | Frontmatter keys |
 |---|---|---|
-| `src/content/experience/*.mdx` | One file per role. Body is description/bullets. | `order`, `group` (internships/academic/freelance), `date`, `title`, `company`, `skills[]`, `link?` |
-| `src/content/projects/*.mdx` | One file per project. Body is the full write-up with Markdown headings. Can embed interactive React components. | `slug`, `featured?`, `title`, `description`, `skills[]`, `link`, `demo?`, `embed?` |
+| `src/content/experience/*.mdx` | One file per role. Body is description/bullets. | `order`, `group` (internships/academic/freelance), `date`, `title`, `company`, `skills[]`, `link?`, `startDate?`/`endDate?` (ISO, for JSON-LD) |
+| `src/content/projects/*.mdx` | One file per project. Body is the full write-up with Markdown headings. Can embed interactive React components. | `slug`, `featured?`, `title`, `description`, `skills[]`, `link`, `demo?`, `embed?`, `schemaType?`, `datePublished?`, `image?` (JSON-LD) |
 | `src/content/about.mdx` | About section intro paragraphs. No frontmatter. | — |
 | `src/content/personal.mdx` | Personal section description. | `title`, `instagram` |
 

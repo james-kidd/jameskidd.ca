@@ -18,6 +18,11 @@ export {
   DEFAULT_META,
   INDEXABLE_ROUTE_META,
 } from "./seo";
+export {
+  resolveStructuredData,
+  toJsonLd,
+  STRUCTURED_DATA_SCRIPT_ID,
+} from "./structuredData";
 
 /** Render one route to a static HTML string. */
 export function render(pathname) {

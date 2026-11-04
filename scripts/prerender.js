@@ -10,7 +10,8 @@
 // For every route in src/seo.js it renders the React tree to a string, injects
 // it into #root, and swaps the <!--seo:start-->…<!--seo:end--> block in
 // index.html for that route's title / description / canonical / OG / Twitter
-// tags. The browser bundle then hydrates the markup it finds.
+// tags plus the route's schema.org JSON-LD (src/structuredData.js). The browser
+// bundle then hydrates the markup it finds.
 
 import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
@@ -39,7 +40,20 @@ function escapeText(value) {
     .replace(/>/g, "&gt;");
 }
 
-function renderHead({ title, canonical, metas }) {
+/**
+ * schema.org JSON-LD for the route, or nothing when the route has none (404).
+ * `json` arrives already serialized and `<`-escaped by src/structuredData.js.
+ */
+function renderJsonLd(json, id) {
+  if (!json) return [];
+  const body = json
+    .split("\n")
+    .map((line) => `      ${line}`)
+    .join("\n");
+  return [`    <script type="application/ld+json" id="${id}">`, body, "    </script>"];
+}
+
+function renderHead({ title, canonical, metas }, jsonLd = []) {
   const lines = [
     "<!--seo:start-->",
     `    <title>${escapeText(title)}</title>`,
@@ -50,6 +64,7 @@ function renderHead({ title, canonical, metas }) {
       return `    <meta ${attrString} content="${escapeAttr(content)}" />`;
     }),
     `    <link rel="canonical" href="${escapeAttr(canonical)}" />`,
+    ...jsonLd,
     "    <!--seo:end-->",
   ];
 
@@ -131,6 +146,9 @@ async function main() {
     canonicalUrl,
     DEFAULT_META,
     INDEXABLE_ROUTE_META,
+    resolveStructuredData,
+    toJsonLd,
+    STRUCTURED_DATA_SCRIPT_ID,
   } = await import(pathToFileURL(SERVER_ENTRY).href);
 
   warnOnDefaultDrift(template, DEFAULT_META);
@@ -139,7 +157,12 @@ async function main() {
 
   for (const routePath of routes) {
     const appHtml = render(routePath);
-    const head = renderHead(toHeadTags(resolveMeta(routePath)));
+    const structuredData = resolveStructuredData(routePath);
+    const jsonLd = renderJsonLd(
+      structuredData && toJsonLd(structuredData),
+      STRUCTURED_DATA_SCRIPT_ID
+    );
+    const head = renderHead(toHeadTags(resolveMeta(routePath)), jsonLd);
 
     const html = template
       .replace(SEO_BLOCK, () => head)
