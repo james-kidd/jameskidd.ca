@@ -2,6 +2,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { resolveMeta, toHeadTags } from "../seo";
+import {
+  resolveStructuredData,
+  toJsonLd,
+  STRUCTURED_DATA_SCRIPT_ID,
+} from "../structuredData";
 
 function upsertMeta({ selector, attrs, content }) {
   let el = document.head.querySelector(selector);
@@ -29,6 +34,26 @@ function upsertCanonical(href) {
   el.setAttribute("href", href);
 }
 
+/** Replace the route's JSON-LD, or remove it on routes that have none. */
+function syncStructuredData(pathname) {
+  const data = resolveStructuredData(pathname);
+  let el = document.getElementById(STRUCTURED_DATA_SCRIPT_ID);
+
+  if (!data) {
+    el?.remove();
+    return;
+  }
+
+  if (!el) {
+    el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.id = STRUCTURED_DATA_SCRIPT_ID;
+    document.head.appendChild(el);
+  }
+
+  el.textContent = toJsonLd(data);
+}
+
 /**
  * Keeps <head> in sync with the active route on client-side navigation.
  *
@@ -45,5 +70,6 @@ export function useRouteMeta() {
     document.title = title;
     metas.forEach(upsertMeta);
     upsertCanonical(canonical);
+    syncStructuredData(pathname);
   }, [pathname]);
 }
