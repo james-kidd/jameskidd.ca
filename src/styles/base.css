@@ -1,0 +1,20 @@
+/* base.css: element defaults. Reads only medium role tokens (--medium-*), so a page
+   or region that switches medium (data-medium="text" | "app") restyles itself without
+   touching component CSS. */
+@layer base {
+  body {
+    font-family: var(--medium-font);
+    font-size: var(--medium-body-size);
+    line-height: var(--medium-body-leading);
+    background: var(--medium-canvas);
+    color: var(--color-text-primary);
+  }
+
+  /* A region that declares its own medium restates the medium-driven properties,
+     because custom properties set on it are not seen by the body rule above. */
+  [data-medium] {
+    font-family: var(--medium-font);
+    font-size: var(--medium-body-size);
+    line-height: var(--medium-body-leading);
+  }
+}

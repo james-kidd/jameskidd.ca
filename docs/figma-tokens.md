@@ -1,179 +1,160 @@
 # Design tokens: Figma → DTCG JSON → CSS
 
-Every theme value on this site is defined in a small set of JSON files in
-[`tokens/`](../tokens). A build step compiles them into `src/styles/tokens.css`,
-which `src/index.css` imports; no `:root` or `[data-theme]` block is hand-written
-anywhere else.
-
-Adopting the tokens at every call site is a separate job — some components still
-carry literals such as `text-[10px]` or a hard-coded `#f59e0b`. The token for each
-of those exists here, ready to be pointed at.
-
-The whole chain is open formats — W3C DTCG JSON in, CSS custom properties out —
-so there is no CMS, no vendor account, and nothing to renew.
+Every brand and layout value on this site is defined in [`tokens/`](../tokens) as
+W3C DTCG JSON. `npm run tokens` compiles them into `src/styles/tokens/shared.css`
+and `src/styles/tokens/web.css`. No `:root` or `[data-theme]` value is hand-written
+anywhere else, apart from the transition aliases in `src/styles/legacy.css`.
 
 ```
-Figma variables ──(plugin export)──► tokens/*.json ──(npm run tokens)──► src/styles/tokens.css
+Figma variables ──(plugin export)──► tokens/**/*.json ──(npm run tokens)──► src/styles/tokens/*.css
 ```
+
+How those tokens then flow through the stylesheets (legacy, mediums, base,
+components) is in [`styles.md`](styles.md).
 
 ## Why a plugin, and not the Figma API
-
-Figma exposes variables two ways, and only one of them is usable here:
 
 | | Availability | Usable? |
 |---|---|---|
 | **Variables REST API** (`GET /v1/files/:key/variables/local`) | Enterprise plans only | No |
-| **Variables Plugin API** (`figma.variables.*`) | Every plan, including Starter and Education | Yes |
+| **Variables Plugin API** (`figma.variables.*`) | Every plan, including Education | Yes |
 
-So there is no automated pull from Figma and no CI job that talks to Figma. The
-supported flow is manual and explicit: **export from Figma with a plugin, commit
-the JSON, let the build do the rest.** That is a feature — the token files are
-reviewable in a diff, and the site builds with no network access and no secrets.
+So there is no automated pull and no CI job that talks to Figma. Export with a
+plugin, commit the JSON, let the build do the rest. The token files stay
+reviewable in a diff and the site builds with no network access and no secrets.
 
-## Repo layout
+## The file layout mirrors the Figma file
 
-```
-tokens/
-  global.json          # mode-independent tokens  -> :root only
-  themes/
-    tech.json          # -> :root (as the default) AND [data-theme='tech']
-    nature.json        # -> [data-theme='nature']
-    editorial.json     # -> [data-theme='editorial']
+The source file is **Jameskidd.info - Design System**
+(`De2NdUNIHbLHH2vp6H24DX`). Its collections are grouped by prefix: `Shared /`
+for the brand that every medium uses, `Web /` for browser-only layout. `tokens/`
+uses the same groups, one file per collection, one file per mode:
 
-scripts/build-tokens.mjs   # Style Dictionary build
-src/styles/tokens.css      # GENERATED — do not edit, it is overwritten
-```
+| `tokens/` path | Figma collection | Emitted as |
+|---|---|---|
+| `shared/01-primitives.json` | Shared / 01 Primitives | `:root` |
+| `shared/02-theme/{tech,nature,editorial}.json` | Shared / 02 Theme (modes Tech, Nature, Editorial) | `:root` (tech) and `[data-theme='…']` |
+| `shared/03-core.json` | Shared / 03 Core | `:root` |
+| `shared/04-spacing.json` | Shared / 04 Spacing | `:root` |
+| `shared/05-motion.json` | Shared / 05 Motion | `:root` |
+| `shared/06-effects.json` | Figma effect styles (shadows) | `:root`, hand-maintained |
+| `web/01-viewports/{mobile-portrait,mobile-landscape,desktop}.json` | Web / 01 Viewports | `:root` inside one media query per mode |
 
-`src/App.jsx` writes the active theme to `document.documentElement.dataset.theme`,
-which is what the `[data-theme='…']` blocks key off.
+The Figma file's `Deprecated / Tech|Nature|Editorial` collections are not
+exported: their names live on as aliases in `src/styles/legacy.css`.
+
+The `Documents` and `Video` kits in Figma have no CSS output on purpose. Word
+documents take their styles from a native Word template, and video composition
+is outside the token sync. The `text` medium in `src/styles/mediums/` is the web
+reading view, not a Word style.
 
 ## The naming contract
 
-**A token's path in the JSON becomes its CSS custom property name, verbatim.**
+**A token's JSON path becomes its CSS custom property, joined with `-`.**
+
+| Figma variable | JSON path | CSS |
+|---|---|---|
+| `color/action/primary` | `color.action.primary` | `--color-action-primary` |
+| `gray/50` | `gray.50` | `--gray-50` |
+| `space/2_5` | `space.2_5` | `--space-2_5` |
+| `font/family/ui` | `font.family.ui` | `--font-family-ui` |
+
+The name comes from the path, never from Figma's per-variable *code syntax*
+field, which is inconsistent in the file today (`var(--x)`, bare `--x`, empty,
+and Tailwind class names on the legacy motion group).
+
+Primitives deliberately have no `color-` prefix. `--color-*` is Tailwind v4's
+colour namespace, and `--color-gray-50` would silently override Tailwind's own
+gray scale for every `bg-gray-*` utility.
+
+### References keep the chain visible
+
+Mode files point at primitives instead of repeating hex values:
 
 ```json
-{ "primary-dark": { "$type": "color", "$value": "#1e40af" } }
+{ "color": { "action": { "primary": { "$type": "color", "$value": "{blue.600}" } } } }
 ```
+
+The build writes references as `var()`:
 
 ```css
---primary-dark: #1e40af;
+--color-action-primary: var(--blue-600);
+--primary: var(--color-action-primary);   /* legacy.css */
 ```
 
-Tokens are flat — no nesting — precisely so that this holds with no translation
-layer. Name the Figma variable exactly as you want the CSS variable to read,
-minus the leading `--`, and a plugin export drops straight into `tokens/`.
+Reading the CSS therefore shows where every value comes from, and changing a
+theme or a primitive re-resolves everything downstream. A file may only
+reference the files listed for it in `REFERENCES` in `scripts/build-tokens.mjs`:
+primitives ← theme ← core, never the other way.
 
-There is one deliberate exception. The typeface token is called
-**`font-family-sans`**, not `font-sans`, because `--font-sans` is also a Tailwind
-theme namespace; `src/index.css` aliases one to the other in its `@theme` block:
+## Seeded with the site's values, not Figma's
 
-```css
-@theme {
-  --font-sans: var(--font-family-sans);
-}
-```
+The token files use the Figma structure and names but hold the values the site
+renders today, so this layout landed with zero visual change. Where Figma
+already differs, the value is kept and the token's `$description` says so:
 
-Consume `var(--font-sans)` (or the `font-sans` utility) in application code. The
-raw token exists only so the alias is not a self-reference.
+| Token | Site (kept) | Figma today |
+|---|---|---|
+| `color/text/primary` | `slate/900` `#0f172a` | `gray/900` `#111827` |
+| `color/text/secondary` | `slate/600` `#475569` | `gray/600` `#4b5563` |
+| Nature `color/action/primary` | `emerald/600` `#059669` | `emerald/700` `#047857` |
+| UI typeface | per theme: system, Segoe UI, Georgia | `font/family/ui` = Geist for all |
 
-## Setting up the Figma file
-
-The JSON above maps onto Figma like this:
-
-| `tokens/` file | Figma |
-|---|---|
-| `global.json` | a single-mode collection, e.g. **Global** |
-| `themes/*.json` | one collection, e.g. **Theme**, with a mode per file |
-
-**Mode support depends on your plan.** Education, Professional, Organization and
-Enterprise plans can create modes; **Starter (free) cannot**. If you are on
-Starter, model the three themes as three separate single-mode collections named
-`tech`, `nature` and `editorial` instead. The export lands in the same place and
-the build does not care which shape produced it.
-
-All six theme tokens must exist in every theme — `primary`, `primary-dark`,
-`secondary`, `surface-muted`, `border`, `font-family-sans`. The build enforces
-this (see [Guard rails](#guard-rails)).
-
-Shadows are the one thing you cannot round-trip: Figma models them as **effect
-styles**, not variables, so no variable export will ever contain them. They stay
-hand-authored in `tokens/global.json` as CSS shorthand strings.
+`slate/600` and `slate/900` exist only in code. A Figma export replaces them; the
+build will then fail on the dangling reference until the theme files point at
+Figma's primitives, which is the moment to accept or reject the change.
 
 ## Exporting
 
-Any plugin that emits W3C DTCG JSON works — the pipeline depends on the JSON
-shape, not on a particular plugin. Verified free options:
+Any plugin that emits W3C DTCG JSON works. Free options:
 
-- **[Tokens Bruecke](https://www.figma.com/community/plugin/1254538877056388290/tokens-bruecke)** — converts Figma variables and styles to DTCG JSON.
-- **[Design Tokens (W3C) Export](https://www.figma.com/community/plugin/1377982390646186215/design-tokens-w3c-export)** — exports each variable collection as its own JSON file, zipped. Closest match to this repo's one-file-per-mode layout.
-- **[Styleframe](https://www.styleframe.dev/figma)** — free and open source, exports *and* imports DTCG, multi-mode aware. Useful if you ever want to push the repo's tokens back into Figma.
+- **[Design Tokens (W3C) Export](https://www.figma.com/community/plugin/1377982390646186215/design-tokens-w3c-export)**: one JSON file per collection, zipped. Closest to this layout.
+- **[Tokens Bruecke](https://www.figma.com/community/plugin/1254538877056388290/tokens-bruecke)**: variables and styles to DTCG.
+- **[Styleframe](https://www.styleframe.dev/figma)**: exports and imports DTCG, multi-mode aware.
 
 Then:
 
-1. Run the plugin, choose DTCG / W3C output, one file per collection-or-mode.
-2. Overwrite the matching file in `tokens/`. Keep the filenames.
-3. `npm run tokens`
-4. Check `git diff` — you are reviewing plain CSS custom properties, so an
+1. Export, choosing DTCG / W3C output, one file per collection or mode.
+2. Overwrite the matching files in `tokens/`. Keep the filenames.
+3. `npm run tokens`, then `npm run build`.
+4. Review `git diff src/styles/tokens/`. It is plain CSS custom properties, so an
    unintended change is obvious.
 
-### If the export does not match byte-for-byte
-
-The build normalises the two shapes plugins actually differ on, so you should not
-need to hand-edit:
-
-- **Dimensions** — both `"18px"` and `{ "value": 18, "unit": "px" }` work.
-- **Font families** — both `"Georgia, serif"` and `["Georgia", "serif"]` work;
-  array entries needing quotes (`Segoe UI`) get them.
-
-Anything else throws with the offending token path rather than emitting broken
-CSS.
-
-## Building
-
-```bash
-npm run tokens   # regenerate src/styles/tokens.css
-npm run build    # runs `tokens` first via `prebuild`, then vite build
-```
-
-`prebuild` means a production build — local or on Vercel — can never ship stale
-CSS against edited tokens.
-
-`src/styles/tokens.css` **is committed** even though it is generated, so
-`npm run dev` and a fresh clone work without a build step. `npm run dev` does not
-regenerate it; run `npm run tokens` yourself after editing a token file.
+The build accepts the shapes plugins differ on: dimensions as `"18px"` or
+`{ "value": 18, "unit": "px" }`, font families as a string or an array, easing as
+four numbers. Durations must carry a unit (`"200ms"`); Figma stores seconds, so
+check the motion export. Anything else fails with the token's path.
 
 ## Guard rails
 
 `scripts/build-tokens.mjs` fails the build if:
 
-- the three `tokens/themes/*.json` files do not declare **exactly the same token
-  names** — a half-finished export can't ship a theme that silently falls back to
-  `:root` for whatever it forgot;
-- the same token name is defined in more than one file;
-- a token file produces nothing;
+- the mode files of one collection (themes, viewports) do not declare exactly the
+  same token names;
+- the same CSS name is produced twice in one block;
+- a reference points at nothing;
 - a `$value` is a shape the CSS writer does not understand.
-
-That last one matters more than it looks: left alone, Style Dictionary downgrades
-an unrenderable value to a warning and writes `--shadow-soft: [object Object];`
-into the stylesheet. The build turns it into a failure that names the token.
 
 ## Adding a token
 
-1. Add it to `tokens/global.json` (mode-independent) or to **all three**
-   `tokens/themes/*.json` (mode-varying).
+1. Add it in Figma, then export. Or, until the export is wired, add it to the
+   matching `tokens/` file by hand (all mode files if the collection has modes).
 2. `npm run tokens`.
-3. Use it. The house style is Tailwind v4's arbitrary-variable syntax —
-   `text-(--text-muted)`, `bg-(--primary)/10` — which needs no registration.
-4. Only if you also want a generated Tailwind utility (`bg-brand`, `font-sans`),
-   add an alias to the `@theme` block in `src/index.css`.
+3. Use it with Tailwind's arbitrary-variable syntax: `text-(--color-text-secondary)`,
+   `bg-(--color-action-primary)/10`.
+4. Only if you also want a generated utility, add an alias to the `@theme` block
+   in `src/index.css`. Mind the namespaces: `--color-*`, `--shadow-*`,
+   `--radius-*`, `--text-*` (font size) and `--ease-*` all belong to Tailwind.
 
-For **font sizes**, note that the `text-*` shorthand resolves to a colour:
-`text-(--text-body)` compiles to `color: var(--text-body)`, not a size. Write
-`text-[length:var(--text-body)]` instead.
+For font sizes, `text-(--font-size-body)` compiles to a colour. Write
+`text-[length:var(--font-size-body)]`.
 
-A warning on step 4: `@theme` keys live in Tailwind's own namespaces, and a name
-collision changes rendered output. `--shadow-*`, `--radius-*` and `--text-*`
-(font sizes) are all Tailwind namespaces, which is why this repo's shadow, radius
-and type tokens are deliberately *not* registered — registering `--text-body`, for
-instance, would generate a `.text-body` utility that shadows the `.text-body`
-component class. `src/index.css` documents each exclusion inline.
+## Building
+
+```bash
+npm run tokens   # regenerate src/styles/tokens/*.css
+npm run build    # runs `tokens` first via `prebuild`
+```
+
+The generated CSS is committed so `npm run dev` and a fresh clone work without a
+build step. `npm run dev` does not regenerate it.

@@ -1,0 +1,81 @@
+{
+  "$description": "Figma collection 'Shared / 05 Motion' (one mode). Figma stores durations in seconds; these carry units. --ease-* shares Tailwind's namespace with identical values.",
+  "duration": {
+    "fast": {
+      "$type": "duration",
+      "$value": "200ms"
+    },
+    "base": {
+      "$type": "duration",
+      "$value": "300ms"
+    },
+    "slow": {
+      "$type": "duration",
+      "$value": "500ms"
+    },
+    "reveal": {
+      "$type": "duration",
+      "$value": "700ms"
+    },
+    "morph": {
+      "$type": "duration",
+      "$value": "1000ms"
+    },
+    "pulse": {
+      "$type": "duration",
+      "$value": "2000ms"
+    }
+  },
+  "typing": {
+    "char": {
+      "$type": "duration",
+      "$value": "45ms"
+    },
+    "pause": {
+      "$type": "duration",
+      "$value": "600ms"
+    },
+    "strike": {
+      "$type": "duration",
+      "$value": "800ms"
+    }
+  },
+  "ease": {
+    "out": {
+      "$type": "cubicBezier",
+      "$value": [
+        0,
+        0,
+        0.2,
+        1
+      ]
+    },
+    "in-out": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.4,
+        0,
+        0.2,
+        1
+      ]
+    },
+    "default": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.4,
+        0,
+        0.2,
+        1
+      ]
+    },
+    "pulse": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.4,
+        0,
+        0.6,
+        1
+      ]
+    }
+  }
+}

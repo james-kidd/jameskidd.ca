@@ -1,13 +1,40 @@
 @import "tailwindcss" source(none);
 
 /* ===============================
-   1. THEMES
+   STYLE ENTRY POINT
    ===============================
-   Every design token lives in tokens/ as W3C DTCG JSON and is compiled to
-   src/styles/tokens.css by `npm run tokens` (wired into `prebuild`, so a
-   production build always regenerates it). Edit tokens/*.json, never the
-   generated CSS. See docs/figma-tokens.md for the Figma workflow. */
-@import "./styles/tokens.css";
+   Import order is the cascade. Each layer may read the ones above it, never below:
+
+     1. tokens/shared.css   generated: primitives -> theme modes -> core, spacing, motion, effects
+     2. tokens/web.css      generated: browser layout tokens per Figma viewport mode
+     3. legacy.css          old names (--primary, --border, ...) aliased to the semantic tokens
+     4. mediums/*.css       role tokens per artifact: site (default), text, app
+     5. base.css            element defaults, reading --medium-* only
+     6. components/*.css    reusable classes
+
+   Tokens come from tokens/ (W3C DTCG JSON laid out like the Figma file) and are
+   compiled by `npm run tokens`, which `prebuild` runs. Edit tokens/*.json, never
+   the generated CSS. docs/figma-tokens.md has the Figma workflow and docs/styles.md
+   the layer rules. */
+@import "./styles/tokens/shared.css";
+@import "./styles/tokens/web.css";
+@import "./styles/legacy.css";
+@import "./styles/mediums/site.css";
+@import "./styles/mediums/text.css";
+@import "./styles/mediums/app.css";
+@import "./styles/base.css";
+
+/* Components, in their original cascade order. */
+@import "./styles/components/sections.css";
+@import "./styles/components/tags.css";
+@import "./styles/components/type.css";
+@import "./styles/components/cards.css";
+@import "./styles/components/badges.css";
+@import "./styles/components/buttons.css";
+@import "./styles/components/navigation.css";
+@import "./styles/components/icons.css";
+@import "./styles/components/timeline.css";
+@import "./styles/components/header.css";
 
 /* Tailwind's automatic detection scans the whole project root, and prose that
    names a utility is indistinguishable from markup that uses one — CLAUDE.md's
@@ -17,19 +44,10 @@
 @source "../src";
 @source "../index.html";
 
-@layer base {
-  body {
-    font-family: var(--font-sans);
-    background: var(--surface-muted);
-    color: var(--text-strong);
-    line-height: 1.6;
-  }
-}
-
 /* ===============================
-   2. TAILWIND TOKENS (v4)
+   TAILWIND BRIDGE (v4)
    ===============================
-   Bridges the raw tokens into Tailwind's theme namespaces so they also drive
+   Bridges the legacy token names (src/styles/legacy.css) into Tailwind's theme namespaces so they also drive
    generated utilities (`bg-primary`, `font-sans`, …) alongside the arbitrary-
    variable syntax used throughout the JSX (`text-(--text-muted)`).
 
@@ -55,229 +73,12 @@
   --color-primary-dark: var(--primary-dark);
   --color-secondary: var(--secondary);
   --color-surface: var(--surface);
-  --color-surface-muted: var(--surface-muted);
+  /* No --color-surface-muted here: that name is now the semantic token itself
+     (tokens/shared/02-theme), and aliasing it to --surface-muted would make a cycle. */
   --color-border: var(--border);
   --color-text-strong: var(--text-strong);
   --color-text-muted: var(--text-muted);
   --color-accent-warn: var(--accent-warn);
 
   --font-sans: var(--font-family-sans);
-}
-
-/* 
-   COMPONENTS
-    */
-@layer components {
-  /* --- SECTION SYSTEM --- */
-  .section-block {
-    @apply py-16 md:py-20 border-t;
-    border-color: var(--border);
-  }
-
-  .section-shell {
-    @apply space-y-10 lg:space-y-12;
-  }
-
-  .section-lead {
-    @apply text-lg md:text-xl font-light;
-    color: var(--text-muted);
-  }
-
-  .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.28em];
-    color: var(--primary-dark);
-    letter-spacing: 0.24em;
-  }
-
-  .section-grid {
-    @apply grid gap-6 md:gap-8;
-  }
-
-  .section-surface {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .surface-muted {
-    background: var(--surface-muted);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-  }
-
-  .section-panel {
-    @apply p-6 md:p-8;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft);
-  }
-
-  /* --- TAG PILL --- */
-  .tag-pill {
-    @apply
-      px-3 py-1 text-xs font-medium rounded-full
-      border border-transparent
-      bg-gray-100 text-gray-600
-      cursor-default
-      transition-colors duration-200
-
-      hover:bg-white
-      hover:border-(--primary)
-      hover:text-(--primary)
-      hover:shadow-sm
-
-      group-hover:bg-white
-      group-hover:border-(--primary)
-      group-hover:text-(--primary);
-  }
-
-  /* --- TYPOGRAPHY --- */
-  .section-title {
-    @apply text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3;
-    color: var(--text-strong);
-  }
-
-  .text-body {
-    @apply leading-relaxed;
-    color: var(--text-muted);
-  }
-
-  /* --- CARD SYSTEM --- */
-  .card {
-    @apply p-6 rounded-2xl transition-all duration-300;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-soft);
-    transition-property: transform, box-shadow, border-color, background-color;
-  }
-
-  .card-hover:hover,
-  .card-hover:focus-within {
-    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
-  }
-
-  /* --- BADGES --- */
-  .badge {
-    @apply px-2 py-1 text-xs font-medium rounded-md border transition-colors;
-  }
-
-  .badge-neutral {
-    @apply bg-gray-100 text-gray-600 border-transparent;
-  }
-
-  .badge-primary {
-    @apply bg-(--secondary) text-(--primary-dark) border-(--primary)/10;
-  }
-
-  /* --- BUTTONS --- */
-  .btn {
-    @apply px-8 py-4 font-semibold rounded-lg
-           flex items-center justify-center
-           transition-colors;
-  }
-
-  .btn-primary {
-    @apply bg-(--primary) text-white
-           hover:bg-(--primary-dark);
-  }
-
-  .btn-outline {
-    @apply bg-white border border-gray-200 text-gray-500
-           hover:text-(--primary)
-           hover:border-(--primary);
-  }
-
-  .btn-pill {
-    @apply inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm font-medium
-           border shadow-sm transition-all active:scale-95;
-    background: var(--surface);
-    border-color: var(--border);
-    color: var(--text-muted);
-  }
-
-  .btn-pill:hover,
-  .btn-pill:focus-visible {
-    border-color: color-mix(in srgb, var(--primary) 50%, transparent);
-    color: var(--primary);
-  }
-
-  /* --- NAVIGATION --- */
-  .nav-item {
-    @apply flex items-center gap-3 px-4 py-3
-           text-sm font-medium rounded-lg
-           cursor-pointer
-           transition-all duration-200
-           text-gray-600
-           hover:bg-white
-           hover:text-gray-900
-           hover:shadow-sm;
-  }
-
-  .nav-indicator {
-    @apply w-2 h-2 rounded-full
-           border border-gray-300
-           ml-auto
-           shrink-0
-           transition-colors duration-200;
-  }
-
-  .nav-item.active {
-    @apply bg-white text-(--primary);
-    border: 1px solid var(--border);
-  }
-
-  .nav-item.active .nav-indicator {
-    @apply bg-(--primary-dark) border-(--primary);
-  }
-
-  .nav-item:hover .nav-indicator {
-    @apply border-(--primary);
-  }
-
-  /* --- ICONS --- */
-  .icon-box {
-    @apply p-2 rounded-lg
-           bg-(--primary)/10
-           text-(--primary)
-           flex items-center justify-center
-           transition-colors duration-200;
-  }
-
-  .group:hover .icon-box {
-    @apply bg-(--primary)/20 text-(--primary-dark);
-  }
-
-  /* --- TIMELINE --- */
-  .timeline-item {
-    @apply relative border-l-2 border-gray-200 pl-8 pb-8 last:pb-0 
-           transition-colors duration-300 
-           hover:border-(--primary);
-    border-color: var(--border);
-  }
-
-  .timeline-dot {
-    @apply absolute -left-2.25 top-0 h-4 w-4 rounded-full border-2 
-           bg-white border-(--primary)/50 
-           transition-colors duration-300;
-  }
-  
-  .timeline-item:hover .timeline-dot {
-    @apply border-(--primary);
-  }
-
-  .timeline-item:hover h3 {
-    @apply text-(--primary);
-  }
-
-  .timeline-dot.active {
-    @apply bg-(--primary) border-(--primary);
-  }
-
-  /* --- NAV / HEADER --- */
-  .glass-header {
-    @apply bg-white/85 backdrop-blur-md border-b;
-    border-color: var(--border);
-  }
 }

@@ -1,0 +1,22 @@
+/* mediums/app.css: dense interactive UI (dashboards, tools, micro-apps).
+
+   PROPOSAL. The Figma file has no App kit yet: it has Web, Documents and Video.
+   This medium exists so a tool built on these tokens inherits the brand while
+   tightening density. Keep it, or ask the Figma agent for an 'App' density
+   collection and export it here.
+
+   Opt in per region or page: <main data-medium="app">. No markup uses it yet. */
+@layer base {
+  [data-medium='app'] {
+    --medium-font: var(--font-family-ui);
+    --medium-body-size: var(--font-size-14);
+    --medium-body-leading: 1.5;
+    --medium-prose-size: var(--font-size-14);
+    --medium-prose-leading: 1.5;
+    --medium-measure: none;
+    --medium-canvas: var(--color-surface-default);
+    --medium-block-gap: var(--space-4);
+    --medium-radius: var(--radius-md);
+    --medium-control-height: 32px;
+  }
+}

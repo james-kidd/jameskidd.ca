@@ -1,0 +1,16 @@
+/* components/icons.css: Tinted icon tile.
+   Moved verbatim from src/index.css. Still written against the legacy token names
+   (--primary, --border, ...), which src/styles/legacy.css maps onto the semantic tokens. */
+@layer components {
+  .icon-box {
+    @apply p-2 rounded-lg
+           bg-(--primary)/10
+           text-(--primary)
+           flex items-center justify-center
+           transition-colors duration-200;
+  }
+
+  .group:hover .icon-box {
+    @apply bg-(--primary)/20 text-(--primary-dark);
+  }
+}

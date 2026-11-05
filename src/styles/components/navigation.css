@@ -1,0 +1,36 @@
+/* components/navigation.css: Sidebar navigation items and their indicator dot.
+   Moved verbatim from src/index.css. Still written against the legacy token names
+   (--primary, --border, ...), which src/styles/legacy.css maps onto the semantic tokens. */
+@layer components {
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-3
+           text-sm font-medium rounded-lg
+           cursor-pointer
+           transition-all duration-200
+           text-gray-600
+           hover:bg-white
+           hover:text-gray-900
+           hover:shadow-sm;
+  }
+
+  .nav-indicator {
+    @apply w-2 h-2 rounded-full
+           border border-gray-300
+           ml-auto
+           shrink-0
+           transition-colors duration-200;
+  }
+
+  .nav-item.active {
+    @apply bg-white text-(--primary);
+    border: 1px solid var(--border);
+  }
+
+  .nav-item.active .nav-indicator {
+    @apply bg-(--primary-dark) border-(--primary);
+  }
+
+  .nav-item:hover .nav-indicator {
+    @apply border-(--primary);
+  }
+}

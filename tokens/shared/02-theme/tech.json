@@ -1,0 +1,79 @@
+{
+  "$description": "'tech' mode of Figma collection 'Shared / 02 Theme'. All three mode files must declare the same token names; the build fails if they drift. Values are references to 01-primitives.",
+  "color": {
+    "action": {
+      "primary": {
+        "$type": "color",
+        "$value": "{blue.600}"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{blue.800}"
+      }
+    },
+    "surface": {
+      "default": {
+        "$type": "color",
+        "$value": "{white}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{blue.50}"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{blue.25}"
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{blue.200}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{slate.900}",
+        "$description": "Code value. Figma: gray/900."
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{slate.600}",
+        "$description": "Code value. Figma: gray/600."
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{gray.500}"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{white}"
+      }
+    },
+    "status": {
+      "warning": {
+        "$type": "color",
+        "$value": "{amber.500}"
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{blue.700}"
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{green.700}"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{red.700}"
+      }
+    },
+    "accent": {
+      "highlight": {
+        "$type": "color",
+        "$value": "{amber.300}"
+      }
+    }
+  }
+}

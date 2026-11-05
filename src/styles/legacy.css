@@ -1,0 +1,45 @@
+/* legacy.css: the old token names, mapped onto the semantic tokens.
+
+   Components and JSX still say --primary, --border, text-(--text-muted) and so on.
+   These aliases keep them rendering exactly as before while the names underneath
+   move to the Figma structure. Delete a line once nothing uses its name; delete the
+   file when it is empty. `grep -rn -- "--primary" src` finds the remaining callers.
+
+   --surface, --text-strong, --text-muted and --accent-warn are not here: Figma keeps
+   them as aliases in 'Shared / 03 Core', so they come from tokens/shared/03-core.json.
+
+   Every alias sits on :root, the same element that carries data-theme, so it
+   re-resolves when the theme changes. */
+@layer base {
+  :root {
+    /* Colour: Figma's 'Deprecated / <theme>' collections -> 'Shared / 02 Theme'. */
+    --primary: var(--color-action-primary);
+    --primary-dark: var(--color-action-hover);
+    --secondary: var(--color-surface-accent);
+    --surface-muted: var(--color-surface-muted);
+    --border: var(--color-border-default);
+
+    /* Type sizes: renamed to font-size/* in Figma. --text-* is Tailwind's font-size
+       namespace, which is why the new names avoid it. */
+    --text-micro: var(--font-size-micro);
+    --text-eyebrow: var(--font-size-eyebrow);
+    --text-body: var(--font-size-body);
+  }
+
+  /* Typeface per theme. Figma moved typefaces out of the theme collection into
+     'Shared / 03 Core' (font/family/ui = Geist for every theme). Until that is
+     decided for the site, each theme keeps its own stack here. index.css aliases
+     Tailwind's --font-sans to this. */
+  :root,
+  [data-theme='tech'] {
+    --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  [data-theme='nature'] {
+    --font-family-sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  [data-theme='editorial'] {
+    --font-family-sans: Georgia, "Times New Roman", serif;
+  }
+}

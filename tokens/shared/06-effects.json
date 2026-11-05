@@ -1,0 +1,13 @@
+{
+  "$description": "Hand-maintained: Figma effect styles (shadows) do not export as variables. Keep names in step with the Figma effect styles.",
+  "shadow-soft": {
+    "$type": "shadow",
+    "$value": "0 1px 3px rgba(15, 23, 42, 0.06)",
+    "$description": "Figma effect style shadow/soft. Effects are styles, not variables, so this file is hand-maintained."
+  },
+  "shadow-hover": {
+    "$type": "shadow",
+    "$value": "0 2px 6px rgba(15, 23, 42, 0.1)",
+    "$description": "Figma effect style shadow/hover."
+  }
+}
