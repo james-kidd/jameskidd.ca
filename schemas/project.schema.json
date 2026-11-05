@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jameskidd.info/schemas/project.schema.json",
+  "title": "Project",
+  "description": "The site's own record of a project: the card and the page header. File: src/content/projects/<slug>.mdx. The body is an optional long write-up; the project's read-me comes from its brief (project-brief.schema.json), which the project repo owns.",
+  "x-schema-org": {
+    "@type": "SoftwareSourceCode or CreativeWork (schemaType)",
+    "maps": {
+      "title": "name",
+      "description": "description",
+      "link": "codeRepository (SoftwareSourceCode) or url",
+      "demo": "url",
+      "skills": "keywords",
+      "datePublished": "datePublished",
+      "image": "image"
+    }
+  },
+  "type": "object",
+  "required": ["slug", "title", "description", "skills"],
+  "additionalProperties": false,
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Route: /projects/<slug>. Also the key that a brief must match." },
+    "featured": { "type": "boolean", "description": "Expanded by default on the home page." },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "description": { "type": "string", "minLength": 20, "maxLength": 400, "description": "One or two sentences for the card and the page description." },
+    "skills": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "link": {
+      "anyOf": [{ "type": "string", "format": "uri" }, { "const": "#" }],
+      "description": "Source or write-up URL. \"#\" means none yet."
+    },
+    "demo": { "type": "string", "format": "uri" },
+    "embed": { "type": "string", "format": "uri", "description": "Rendered in an iframe under \"Try It\"." },
+    "tag": { "type": "string", "maxLength": 60, "description": "Short label on the card, e.g. the year." },
+    "published": { "type": "boolean", "description": "false holds the project: file stays, no card, no route." },
+    "schemaType": { "enum": ["SoftwareSourceCode", "CreativeWork"] },
+    "datePublished": { "type": "string", "pattern": "^[0-9]{4}(-[0-9]{2})?(-[0-9]{2})?$" },
+    "image": { "type": "string", "description": "Site-relative path under public/ or an absolute URL." }
+  }
+}

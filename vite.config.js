@@ -5,6 +5,10 @@ import mdx from '@mdx-js/rollup'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkGfm from 'remark-gfm'
+import { fileURLToPath } from 'node:url'
+import remarkApproval from './scripts/remark-approval.mjs'
+
+const ROOT = fileURLToPath(new URL('.', import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig(({ isSsrBuild }) => ({
@@ -23,6 +27,9 @@ export default defineConfig(({ isSsrBuild }) => ({
           remarkGfm,
           remarkFrontmatter,
           [remarkMdxFrontmatter, { name: 'frontmatter' }],
+          // Adds `export const approval` from content.approvals.json so the
+          // loaders can hold unapproved items offline (docs/approvals.md).
+          [remarkApproval, { root: ROOT }],
         ],
       }),
     },

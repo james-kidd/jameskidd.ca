@@ -1,6 +1,6 @@
 import { byOrder, collectMdx, groupBy } from "../mdxCollection";
 
-const modules = import.meta.glob("./*.mdx", { eager: true });
+const modules = import.meta.glob("./*.{md,mdx}", { eager: true });
 
 export const experiences = collectMdx(modules, { sort: byOrder });
 

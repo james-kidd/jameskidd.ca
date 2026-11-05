@@ -5,13 +5,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev      # Start Vite dev server with HMR
-npm run build    # Full production build: client + SSR bundle + prerender
-npm run lint     # ESLint
-npm run preview  # Preview production build
+npm run dev            # Vite dev server with HMR (prints the content report first)
+npm run build          # tokens, content gate, client, SSR bundle, prerender
+npm run lint           # ESLint (src and scripts)
+npm run preview        # Preview production build
+npm run copy-deck      # regenerate docs/copy-deck.md: every published word with source and status
+npm run approve -- X   # stamp content as approved (any unique part of the path, or --all, --list)
+npm run check-content  # schemas + approval stamps; what prebuild and CI run
+npm run sync-briefs    # fetch project briefs from their repos (docs/project-brief.md)
 ```
 
-No test runner is configured. Treat `npm run lint` plus a clean `npm run build` as the test suite.
+No test runner is configured. Treat `npm run lint`, `npm run check-content`, `npm run copy-deck:check` and a clean `npm run build` as the test suite; `.github/workflows/ci.yml` runs exactly those.
+
+## Content gate: nothing about James goes online unstamped
+
+Read `docs/approvals.md` before editing anything under `src/content/` or `src/data/`. Every such file is covered by an approval stamp in `content.approvals.json` (sha of the file's text). Editing a file breaks its stamp: experience, projects, briefs and writing items are then dropped from the build; hero, data slices, about and personal fail the build. Only James stamps (`npm run approve`). An agent's job ends at: edit, `npm run copy-deck`, tell James which files are in the review queue. Never run `npm run approve`, never edit `content.approvals.json`, never set `requireApproval` to false.
+
+Content files are Markdown with frontmatter (`.md`), validated against `schemas/<type>.schema.json` (`docs/decisions/0008-content-is-markdown-not-mdx.md`). `.mdx` is tolerated only where a write-up embeds a registered interactive component; prefer `.md` for anything new. Project pages take their body from a brief the project repo delivers (`docs/project-brief.md`); the site never edits a brief and never reads a project's board.
 
 ## Architecture
 
@@ -104,8 +114,8 @@ Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<ht
 - **`src/layout/`** — `Layout` (home shell), `Navigation` (scroll-spy nav), `IdentityBlock` (hero sidebar), `ThemeControls`
 - **`src/sections/`** — One component per home section, plus `TravelMap` (react-simple-maps)
 - **`src/sections/components/`** — Section-scoped cards (`ExperienceCard`, `ProjectCard`, `SkillCard`, `EducationCard`)
-- **`src/pages/`** — Full-page routes: `PersonalPage`, `ProjectPage`, `NotFoundPage`
-- **`src/components/`** — Shared UI primitives (`SectionPanel`, `TagPill`, `GalleryLightbox`, `BipartiteVisual`, etc.)
+- **`src/pages/`** — Full-page routes: `PersonalPage`, `ProjectPage` (header from the project record, body from the synced brief, optional write-up, comments), `NotFoundPage`
+- **`src/components/`** — Shared UI primitives (`SectionPanel`, `TagPill`, `GalleryLightbox`, `BipartiteVisual`, `Comments` (giscus, click-to-load), etc.)
 - **`src/components/mdx/`** — MDX component overrides and custom components (`mdxComponents.jsx`, `Callout`, `Figure`) used via `MDXProvider`
 - **`src/hooks/`** — `useScrollSpy` (Intersection Observer for active nav), `useScrollToTop` (auto-scroll on route change, skips initial mount so browser scroll restoration still works), `useRouteMeta` (syncs `<head>` on client-side navigation)
 

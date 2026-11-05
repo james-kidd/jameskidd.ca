@@ -4,12 +4,13 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
-const NODE_FILES = ['scripts/**/*.js', 'vite.config.js', 'eslint.config.js']
+const NODE_FILES = ['scripts/**/*.js', 'scripts/**/*.mjs', 'vite.config.js', 'eslint.config.js']
 
 export default defineConfig([
-  globalIgnores(['dist', 'dist-ssr']),
+  // .claude/worktrees holds agent worktrees of other branches; lint the checkout, not them.
+  globalIgnores(['dist', 'dist-ssr', '.claude']),
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx,mjs}'],
     ignores: NODE_FILES,
     extends: [
       js.configs.recommended,

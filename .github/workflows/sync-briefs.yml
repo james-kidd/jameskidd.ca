@@ -1,0 +1,67 @@
+name: Sync project briefs
+
+# Fetches every brief listed in briefs.config.json from its project repo,
+# validates it, and commits the snapshot under src/content/projects/briefs/
+# if it changed. A new snapshot is held off the site until James stamps it
+# (docs/approvals.md), so this job can never publish words on its own.
+on:
+  schedule:
+    # 06:47 UTC daily, half an hour after the sheet sync.
+    - cron: "47 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-briefs
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.repository_owner == 'james-kidd'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync briefs
+        env:
+          # Only needed for private project repos: a fine-grained token with
+          # read access to their contents, stored as a repository secret.
+          GITHUB_BRIEFS_TOKEN: ${{ secrets.GITHUB_BRIEFS_TOKEN }}
+        run: npm run sync-briefs
+
+      - name: Refresh the copy deck
+        run: npm run copy-deck
+
+      - name: Commit and push if changed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A -- src/content/projects/briefs docs/copy-deck.md
+
+          if git diff --cached --quiet; then
+            echo "No brief changes. Nothing to commit."
+            exit 0
+          fi
+
+          git diff --cached --stat
+          git commit -m "chore(briefs): sync project briefs [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
