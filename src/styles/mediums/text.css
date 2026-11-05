@@ -1,0 +1,22 @@
+/* mediums/text.css: long-form reading (project write-ups, essays, notes).
+
+   Figma's 'Documents' kit covers Word and PDF, which are styled by a native Word
+   template, not by this CSS. This medium is the web reading view: a reading face,
+   larger prose, a comfortable measure and more air between blocks.
+
+   Opt in per region: <article data-medium="text">. No markup uses it yet.
+   Proposed values; confirm against Figma's 'Documents / Exploration' styles. */
+@layer base {
+  [data-medium='text'] {
+    --medium-font: var(--font-family-reading);
+    --medium-body-size: var(--font-size-18);
+    --medium-body-leading: 1.7;
+    --medium-prose-size: var(--font-size-18);
+    --medium-prose-leading: 1.7;
+    --medium-measure: 68ch;
+    --medium-canvas: var(--color-surface-default);
+    --medium-block-gap: var(--space-8);
+    --medium-radius: var(--radius-md);
+    --medium-control-height: 44px;
+  }
+}

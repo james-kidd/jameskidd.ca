@@ -1,0 +1,28 @@
+/* mediums/site.css: the default medium, the portfolio website.
+
+   A medium is the kind of artifact being rendered. The brand (theme) says what
+   colour and type to use; the medium says how dense, how wide and how readable:
+
+     shared tokens (brand, every medium)
+       -> medium role tokens (--medium-*: this file, text.css, app.css)
+         -> base.css and components (read --medium-* and semantic tokens only)
+
+   site is the default on :root. text.css and app.css override the same names under
+   [data-medium='text'] and [data-medium='app']. Every medium file must declare the
+   same --medium-* names so swapping one never leaves a hole.
+
+   Values here reproduce the site as it renders today. */
+@layer base {
+  :root {
+    --medium-font: var(--font-sans);
+    --medium-body-size: var(--font-size-16);
+    --medium-body-leading: 1.6;
+    --medium-prose-size: var(--font-size-body);
+    --medium-prose-leading: 1.625;
+    --medium-measure: none;
+    --medium-canvas: var(--color-surface-muted);
+    --medium-block-gap: var(--layout-section-gap);
+    --medium-radius: var(--radius-lg);
+    --medium-control-height: 44px;
+  }
+}

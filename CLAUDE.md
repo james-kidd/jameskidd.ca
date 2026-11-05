@@ -95,7 +95,9 @@ Canonical list of home page sections. Drives: section rendering order on `HomePa
 
 ### Theme System
 
-Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<html>`. CSS custom properties defined in `src/index.css` `@layer base`. Tokens bridged into Tailwind v4 via `@theme`. Theme persists to `localStorage` key `portfolio-theme`.
+Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<html>`. Their values come from `tokens/shared/02-theme/*.json`, compiled into `src/styles/tokens/shared.css` by `npm run tokens`; `tokens/` mirrors the Figma file's collections (see `docs/figma-tokens.md`). Theme persists to `localStorage` key `portfolio-theme`.
+
+A second, independent axis is the **medium** (`data-medium="site|text|app"` on any element; `site` is the default): role tokens for density, reading size and measure in `src/styles/mediums/`. See `docs/styles.md`.
 
 `src/theme.js` owns the theme list and a small external store over `localStorage`, read via `useSyncExternalStore` in `App.jsx`. Its server snapshot is `null` so prerendered markup and the first client render always agree. An inline script in `index.html` applies `data-theme` before first paint to avoid a flash of the default palette — keep its hardcoded theme ids in sync with `THEMES`.
 
@@ -111,7 +113,7 @@ Three themes (`tech`, `nature`, `editorial`) controlled via `data-theme` on `<ht
 
 ### CSS Conventions
 
-Tailwind v4 with `@tailwindcss/vite` plugin. Custom component classes (`.section-block`, `.section-panel`, `.section-shell`, `.surface-muted`, `.eyebrow`, `.btn`, `.card`, `.tag-pill`, `.timeline-item`, etc.) defined in `src/index.css` `@layer components`. Prefer these over ad-hoc Tailwind strings for structural layout. Theme-aware colors reference CSS vars: `text-(--text-muted)`, `bg-(--surface)`.
+Tailwind v4 with `@tailwindcss/vite` plugin. `src/index.css` is the entry point and imports, in cascade order: generated tokens (`src/styles/tokens/`), `legacy.css` (old names such as `--primary` aliased to the semantic tokens), `mediums/`, `base.css`, then one file per component family in `src/styles/components/` (`.section-block`, `.section-panel`, `.eyebrow`, `.btn`, `.card`, `.tag-pill`, `.timeline-item`, etc.). Prefer these classes over ad-hoc Tailwind strings for structural layout. New code should use the semantic names (`text-(--color-text-secondary)`, `bg-(--color-surface-default)`); the legacy names (`text-(--text-muted)`, `bg-(--surface)`) still work while components migrate. Layer rules and the migration table: `docs/styles.md`.
 
 ### Key Conventions
 

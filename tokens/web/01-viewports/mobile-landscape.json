@@ -1,0 +1,49 @@
+{
+  "$description": "'mobile-landscape' mode of Figma collection 'Web / 01 Viewports'. Emitted inside a media query (see scripts/build-tokens.mjs). Figma's viewport/* and breakpoint/* artboard values are not tokens here: breakpoints live in the build script's media queries.",
+  "layout": {
+    "page-inset": {
+      "$type": "dimension",
+      "$value": "24px"
+    },
+    "block-inset": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "section-gap": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "header-height": {
+      "$type": "dimension",
+      "$value": "64px"
+    },
+    "footer-height": {
+      "$type": "dimension",
+      "$value": "28px"
+    },
+    "content-max": {
+      "$type": "dimension",
+      "$value": "796px"
+    }
+  },
+  "scene": {
+    "stage-height": {
+      "$type": "dimension",
+      "$value": "156px"
+    },
+    "safe-inset": {
+      "$type": "dimension",
+      "$value": "16px"
+    }
+  },
+  "grid": {
+    "columns": {
+      "$type": "number",
+      "$value": 8
+    },
+    "gutter": {
+      "$type": "dimension",
+      "$value": "16px"
+    }
+  }
+}

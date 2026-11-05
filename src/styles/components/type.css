@@ -1,0 +1,14 @@
+/* components/type.css: Section titles and body copy colour.
+   Moved verbatim from src/index.css. Still written against the legacy token names
+   (--primary, --border, ...), which src/styles/legacy.css maps onto the semantic tokens. */
+@layer components {
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3;
+    color: var(--text-strong);
+  }
+
+  .text-body {
+    @apply leading-relaxed;
+    color: var(--text-muted);
+  }
+}

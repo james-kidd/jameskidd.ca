@@ -1,0 +1,29 @@
+/* components/timeline.css: Experience timeline rail and dots.
+   Moved verbatim from src/index.css. Still written against the legacy token names
+   (--primary, --border, ...), which src/styles/legacy.css maps onto the semantic tokens. */
+@layer components {
+  .timeline-item {
+    @apply relative border-l-2 border-gray-200 pl-8 pb-8 last:pb-0 
+           transition-colors duration-300 
+           hover:border-(--primary);
+    border-color: var(--border);
+  }
+
+  .timeline-dot {
+    @apply absolute -left-2.25 top-0 h-4 w-4 rounded-full border-2 
+           bg-white border-(--primary)/50 
+           transition-colors duration-300;
+  }
+  
+  .timeline-item:hover .timeline-dot {
+    @apply border-(--primary);
+  }
+
+  .timeline-item:hover h3 {
+    @apply text-(--primary);
+  }
+
+  .timeline-dot.active {
+    @apply bg-(--primary) border-(--primary);
+  }
+}

@@ -1,0 +1,49 @@
+/* components/sections.css: Section wrappers, panels and surfaces that frame every home-page block.
+   Moved verbatim from src/index.css. Still written against the legacy token names
+   (--primary, --border, ...), which src/styles/legacy.css maps onto the semantic tokens. */
+@layer components {
+  .section-block {
+    @apply py-16 md:py-20 border-t;
+    border-color: var(--border);
+  }
+
+  .section-shell {
+    @apply space-y-10 lg:space-y-12;
+  }
+
+  .section-lead {
+    @apply text-lg md:text-xl font-light;
+    color: var(--text-muted);
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.28em];
+    color: var(--primary-dark);
+    letter-spacing: 0.24em;
+  }
+
+  .section-grid {
+    @apply grid gap-6 md:gap-8;
+  }
+
+  .section-surface {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .surface-muted {
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .section-panel {
+    @apply p-6 md:p-8;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+  }
+}

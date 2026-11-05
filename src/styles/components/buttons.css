@@ -1,0 +1,35 @@
+/* components/buttons.css: Primary, outline and pill buttons.
+   Moved verbatim from src/index.css. Still written against the legacy token names
+   (--primary, --border, ...), which src/styles/legacy.css maps onto the semantic tokens. */
+@layer components {
+  .btn {
+    @apply px-8 py-4 font-semibold rounded-lg
+           flex items-center justify-center
+           transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-(--primary) text-white
+           hover:bg-(--primary-dark);
+  }
+
+  .btn-outline {
+    @apply bg-white border border-gray-200 text-gray-500
+           hover:text-(--primary)
+           hover:border-(--primary);
+  }
+
+  .btn-pill {
+    @apply inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm font-medium
+           border shadow-sm transition-all active:scale-95;
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text-muted);
+  }
+
+  .btn-pill:hover,
+  .btn-pill:focus-visible {
+    border-color: color-mix(in srgb, var(--primary) 50%, transparent);
+    color: var(--primary);
+  }
+}

@@ -1,0 +1,17 @@
+/* components/cards.css: Base card and its hover state.
+   Moved verbatim from src/index.css. Still written against the legacy token names
+   (--primary, --border, ...), which src/styles/legacy.css maps onto the semantic tokens. */
+@layer components {
+  .card {
+    @apply p-6 rounded-2xl transition-all duration-300;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-soft);
+    transition-property: transform, box-shadow, border-color, background-color;
+  }
+
+  .card-hover:hover,
+  .card-hover:focus-within {
+    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  }
+}
