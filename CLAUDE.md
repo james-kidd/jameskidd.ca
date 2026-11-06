@@ -2,6 +2,20 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Current state (2026-11-06): one-page shell
+
+The site is a single page linked from LinkedIn: name, title, tagline and link tiles (`links` in `src/data/hero.js`),
+rendered by `src/pages/ShellPage.jsx`. Routes are `/` and `/404` only. The rest of this file describes the earlier
+multi-section site: that code and content are still in the repo but are **not routed or published**. Do not re-add
+sections, photos, emails or the resume unless James asks.
+
+- The approval gate covers only `src/data/hero.js` (`STRUCTURAL_FILES` in `scripts/lib/approval.mjs`). To bring a
+  held file back: route it, add it to that list, stamp it. See `docs/approvals.md` ("Shell site").
+- Photos and the resume PDF are in `held/`, not `public/`, so they are not served.
+- App tiles point at `<name>.jameskidd.info` via `appUrl()`; add a tile only after the subdomain answers.
+  Runbook: `docs/subdomains.md`.
+- James's TODO board: `~/Notes/jameskidd/Projects/Personal site (jameskidd.info).md`, "Shell site: clean slate".
+
 ## Commands
 
 ```bash
