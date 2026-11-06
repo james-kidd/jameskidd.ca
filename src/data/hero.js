@@ -9,7 +9,7 @@
 // until James runs `npm run approve -- hero`.
 //
 // Held back on purpose (kept in the repo, not rendered): stack tags, the school
-// email, the resume link, education, experience, skills, projects, personal,
+// email, the resume (held/James_Kidd_Resume.pdf, no longer served), the email tile, education, experience, skills, projects, personal,
 // travel and photos. Their files are untouched; see docs/approvals.md.
 export const heroData = {
   name: "James Kidd",
@@ -35,13 +35,6 @@ export const heroData = {
       href: "https://github.com/james-kidd/",
       icon: "github",
       external: true,
-    },
-    {
-      id: "contact",
-      label: "Email",
-      note: "dev@jameskidd.info",
-      href: "mailto:dev@jameskidd.info",
-      icon: "mail",
     },
   ],
 };

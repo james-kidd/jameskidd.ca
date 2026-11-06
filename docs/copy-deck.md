@@ -4,7 +4,7 @@ Every word the site publishes about James, in section-registry order, keyed by p
 
 Approval: `requireApproval` is **true**. An item goes online only once its file carries a matching stamp in `content.approvals.json`. Experience, projects, briefs and writing without one are held offline; hero, about, skills and personal without one fail the build.
 
-Totals: 19 items, 254 fields, 2604 words of prose, 71 microcopy strings.
+Totals: 19 items, 249 fields, 2599 words of prose, 71 microcopy strings.
 
 ## Review queue
 
@@ -51,11 +51,6 @@ Status: **awaiting approval** · source: `src/data/hero.js`
 | `hero.links.github.href` | https://github.com/james-kidd/ | hero.js:35 |
 | `hero.links.github.icon` | github | hero.js:32 |
 | `hero.links.github.external` | true | hero.js:29 |
-| `hero.links.contact.id` | contact | hero.js:40 |
-| `hero.links.contact.label` | Email | hero.js:41 |
-| `hero.links.contact.note` | dev@jameskidd.info | hero.js:42 |
-| `hero.links.contact.href` | mailto:dev@jameskidd.info | hero.js:43 |
-| `hero.links.contact.icon` | mail | hero.js:12 |
 
 ## experience
 

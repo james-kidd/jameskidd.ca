@@ -36,8 +36,7 @@ the repo and nothing renders, stamp or not.
 photos (now in `held/`, outside `public/`) are kept in the repo but are not published, so they need no
 stamp until a page brings them back. To bring one back: route it in `src/App.jsx`, add its path to
 `STRUCTURAL_FILES` or `STRUCTURAL_DIRS` in `scripts/lib/approval.mjs`, and stamp it.
-`public/James_Kidd_Resume.pdf` is still served from `public/` (it carries contact details); moving it is
-James's call.
+The resume PDF is also in `held/`, so it is no longer served.
 
 `src/data/travel.js` is generated from photo EXIF and is not covered.
 
