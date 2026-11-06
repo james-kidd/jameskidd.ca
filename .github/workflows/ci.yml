@@ -1,0 +1,48 @@
+name: CI
+
+# Every PR and every push to main: lint, the content gate, the generated
+# files up to date, and a full build. A red check names the file at fault.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Content gate (schemas and approval stamps)
+        run: npm run check-content
+
+      - name: Copy deck is up to date
+        run: npm run copy-deck:check
+
+      - name: Project brief snapshots are valid
+        run: npm run sync-briefs:check
+
+      - name: Build (tokens, client, SSR, prerender)
+        run: npm run build

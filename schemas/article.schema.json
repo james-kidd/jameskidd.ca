@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jameskidd.info/schemas/article.schema.json",
+  "title": "Article",
+  "description": "A piece of writing published on the site. File: src/content/writing/<slug>.mdx, exported from the vault (docs/writing.md). The body is the article in Markdown; the PDF, when there is one, is an alternate representation of the same canonical URL.",
+  "x-schema-org": {
+    "@type": "Article, BlogPosting or ScholarlyArticle (schemaType)",
+    "maps": {
+      "title": "headline",
+      "summary": "description",
+      "date": "datePublished",
+      "updated": "dateModified",
+      "topic": "keywords",
+      "pdf": "encoding (MediaObject, application/pdf)"
+    },
+    "note": "author is always the site's Person @id."
+  },
+  "type": "object",
+  "required": ["slug", "title", "summary", "date", "schemaType"],
+  "additionalProperties": false,
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Route: /writing/<slug>. Stable once published." },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "summary": { "type": "string", "minLength": 20, "maxLength": 300 },
+    "date": { "type": "string", "format": "date", "description": "First published, YYYY-MM-DD." },
+    "updated": { "type": "string", "format": "date" },
+    "version": { "type": "integer", "minimum": 1, "description": "Bumped with every PDF re-issue; the PDF file name carries it." },
+    "schemaType": { "enum": ["Article", "BlogPosting", "ScholarlyArticle"] },
+    "topic": {
+      "type": "array",
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "pdf": { "type": "string", "description": "Site-relative path under public/papers/ or an absolute URL." },
+    "published": { "type": "boolean" }
+  }
+}

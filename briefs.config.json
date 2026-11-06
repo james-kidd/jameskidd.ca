@@ -1,0 +1,14 @@
+{
+  "_readme": "Which project repos deliver a page brief to this site, and where it lives in each repo. Run `npm run sync-briefs` to fetch, validate and snapshot them into outDir; `npm run sync-briefs:check` validates the committed snapshots offline (CI). The contract a project must meet is docs/project-brief.md. Keys starting with _ are documentation.",
+  "outDir": "src/content/projects/briefs",
+  "briefs": [],
+  "_briefSchema": {
+    "slug": "required string. Must match a site project record: src/content/projects/<slug>.mdx.",
+    "repo": "required string. GitHub owner/name of the project repo. Private repos need GITHUB_BRIEFS_TOKEN in the environment (a fine-grained token with read access to that repo).",
+    "path": "optional string. Path of the brief inside the repo. Default docs/jameskidd.info.md.",
+    "ref": "optional string. Branch or tag to read. Default main."
+  },
+  "_exampleBriefs": [
+    { "slug": "paint-by-number", "repo": "james-kidd/bynumber", "path": "docs/jameskidd.info.md", "ref": "main" }
+  ]
+}

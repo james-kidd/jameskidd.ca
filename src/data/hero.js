@@ -1,31 +1,48 @@
 // src/data/hero.js
+//
+// The whole published surface of the shell site: a name, one line, and a list of
+// links shown as tiles. Nothing else about James is rendered, so this one file is
+// the only content the approval gate has to cover (scripts/lib/approval.mjs).
+//
+// To add a tile (a new page later, a project, a profile): add an entry to `links`.
+// That edits this file, which breaks its stamp, so the tile stays off the site
+// until James runs `npm run approve -- hero`.
+//
+// Held back on purpose (kept in the repo, not rendered): stack tags, the school
+// email, the resume (held/James_Kidd_Resume.pdf, no longer served), the email tile, education, experience, skills, projects, personal,
+// travel and photos. Their files are untouched; see docs/approvals.md.
+// Subdomain front: an app lives on Cloud Run, but the tile points at
+// <name>.jameskidd.info so the Google URL never shows and the app can move
+// without the link changing. Setup per app: docs/subdomains.md.
+const SITE_DOMAIN = "jameskidd.info";
+export const appUrl = (name) => `https://${name}.${SITE_DOMAIN}`;
+
 export const heroData = {
   name: "James Kidd",
   // TODO(James): positioning. Was "Software Developer & Data Scientist"; the plain
   // degree line below is the audit's proposal. Decide whether the hero stays technical.
   title: "Mathematics & Computer Science, McGill '26",
   tagline: "I design reliable data systems and internal tools",
-  stack: ["Python", "PyTorch", "Pandas / NumPy", "SQL"],
-  resumeLink: "/James_Kidd_Resume.pdf",
 
-  emails: {
-    school: "james.kidd@mail.mcgill.ca",
-    dev: "dev@jameskidd.info",
-  },
-
-  contactGuidance: {
-    recruiter: {
-      label: "Recruiters",
-      text: "contact details are included in my resume",
+  // Tiles, in order. `external` opens a new tab; internal pages use a path and no flag.
+  // An app tile is { id, label, note, href: appUrl("name"), icon: "app" }; add it only
+  // after the subdomain answers (docs/subdomains.md), or the tile is a dead link.
+  links: [
+    {
+      id: "linkedin",
+      label: "LinkedIn",
+      note: "Experience and background",
+      href: "https://linkedin.com/in/james-kidd-mtl/",
+      icon: "linkedin",
+      external: true,
     },
-    contract: {
-      label: "Contract inquiries",
-      emailKey: "dev",
+    {
+      id: "github",
+      label: "GitHub",
+      note: "Code and projects",
+      href: "https://github.com/james-kidd/",
+      icon: "github",
+      external: true,
     },
-  },
-
-  socials: {
-    github: "https://github.com/james-kidd/",
-    linkedin: "https://linkedin.com/in/james-kidd-mtl/",
-  },
+  ],
 };

@@ -12,16 +12,10 @@
 // stats) rather than duplicated by hand.
 
 import { heroData } from "./data/hero";
-import { travelData } from "./data/travel";
-import { projects } from "./content/projects";
-import { frontmatter as personalMeta } from "./content/personal.mdx";
 
 export const SITE_URL = "https://jameskidd.info";
 export const SITE_NAME = heroData.name;
-export const DEFAULT_OG_IMAGE = "/photos/about-me-2.jpg";
-// about-me-2.jpg is square (900x900). "summary_large_image" expects ~1.91:1 and
-// would centre-crop it, so stick to the square card until a dedicated 1200x630
-// OG image exists.
+// No share image on purpose: the shell site publishes no photos.
 export const TWITTER_CARD = "summary";
 
 const MAX_DESCRIPTION = 200;
@@ -43,23 +37,8 @@ function pageTitle(headline) {
 export const DEFAULT_META = {
   path: "/",
   title: `${heroData.name} — ${heroData.title}`,
-  description: clamp(
-    `${heroData.tagline}. ${heroData.name} — ${heroData.title} — working across ${heroData.stack.join(", ")}.`
-  ),
+  description: clamp(`${heroData.tagline}. ${heroData.name} — ${heroData.title}.`),
   type: "website",
-  image: DEFAULT_OG_IMAGE,
-};
-
-const PERSONAL_META = {
-  path: "/personal",
-  // "Offline Mode" alone reads like an error state in a search result, so the
-  // frontmatter heading is qualified with what the page actually contains.
-  title: pageTitle(`${personalMeta.title}: Travel & Photography`),
-  description: clamp(
-    `Life beyond the terminal — a travel map, photo gallery, and life story covering ${travelData.stats.citiesExplored} cities across ${travelData.stats.countriesVisited} countries.`
-  ),
-  type: "website",
-  image: DEFAULT_OG_IMAGE,
 };
 
 const NOT_FOUND_META = {
@@ -67,28 +46,11 @@ const NOT_FOUND_META = {
   title: pageTitle("Page not found"),
   description: "That page does not exist.",
   type: "website",
-  image: DEFAULT_OG_IMAGE,
   robots: "noindex",
 };
 
-function projectMeta(project) {
-  return {
-    path: `/projects/${project.slug}`,
-    title: pageTitle(project.title),
-    description: clamp(project.description),
-    type: "article",
-    image: DEFAULT_OG_IMAGE,
-  };
-}
-
-const STATIC_META = [DEFAULT_META, PERSONAL_META];
-
 /** Every route the build should prerender, in emit order. */
-export const ROUTE_META = [
-  ...STATIC_META,
-  ...projects.map(projectMeta),
-  NOT_FOUND_META,
-];
+export const ROUTE_META = [DEFAULT_META, NOT_FOUND_META];
 
 /** Routes that belong in sitemap.xml — everything crawlable. */
 export const INDEXABLE_ROUTE_META = ROUTE_META.filter((meta) => !meta.robots);
@@ -122,7 +84,6 @@ export function canonicalUrl(path) {
 
 export function toHeadTags(meta) {
   const canonical = canonicalUrl(meta.path);
-  const image = `${SITE_URL}${meta.image}`;
 
   return {
     title: meta.title,
@@ -137,11 +98,9 @@ export function toHeadTags(meta) {
       { selector: 'meta[property="og:title"]', attrs: { property: "og:title" }, content: meta.title },
       { selector: 'meta[property="og:description"]', attrs: { property: "og:description" }, content: meta.description },
       { selector: 'meta[property="og:url"]', attrs: { property: "og:url" }, content: canonical },
-      { selector: 'meta[property="og:image"]', attrs: { property: "og:image" }, content: image },
       { selector: 'meta[name="twitter:card"]', attrs: { name: "twitter:card" }, content: TWITTER_CARD },
       { selector: 'meta[name="twitter:title"]', attrs: { name: "twitter:title" }, content: meta.title },
       { selector: 'meta[name="twitter:description"]', attrs: { name: "twitter:description" }, content: meta.description },
-      { selector: 'meta[name="twitter:image"]', attrs: { name: "twitter:image" }, content: image },
     ],
   };
 }

@@ -1,20 +1,39 @@
 import { Suspense } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { MDXProvider } from "@mdx-js/react";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, BookOpen } from "lucide-react";
 import PageShell from "../components/PageShell";
 import TagPill from "../components/TagPill";
+import Comments from "../components/Comments";
 import { projects, projectChapters } from "../content/projects";
+import { briefsBySlug } from "../content/projects/briefs";
 import { mdxComponents } from "../components/mdx/mdxComponents";
 
+const STATUS_LABEL = {
+  idea: "Idea",
+  building: "In progress",
+  live: "Live",
+  paused: "Paused",
+  archived: "Archived",
+};
+
+/**
+ * One project page, three owners:
+ *   - the header is the site's record (src/content/projects/<slug>.mdx frontmatter);
+ *   - the read-me is the project's brief, synced from its own repo
+ *     (src/content/projects/briefs/<slug>.mdx, contract in docs/project-brief.md);
+ *   - the optional write-up is the site's MDX body, kept below the brief.
+ * Comments come last and load only on request.
+ */
 export default function ProjectPage() {
   const { slug } = useParams();
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) return <Navigate to="/" replace />;
 
+  const brief = briefsBySlug[slug];
   const Chapter = projectChapters[slug] ?? project.Chapter;
-  if (!Chapter) return <Navigate to="/" replace />;
+  if (!brief && !Chapter) return <Navigate to="/" replace />;
 
   return (
     <PageShell>
@@ -75,15 +94,50 @@ export default function ProjectPage() {
       )}
 
       <div className="space-y-8">
-        <div className="section-panel">
-          <MDXProvider components={mdxComponents}>
-            <Suspense
-              fallback={<p className="text-body text-sm">Loading chapter...</p>}
-            >
-              <Chapter />
-            </Suspense>
-          </MDXProvider>
-        </div>
+        <MDXProvider components={mdxComponents}>
+          {brief && (
+            <section className="section-panel" aria-labelledby="brief-heading">
+              <div className="flex flex-wrap items-baseline justify-between gap-3 mb-2">
+                <h2 id="brief-heading" className="font-bold text-lg text-(--text-strong)">
+                  <BookOpen className="w-4 h-4 mr-2 inline-block align-[-2px]" />
+                  Read me
+                </h2>
+                <span className="text-xs text-(--text-muted)">
+                  {STATUS_LABEL[brief.status] ?? brief.status}
+                  {brief.updated ? ` · updated ${brief.updated}` : ""}
+                  {" · "}
+                  <a
+                    href={brief.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-(--primary) hover:text-(--primary-dark) underline underline-offset-2"
+                  >
+                    from the project repo
+                  </a>
+                </span>
+              </div>
+              <p className="text-body text-[15px] leading-relaxed mb-2">{brief.summary}</p>
+              <Suspense fallback={<p className="text-body text-sm">Loading read me...</p>}>
+                <brief.ReadMe />
+              </Suspense>
+            </section>
+          )}
+
+          {Chapter && (
+            <section className="section-panel" aria-labelledby={brief ? "writeup-heading" : undefined}>
+              {brief && (
+                <h2 id="writeup-heading" className="font-bold text-lg text-(--text-strong) mb-2">
+                  Write-up
+                </h2>
+              )}
+              <Suspense fallback={<p className="text-body text-sm">Loading chapter...</p>}>
+                <Chapter />
+              </Suspense>
+            </section>
+          )}
+        </MDXProvider>
+
+        <Comments term={`projects/${slug}`} />
       </div>
     </PageShell>
   );
