@@ -11,6 +11,12 @@
 // Held back on purpose (kept in the repo, not rendered): stack tags, the school
 // email, the resume (held/James_Kidd_Resume.pdf, no longer served), the email tile, education, experience, skills, projects, personal,
 // travel and photos. Their files are untouched; see docs/approvals.md.
+// Subdomain front: an app lives on Cloud Run, but the tile points at
+// <name>.jameskidd.info so the Google URL never shows and the app can move
+// without the link changing. Setup per app: docs/subdomains.md.
+const SITE_DOMAIN = "jameskidd.info";
+export const appUrl = (name) => `https://${name}.${SITE_DOMAIN}`;
+
 export const heroData = {
   name: "James Kidd",
   // TODO(James): positioning. Was "Software Developer & Data Scientist"; the plain
@@ -19,6 +25,8 @@ export const heroData = {
   tagline: "I design reliable data systems and internal tools",
 
   // Tiles, in order. `external` opens a new tab; internal pages use a path and no flag.
+  // An app tile is { id, label, note, href: appUrl("name"), icon: "app" }; add it only
+  // after the subdomain answers (docs/subdomains.md), or the tile is a dead link.
   links: [
     {
       id: "linkedin",

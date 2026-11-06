@@ -36,21 +36,21 @@ Status: **awaiting approval** · source: `src/data/hero.js`
 
 | key | text | source |
 |---|---|---|
-| `hero.name` | James Kidd | hero.js:15 |
-| `hero.title` | Mathematics & Computer Science, McGill '26 | hero.js:18 |
-| `hero.tagline` | I design reliable data systems and internal tools | hero.js:19 |
-| `hero.links.linkedin.id` | linkedin | hero.js:24 |
-| `hero.links.linkedin.label` | LinkedIn | hero.js:25 |
-| `hero.links.linkedin.note` | Experience and background | hero.js:26 |
-| `hero.links.linkedin.href` | https://linkedin.com/in/james-kidd-mtl/ | hero.js:27 |
-| `hero.links.linkedin.icon` | linkedin | hero.js:24 |
-| `hero.links.linkedin.external` | true | hero.js:29 |
-| `hero.links.github.id` | github | hero.js:32 |
-| `hero.links.github.label` | GitHub | hero.js:33 |
-| `hero.links.github.note` | Code and projects | hero.js:34 |
-| `hero.links.github.href` | https://github.com/james-kidd/ | hero.js:35 |
-| `hero.links.github.icon` | github | hero.js:32 |
-| `hero.links.github.external` | true | hero.js:29 |
+| `hero.name` | James Kidd | hero.js:21 |
+| `hero.title` | Mathematics & Computer Science, McGill '26 | hero.js:24 |
+| `hero.tagline` | I design reliable data systems and internal tools | hero.js:25 |
+| `hero.links.linkedin.id` | linkedin | hero.js:32 |
+| `hero.links.linkedin.label` | LinkedIn | hero.js:33 |
+| `hero.links.linkedin.note` | Experience and background | hero.js:34 |
+| `hero.links.linkedin.href` | https://linkedin.com/in/james-kidd-mtl/ | hero.js:35 |
+| `hero.links.linkedin.icon` | linkedin | hero.js:32 |
+| `hero.links.linkedin.external` | true | hero.js:37 |
+| `hero.links.github.id` | github | hero.js:40 |
+| `hero.links.github.label` | GitHub | hero.js:41 |
+| `hero.links.github.note` | Code and projects | hero.js:42 |
+| `hero.links.github.href` | https://github.com/james-kidd/ | hero.js:43 |
+| `hero.links.github.icon` | github | hero.js:40 |
+| `hero.links.github.external` | true | hero.js:37 |
 
 ## experience
 

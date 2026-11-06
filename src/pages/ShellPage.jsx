@@ -1,7 +1,7 @@
-import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import { AppWindow, ArrowUpRight, Github, Linkedin } from "lucide-react";
 import { heroData } from "../data";
 
-const ICONS = { github: Github, linkedin: Linkedin, mail: Mail };
+const ICONS = { github: Github, linkedin: Linkedin, app: AppWindow };
 
 /**
  * The whole site: name, one line, link tiles. Landmarks are real elements so
