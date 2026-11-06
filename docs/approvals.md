@@ -29,7 +29,15 @@ the repo and nothing renders, stamp or not.
 | files | kind | when not approved |
 |---|---|---|
 | `src/content/experience/*.{md,mdx}`, `src/content/projects/*.{md,mdx}`, `src/content/projects/briefs/*.md`, `src/content/writing/*.md` | collection | the item is dropped from the build, like `published: false` |
-| `src/data/hero.js`, `src/data/sections/**/*.js` (not barrels), `src/content/about.mdx`, `src/content/personal.mdx` | structural | the build fails and names the file |
+| `src/data/hero.js` | structural | the build fails and names the file |
+
+**Shell site (2026-11-06).** The site is one page that renders only `hero.js`: name, one line, link tiles.
+`src/data/sections/**`, `about.mdx`, `personal.mdx`, the experience and project collections and the
+photos (now in `held/`, outside `public/`) are kept in the repo but are not published, so they need no
+stamp until a page brings them back. To bring one back: route it in `src/App.jsx`, add its path to
+`STRUCTURAL_FILES` or `STRUCTURAL_DIRS` in `scripts/lib/approval.mjs`, and stamp it.
+`public/James_Kidd_Resume.pdf` is still served from `public/` (it carries contact details); moving it is
+James's call.
 
 `src/data/travel.js` is generated from photo EXIF and is not covered.
 

@@ -1,13 +1,8 @@
-import { createElement, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useScrollToTop } from "./hooks/useScrollToTop";
 import { useRouteMeta } from "./hooks/useRouteMeta";
-import Layout from "./layout/Layout";
-import HeroSection from "./sections/HeroSection";
-import { SECTIONS } from "./sections/registry";
-import { heroData, sectionData } from "./data";
-import ProjectPage from "./pages/ProjectPage";
-import PersonalPage from "./pages/PersonalPage";
+import ShellPage from "./pages/ShellPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {
   subscribeTheme,
@@ -15,36 +10,15 @@ import {
   getServerThemeSnapshot,
 } from "./theme";
 
-function HomePage() {
-  return (
-    <>
-      <HeroSection data={heroData} />
-
-      {SECTIONS.map(({ id, Component }) => (
-        <section id={id} key={id} className="section-block first:border-0">
-          {createElement(Component, { data: sectionData[id] })}
-        </section>
-      ))}
-    </>
-  );
-}
-
-function AppRoutes({ currentTheme }) {
+// The site is one page. Sections, the project and personal pages and their
+// components are still in the repo but are not routed: see src/data/hero.js.
+function AppRoutes() {
   useScrollToTop();
   useRouteMeta();
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <Layout sections={SECTIONS} currentTheme={currentTheme}>
-            <HomePage />
-          </Layout>
-        }
-      />
-      <Route path="/projects/:slug" element={<ProjectPage />} />
-      <Route path="/personal" element={<PersonalPage />} />
+      <Route path="/" element={<ShellPage />} />
       {/* Prerendered to dist/404.html, which Vercel serves for unknown paths. */}
       <Route path="/404" element={<NotFoundPage />} />
       <Route path="*" element={<NotFoundPage />} />
@@ -63,13 +37,10 @@ function AppRoutes({ currentTheme }) {
  * correct because index.html applies `data-theme` inline before any CSS runs.
  */
 export function AppShell() {
-  const currentTheme = useSyncExternalStore(
-    subscribeTheme,
-    getThemeSnapshot,
-    getServerThemeSnapshot
-  );
+  // Subscribing keeps the stored theme applied after hydration.
+  useSyncExternalStore(subscribeTheme, getThemeSnapshot, getServerThemeSnapshot);
 
-  return <AppRoutes currentTheme={currentTheme} />;
+  return <AppRoutes />;
 }
 
 function App() {

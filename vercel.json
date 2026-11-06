@@ -2,9 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/resume.pdf", "destination": "/James_Kidd_Resume.pdf", "permanent": false },
-    { "source": "/skills", "destination": "/#skills", "permanent": true },
-    { "source": "/projects/personal-portfolio", "destination": "/#projects", "permanent": true },
-    { "source": "/projects/manager-dna", "destination": "/#projects", "permanent": false }
+    { "source": "/personal", "destination": "/", "permanent": false },
+    { "source": "/skills", "destination": "/", "permanent": true },
+    { "source": "/projects/:slug", "destination": "/", "permanent": false }
   ]
 }

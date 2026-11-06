@@ -34,12 +34,11 @@ export const COLLECTION_DIRS = [
 ];
 
 /** Files that cannot be dropped: the build fails if one is unapproved. */
-export const STRUCTURAL_FILES = [
-  "src/content/about.mdx",
-  "src/content/personal.mdx",
-  "src/data/hero.js",
-];
-export const STRUCTURAL_DIRS = ["src/data/sections"];
+// The shell site renders only hero.js, so it is the only structural file. The
+// data slices, about.mdx and personal.mdx are kept in the repo but are not
+// published, so they need no stamp until a page brings them back.
+export const STRUCTURAL_FILES = ["src/data/hero.js"];
+export const STRUCTURAL_DIRS = [];
 const STRUCTURAL_EXCLUDE = /(^|\/)index\.js$/; // barrels hold no words
 
 export const STATUS = {

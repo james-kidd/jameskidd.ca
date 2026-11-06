@@ -4,11 +4,11 @@ Every word the site publishes about James, in section-registry order, keyed by p
 
 Approval: `requireApproval` is **true**. An item goes online only once its file carries a matching stamp in `content.approvals.json`. Experience, projects, briefs and writing without one are held offline; hero, about, skills and personal without one fail the build.
 
-Totals: 19 items, 247 fields, 2606 words of prose, 70 microcopy strings.
+Totals: 19 items, 254 fields, 2604 words of prose, 71 microcopy strings.
 
 ## Review queue
 
-17 file(s) are not approved as they stand. Read each one below, then stamp it:
+9 file(s) are not approved as they stand. Read each one below, then stamp it:
 
 ```
 npm run approve -- src/data/hero.js
@@ -18,16 +18,8 @@ npm run approve -- src/content/experience/ci-financial-analyst.mdx
 npm run approve -- src/content/experience/qctf.mdx
 npm run approve -- src/content/experience/itm-instruments.mdx
 npm run approve -- src/content/experience/kpmg-hungary.mdx
-npm run approve -- src/content/about.mdx
-npm run approve -- src/data/sections/education.js
-npm run approve -- src/data/sections/skills.js
 npm run approve -- src/content/projects/paint-by-number.mdx
 npm run approve -- src/content/projects/squash-no-friends.mdx
-npm run approve -- src/content/personal.mdx
-npm run approve -- src/data/sections/personal/stats.js
-npm run approve -- src/data/sections/personal/milestones.js
-npm run approve -- src/data/sections/personal/favorites.js
-npm run approve -- src/data/sections/personal/gallery.js
 ```
 
 Or, after reading the whole deck: `npm run approve -- --all`.
@@ -44,19 +36,26 @@ Status: **awaiting approval** · source: `src/data/hero.js`
 
 | key | text | source |
 |---|---|---|
-| `hero.name` | James Kidd | hero.js:3 |
-| `hero.title` | Mathematics & Computer Science, McGill '26 | hero.js:6 |
-| `hero.tagline` | I design reliable data systems and internal tools | hero.js:7 |
-| `hero.stack` | Python · PyTorch · Pandas / NumPy · SQL | hero.js:8 |
-| `hero.resumeLink` | /James_Kidd_Resume.pdf | hero.js:9 |
-| `hero.emails.school` | james.kidd@mail.mcgill.ca | hero.js:12 |
-| `hero.emails.dev` | dev@jameskidd.info | hero.js:13 |
-| `hero.contactGuidance.recruiter.label` | Recruiters | hero.js:18 |
-| `hero.contactGuidance.recruiter.text` | contact details are included in my resume | hero.js:19 |
-| `hero.contactGuidance.contract.label` | Contract inquiries | hero.js:22 |
-| `hero.contactGuidance.contract.emailKey` | dev | hero.js:13 |
-| `hero.socials.github` | https://github.com/james-kidd/ | hero.js:28 |
-| `hero.socials.linkedin` | https://linkedin.com/in/james-kidd-mtl/ | hero.js:29 |
+| `hero.name` | James Kidd | hero.js:15 |
+| `hero.title` | Mathematics & Computer Science, McGill '26 | hero.js:18 |
+| `hero.tagline` | I design reliable data systems and internal tools | hero.js:19 |
+| `hero.links.linkedin.id` | linkedin | hero.js:24 |
+| `hero.links.linkedin.label` | LinkedIn | hero.js:25 |
+| `hero.links.linkedin.note` | Experience and background | hero.js:26 |
+| `hero.links.linkedin.href` | https://linkedin.com/in/james-kidd-mtl/ | hero.js:27 |
+| `hero.links.linkedin.icon` | linkedin | hero.js:24 |
+| `hero.links.linkedin.external` | true | hero.js:29 |
+| `hero.links.github.id` | github | hero.js:32 |
+| `hero.links.github.label` | GitHub | hero.js:33 |
+| `hero.links.github.note` | Code and projects | hero.js:34 |
+| `hero.links.github.href` | https://github.com/james-kidd/ | hero.js:35 |
+| `hero.links.github.icon` | github | hero.js:32 |
+| `hero.links.github.external` | true | hero.js:29 |
+| `hero.links.contact.id` | contact | hero.js:40 |
+| `hero.links.contact.label` | Email | hero.js:41 |
+| `hero.links.contact.note` | dev@jameskidd.info | hero.js:42 |
+| `hero.links.contact.href` | mailto:dev@jameskidd.info | hero.js:43 |
+| `hero.links.contact.icon` | mail | hero.js:12 |
 
 ## experience
 
@@ -196,7 +195,7 @@ Status: **awaiting approval** · source: `src/content/experience/kpmg-hungary.md
 
 ### `about.intro`
 
-Status: **awaiting approval** · source: `src/content/about.mdx`
+Status: **generated** · source: `src/content/about.mdx`
 
 
 **`about.intro.body`** · 2 blocks, 48 words · about.mdx:1
@@ -207,7 +206,7 @@ Status: **awaiting approval** · source: `src/content/about.mdx`
 
 ### `about.education`
 
-Status: **awaiting approval** · source: `src/data/sections/education.js`
+Status: **generated** · source: `src/data/sections/education.js`
 
 | key | text | source |
 |---|---|---|
@@ -274,7 +273,7 @@ Status: **awaiting approval** · source: `src/data/sections/education.js`
 
 ### `skills`
 
-Status: **awaiting approval** · source: `src/data/sections/skills.js`
+Status: **generated** · source: `src/data/sections/skills.js`
 
 | key | text | source |
 |---|---|---|
@@ -501,7 +500,7 @@ _No project briefs synced yet (`npm run sync-briefs`, see `docs/project-brief.md
 
 ### `personal.intro`
 
-Status: **awaiting approval** · source: `src/content/personal.mdx`
+Status: **generated** · source: `src/content/personal.mdx`
 
 | key | text | source |
 |---|---|---|
@@ -515,7 +514,7 @@ Status: **awaiting approval** · source: `src/content/personal.mdx`
 
 ### `personal.stats`
 
-Status: **awaiting approval** · source: `src/data/sections/personal/stats.js`
+Status: **generated** · source: `src/data/sections/personal/stats.js`
 
 | key | text | source |
 |---|---|---|
@@ -524,7 +523,7 @@ Status: **awaiting approval** · source: `src/data/sections/personal/stats.js`
 
 ### `personal.milestones`
 
-Status: **awaiting approval** · source: `src/data/sections/personal/milestones.js`
+Status: **generated** · source: `src/data/sections/personal/milestones.js`
 
 | key | text | source |
 |---|---|---|
@@ -583,7 +582,7 @@ Status: **awaiting approval** · source: `src/data/sections/personal/milestones.
 
 ### `personal.favorites`
 
-Status: **awaiting approval** · source: `src/data/sections/personal/favorites.js`
+Status: **generated** · source: `src/data/sections/personal/favorites.js`
 
 | key | text | source |
 |---|---|---|
@@ -593,7 +592,7 @@ Status: **awaiting approval** · source: `src/data/sections/personal/favorites.j
 
 ### `personal.gallery`
 
-Status: **awaiting approval** · source: `src/data/sections/personal/gallery.js`
+Status: **generated** · source: `src/data/sections/personal/gallery.js`
 
 | key | text | source |
 |---|---|---|
@@ -683,6 +682,7 @@ Literal strings inside the components: labels, buttons, alt text, empty states. 
 | `ProjectPage.jsx` | Loading read me... | ProjectPage.jsx:120 |
 | `ProjectPage.jsx` | Write-up | ProjectPage.jsx:129 |
 | `ProjectPage.jsx` | Loading chapter... | ProjectPage.jsx:133 |
+| `ShellPage.jsx` | Links | ShellPage.jsx:26 |
 | `AboutSection.jsx` | Education Timeline | AboutSection.jsx:23 |
 | `HeroSection.jsx` | Resume | HeroSection.jsx:49 |
 | `HeroSection.jsx` | LinkedIn | HeroSection.jsx:61 |
