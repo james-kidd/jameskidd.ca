@@ -8,10 +8,9 @@ Totals: 19 items, 249 fields, 2599 words of prose, 71 microcopy strings.
 
 ## Review queue
 
-9 file(s) are not approved as they stand. Read each one below, then stamp it:
+8 file(s) are not approved as they stand. Read each one below, then stamp it:
 
 ```
-npm run approve -- src/data/hero.js
 npm run approve -- src/content/experience/ci-financial-enablement.mdx
 npm run approve -- src/content/experience/codejam.mdx
 npm run approve -- src/content/experience/ci-financial-analyst.mdx
@@ -32,7 +31,7 @@ Held by `published: false` (not on the site, no stamp needed): `experience.freel
 
 ### `hero`
 
-Status: **awaiting approval** · source: `src/data/hero.js`
+Status: **approved** (2026-11-06, kiddj) · source: `src/data/hero.js`
 
 | key | text | source |
 |---|---|---|

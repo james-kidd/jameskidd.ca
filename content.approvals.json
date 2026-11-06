@@ -1,5 +1,11 @@
 {
   "$readme": "Approval stamps for everything published about James. Written by `npm run approve`, never by hand. A stamp binds a file path to the sha of its exact text; an edit breaks the stamp and the item is held offline until re-stamped. With requireApproval true, unapproved collection items (experience, projects, briefs, writing) are dropped at build and unapproved structural files (hero.js, data slices, about.mdx, personal.mdx) fail the build. See docs/copy-deck.md for the review queue.",
   "requireApproval": true,
-  "items": {}
+  "items": {
+    "src/data/hero.js": {
+      "sha": "c46ef58571f455d7",
+      "by": "kiddj",
+      "on": "2026-11-06"
+    }
+  }
 }
